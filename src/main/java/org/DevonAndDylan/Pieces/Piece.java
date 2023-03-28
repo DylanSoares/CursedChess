@@ -1,4 +1,4 @@
-package chess;
+package org.DevonAndDylan.Pieces;
 
 public abstract class Piece {
 	private char letter;

@@ -1,4 +1,4 @@
-package chess;
+package org.DevonAndDylan.Pieces;
 
 public interface MovesTwiceFirstTurn {
 

@@ -1,4 +1,4 @@
-package chess;
+package org.DevonAndDylan.Pieces;
 
 public class Pawn extends Piece implements MovesOneSpace, MovesTwiceFirstTurn, CanPromote, CanEnPassant {
 
