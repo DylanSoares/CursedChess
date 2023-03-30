@@ -1,5 +1,5 @@
 package org.DevonAndDylan.Pieces;
 
-public interface MovesHorizontally {
+public interface MovesDiagonally {
 
 }

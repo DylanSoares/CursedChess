@@ -5,10 +5,11 @@ public abstract class Piece {
 	private int value;
 	private boolean isWhite;
 	private char[] possiblePromotions;
-	private char loc1;
-	private int loc2;
+	private Location loc;
 	
-	
+	public Piece(Location loc) {
+		this.loc = loc;
+	}
 	public void capture(char loc1, int loc2) {
 		
 	}

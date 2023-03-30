@@ -1,8 +1,8 @@
 package org.DevonAndDylan.Pieces;
 
-public class King extends Piece implements MovesOneSpace {
+public class Knight extends Piece implements MovesLShaped {
 
-	public King(Location loc) {
+	public Knight(Location loc) {
 		super(loc);
 		// TODO Auto-generated constructor stub
 	}
