@@ -1,5 +1,7 @@
 package org.DevonAndDylan.Pieces;
 
+import java.util.ArrayList;
+
 public abstract class Piece {
 	private char letter;
 	private int value;
@@ -7,8 +9,9 @@ public abstract class Piece {
 	private char[] possiblePromotions;
 	private Location loc;
 	
-	public Piece(Location loc) {
+	public Piece(Location loc, boolean isWhite) {
 		this.loc = loc;
+		this.isWhite = isWhite;
 	}
 	public void capture(char loc1, int loc2) {
 		

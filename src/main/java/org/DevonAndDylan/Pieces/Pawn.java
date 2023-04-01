@@ -2,9 +2,15 @@ package org.DevonAndDylan.Pieces;
 
 public class Pawn extends Piece implements MovesOneSpace, MovesTwiceFirstTurn, CanPromote, CanEnPassant {
 
-	public Pawn(Location loc) {
-		super(loc);
+	public Pawn(Location loc, boolean isWhite) { //default pawn
+		super(loc, isWhite);
+		char[] temp = {'Q', 'R', 'B', 'K'}; // probably needs a better approach
+		setPossiblePromotions(temp);
 		// TODO Auto-generated constructor stub
+	}
+	public Pawn(Location loc, boolean isWhite, char[] promos) {
+		super(loc, isWhite);
+		setPossiblePromotions(promos);
 	}
 
 	@Override
