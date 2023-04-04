@@ -13,7 +13,10 @@ public abstract class Piece {
 		this.loc = loc;
 		this.isWhite = isWhite;
 	}
-	public void capture(char loc1, int loc2) {
+	public void move(Location loc) {
+		
+	}
+	public void capture(Location loc) {
 		
 	}
 	public char getLetter() {

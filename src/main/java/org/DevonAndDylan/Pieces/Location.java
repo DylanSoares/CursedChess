@@ -6,8 +6,12 @@ public class Location {
 	private char loc1;
 	private int loc2;
 	
-	public Location(char loc1, char loc2) {
+	public Location(char loc1, int loc2) {
 		this.loc1 = loc1;
+		this.loc2 = loc2;
+	}
+	public Location(int loc1, int loc2) {
+		this.loc1 = (char)(loc1+96); //convert to letter
 		this.loc2 = loc2;
 	}
 

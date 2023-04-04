@@ -4,7 +4,7 @@ public class Pawn extends Piece implements MovesOneSpace, MovesTwiceFirstTurn, C
 
 	public Pawn(Location loc, boolean isWhite) { //default pawn
 		super(loc, isWhite);
-		char[] temp = {'Q', 'R', 'B', 'K'}; // probably needs a better approach
+		char[] temp = {'Q', 'R', 'B', 'N'}; // probably needs a better approach
 		setPossiblePromotions(temp);
 		// TODO Auto-generated constructor stub
 	}
