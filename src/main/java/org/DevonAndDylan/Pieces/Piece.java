@@ -16,6 +16,12 @@ public abstract class Piece {
 	public void move(Location loc) {
 		
 	}
+	public Location getLoc() {
+		return loc;
+	}
+	public void setLoc(Location loc) {
+		this.loc = loc;
+	}
 	public void capture(Location loc) {
 		
 	}
