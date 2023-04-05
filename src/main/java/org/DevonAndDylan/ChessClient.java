@@ -11,7 +11,10 @@ public class ChessClient {
 
     public static void main(String[] args) throws IOException {
 
-        //just gonna put this here
+        // Create the UI for the chessboard
+        new ChessUI();
+
+//        just gonna put this here
         String move = "e4 Nc3";
 
         Socket socket = new Socket("localhost", 7777);
