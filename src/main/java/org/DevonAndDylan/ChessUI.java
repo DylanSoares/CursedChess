@@ -24,6 +24,8 @@ public class ChessUI extends JFrame {
         panel.add(new JLabel(""));
 
         // add buttons and numbers along left and right columns
+        // TODO make this in an array so we can actaully reference the buttons and start to
+        //      think about data transfer for the server.
         for (int i = 8; i >= 1; i--) {
             JLabel labelStart = new JLabel(String.valueOf(i), SwingConstants.CENTER);
             labelStart.setForeground(textColor);

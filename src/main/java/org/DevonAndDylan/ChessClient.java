@@ -13,6 +13,8 @@ public class ChessClient {
 
         // Create the UI for the chessboard
         new ChessUI();
+        // TODO catch when the client closes the UI, should close the sockets and such.
+        //      and disconnect the game/forfeit etc.
 
 //        just gonna put this here
         String move = "e4 Nc3";
