@@ -1,6 +1,8 @@
 package org.DevonAndDylan;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class ChessUI extends JFrame {
 
@@ -32,6 +34,15 @@ public class ChessUI extends JFrame {
             panel.add(labelStart);
             for (char j = 'a'; j <= 'h'; j++) {
                 JButton button = new JButton();
+                int finali = i;
+                char finalJ = j;
+                button.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        // TODO handle passing this click back to the ChessClient etc
+                        System.out.println("User clicked button at " + finali + "" + finalJ);
+                    }
+                });
                 button.setPreferredSize(new Dimension(50, 50));
                 if ((i + j) % 2 == 0) {
                     button.setBackground(lightSquareColor);
