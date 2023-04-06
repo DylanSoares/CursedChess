@@ -10,7 +10,8 @@ import java.net.Socket;
 public class ChessClient {
 
     public static void main(String[] args) throws IOException {
-
+    	Board board = new Board();
+    	System.out.println(board);
         // Create the UI for the chessboard
         new ChessUI();
         // TODO catch when the client closes the UI, should close the sockets and such.

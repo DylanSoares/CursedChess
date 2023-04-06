@@ -33,6 +33,6 @@ public class Location {
 	
 	@Override
 	public String toString() {
-		return loc1 + loc2 + "";
+		return loc1 + "" + loc2;
 	}
 }

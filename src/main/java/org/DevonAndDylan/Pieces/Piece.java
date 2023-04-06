@@ -8,6 +8,7 @@ public abstract class Piece {
 	private boolean isWhite;
 	private char[] possiblePromotions;
 	private Location loc;
+	private boolean moved = false;
 	
 	public Piece(Location loc, boolean isWhite) {
 		this.loc = loc;
@@ -49,9 +50,39 @@ public abstract class Piece {
 	public void setPossiblePromotions(char[] possiblePromotions) {
 		this.possiblePromotions = possiblePromotions;
 	}
+	public boolean isMoved() {
+		return moved;
+	}
+	public void setMoved(boolean moved) {
+		this.moved = moved;
+	}
 	
 	@Override
 	public String toString() {
-		return letter + "";
+		String piece = "";
+		switch(letter) {
+		case 'P':
+			piece = "Pawn";
+			break;
+		case 'Q':
+			piece = "Queen";
+			break;
+		case 'K':
+			piece = "King";
+			break;
+		case 'N':
+			piece = "Knight";
+			break;
+		case 'B':
+			piece = "Bishop";
+			break;
+		case 'R':
+			piece = "Rook";
+			break;
+		default:
+			piece = "Unknown";
+		}
+		return piece + " on " + loc;
 	}
+
 }

@@ -5,9 +5,10 @@ import java.util.ArrayList;
 public class Board {
 	private int width;
 	private int length;
-	private ArrayList<Piece> pieces;
+	private ArrayList<Piece> pieces = new ArrayList<Piece>();
 	private Piece lastMovePiece;
 	private Location lastMoveLocation;
+	private boolean whiteTurn = true;
 	public Board() {
 		this.width = 8;
 		this.length = 8;
@@ -23,6 +24,57 @@ public class Board {
 		this.length = length;
 		this.pieces = pieces;
 	}
+	
+	/*public boolean move(String m) {
+		char letter = m.charAt(0);
+		
+	}*/
+	
+	public boolean move(Location start, Location end) {
+		int a = toInt(start.getLoc1()); //start file
+		int b = start.getLoc2(); //start rank
+		int c = toInt(end.getLoc1()); //end file
+		int d = end.getLoc2(); //end rank
+		//moving to starting position
+		if (start == end) {
+			return false;
+		}
+		//moving out of bounds
+		if (a > width || a < 1) {
+			return false;
+		}
+		if (b > length || b < 1) {
+			return false;
+		}
+		if (c > width || c < 1) {
+			return false;
+		}
+		if (d > length || d < 1) {
+			return false;
+		}
+		//see who's moving
+		int sindex = -1;
+		Piece startPiece;
+		int eindex = -1;
+		boolean capture = false;
+		for (int i=0;i<pieces.size();i++) {
+			if (pieces.get(i).getLoc().equals(start)) {
+				sindex = i;
+			} else if (pieces.get(i).getLoc().equals(end)) {
+				eindex = i;
+				capture = true;
+			}
+		}
+		if (sindex == -1) {
+			return false;
+		}
+		//TODO continue here
+		int moveFile = a-c;
+		int moveRank = b-d;
+		
+		return true;
+	}
+	
 	private void populate() {
 		boolean white = true;
 		for (int i=1;i<=width;i+=7) {
@@ -49,4 +101,14 @@ public class Board {
 	public int toInt(char a) {
 		return a-96;
 	}
+	
+	@Override
+	public String toString() {
+		String output = "";
+		for (Piece p : pieces) {
+			output += p + "\n";
+		}
+		return output;
+	}
+	
 }
