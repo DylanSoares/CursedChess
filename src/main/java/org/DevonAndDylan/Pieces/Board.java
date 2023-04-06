@@ -2,6 +2,7 @@ package org.DevonAndDylan.Pieces;
 
 import java.util.ArrayList;
 
+
 public class Board {
 	private int width;
 	private int length;
@@ -54,12 +55,13 @@ public class Board {
 		}
 		//see who's moving
 		int sindex = -1;
-		Piece startPiece;
+		Piece startPiece = null;
 		int eindex = -1;
 		boolean capture = false;
 		for (int i=0;i<pieces.size();i++) {
 			if (pieces.get(i).getLoc().equals(start)) {
 				sindex = i;
+				startPiece = pieces.get(i);
 			} else if (pieces.get(i).getLoc().equals(end)) {
 				eindex = i;
 				capture = true;
@@ -68,11 +70,38 @@ public class Board {
 		if (sindex == -1) {
 			return false;
 		}
-		//TODO continue here
-		int moveFile = a-c;
-		int moveRank = b-d;
 		
-		return true;
+		
+		int moveFile = c-a;
+		int moveRank = d-b;
+		int deltaFile = Math.abs(moveFile);
+		int deltaRank = Math.abs(moveRank);
+		if ((deltaFile == 2 && deltaRank == 1) || (deltaFile == 1 && deltaRank == 2)) {
+			//knight movement
+			if ((startPiece instanceof MovesLShaped)) {
+				return true;
+			}
+		}
+		if (deltaFile == 0 && deltaRank > 0 || deltaFile >= 0 && deltaRank == 0) {
+			//rook/queen movement
+			if ((startPiece instanceof MovesCrossShaped)) {
+				//avoid a collision
+				if (deltaFile == 0) {
+					int lowerBound = Math.min(b+moveRank, b);
+					int upperBound = Math.max(b+moveRank, b);
+					for (Piece p : pieces) {
+						
+					}
+				} else {
+					int lowerBound = Math.min(a+moveFile, a);
+					int upperBound = Math.max(a+moveFile, a);
+				}
+				
+				
+				return true;
+			} 
+		} //else if
+		return false;
 	}
 	
 	private void populate() {

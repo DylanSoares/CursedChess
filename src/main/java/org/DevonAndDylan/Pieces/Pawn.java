@@ -1,6 +1,6 @@
 package org.DevonAndDylan.Pieces;
 
-public class Pawn extends Piece implements MovesOneSpace, MovesTwiceFirstTurn, CanPromote, CanEnPassant {
+public class Pawn extends Piece implements MovesOneSpace, MovesTwiceFirstTurn, MovesForward, AttacksDiagonally, CanPromote, CanEnPassant {
 
 	public Pawn(Location loc, boolean isWhite) { //default pawn
 		super(loc, isWhite);
