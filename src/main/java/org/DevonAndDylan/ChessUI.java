@@ -122,6 +122,8 @@ public class ChessUI extends JFrame {
         frame.remove(panel); // This is super dumb but it works for some reason.
         drawUI(pieces);
         frame.add(panel);
+        panel.revalidate();
+        panel.repaint();
     }
 
     private void addLabels() {
