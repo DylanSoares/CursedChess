@@ -92,8 +92,12 @@ public class Board {
 		if (sindex == -1) {
 			return 4;
 		}
-		//if (startPiece)
-		
+		if (startPiece.isWhite() && !(whiteTurn)) {
+			return 5;
+		}
+		if (capture && (startPiece.isWhite() == pieces.get(eindex).isWhite())) {
+			return 7;
+		}
 		
 		int moveFile = c-a;
 		int moveRank = d-b;
@@ -103,11 +107,8 @@ public class Board {
 		if ((deltaFile == 2 && deltaRank == 1) || (deltaFile == 1 && deltaRank == 2)) {
 			//knight movement
 			if (startPiece instanceof MovesLShaped) {
-				if (capture) {
-					pieces.remove(eindex);
-				}
-				pieces.get(sindex).move(end);
-				return 0; //knights can jump so no check needed TODO move the pieces
+				processMove(end, sindex, eindex, capture);
+				return 0; //knights can jump so no check needed
 			}
 		}
 		if (deltaFile == 0 && deltaRank > 0 || deltaFile > 0 && deltaRank == 0) {
@@ -133,22 +134,41 @@ public class Board {
 						}
 					}
 				}
-				if (capture) {
-					pieces.remove(eindex);
-				}
-				pieces.get(sindex).move(end);
+				processMove(end, sindex, eindex, capture);
 				return 0; //done checking collisions and found none
 			} 
 		}
 		if (deltaFile == deltaRank) {
 			//bishop/queen movement
 			if (startPiece instanceof MovesDiagonally) {
-				
+				int lowerBoundFile = Math.min(a+moveFile, a);
+				int upperBoundFile = Math.max(a+moveFile, a);
+				int lowerBoundRank = Math.min(b+moveRank, b);
+				int upperBoundRank = Math.max(b+moveRank, b);
+				for (Piece p : pieces) {
+					int file = toInt(p.getLoc().getLoc1());
+					int rank = p.getLoc().getLoc2();
+					/*if ((file < upperBoundFile && file > lowerBoundFile)
+							&& rank < upperBoundRank && rank > lowerBoundRank
+							&& ) {
+						
+						return 6;
+					}*/
+				}
 			}
 		}
 		
 		
 		return 1; // unknown/impossible move
+	}
+	private void processMove(Location end, int sindex, int eindex, boolean capture) {
+		lastMovePiece = pieces.get(sindex);
+		lastMoveLocation = end;
+		whiteTurn = !whiteTurn;
+		pieces.get(sindex).move(end);
+		if (capture) {
+			pieces.remove(eindex);
+		}
 	}
 	
 	private void populate() {
