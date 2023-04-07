@@ -7,7 +7,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 
 public class ChessUI extends JFrame {
 
@@ -40,14 +39,14 @@ public class ChessUI extends JFrame {
 
     public ChessUI(Piece[][] pieces) {
         JFrame frame = new JFrame("Chessboard");
-        drawPanel(pieces);
+        drawUI(pieces);
         frame.add(panel);
         frame.pack();
         frame.setVisible(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
-    private void drawPanel(Piece[][] pieces) {
+    public void drawUI(Piece[][] pieces) {
         panel = new JPanel(new GridLayout(10, 10));
 
         // add letters along top and bottom rows
@@ -73,56 +72,30 @@ public class ChessUI extends JFrame {
                 if (currPiece != null) {
                     if (currPiece.isWhite()) {
                         switch (currPiece.getLetter()) {
-                            case 'P':
-                                button.setIcon(pawnWhite);
-                                break;
-                            case 'Q':
-                                button.setIcon(queenWhite);
-                                break;
-                            case 'K':
-                                button.setIcon(kingWhite);
-                                break;
-                            case 'N':
-                                button.setIcon(knightWhite);
-                                break;
-                            case 'B':
-                                button.setIcon(bishopWhite);
-                                break;
-                            case 'R':
-                                button.setIcon(rookWhite);
-                                break;
+                            case 'P' -> button.setIcon(pawnWhite);
+                            case 'Q' -> button.setIcon(queenWhite);
+                            case 'K' -> button.setIcon(kingWhite);
+                            case 'N' -> button.setIcon(knightWhite);
+                            case 'B' -> button.setIcon(bishopWhite);
+                            case 'R' -> button.setIcon(rookWhite);
                         }
                     } else {
                         switch (currPiece.getLetter()) {
-                            case 'P':
-                                button.setIcon(pawnBlack);
-                                break;
-                            case 'Q':
-                                button.setIcon(queenBlack);
-                                break;
-                            case 'K':
-                                button.setIcon(kingBlack);
-                                break;
-                            case 'N':
-                                button.setIcon(knightBlack);
-                                break;
-                            case 'B':
-                                button.setIcon(bishopBlack);
-                                break;
-                            case 'R':
-                                button.setIcon(rookBlack);
-                                break;
+                            case 'P' -> button.setIcon(pawnBlack);
+                            case 'Q' -> button.setIcon(queenBlack);
+                            case 'K' -> button.setIcon(kingBlack);
+                            case 'N' -> button.setIcon(knightBlack);
+                            case 'B' -> button.setIcon(bishopBlack);
+                            case 'R' -> button.setIcon(rookBlack);
                         }
                     }
                 }
 
-                button.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        // TODO handle passing this click back to the ChessClient etc
-                        System.out.println("DEBUG: Location clicked was a: " + pieces[finali][finalj]);
-                    }
+                button.addActionListener(e -> {
+                    // TODO handle passing this click back to the ChessClient etc
+                    System.out.println("DEBUG: Location clicked was a: " + pieces[finali][finalj]);
                 });
+
                 button.setPreferredSize(new Dimension(50, 50));
                 if ((i + j) % 2 == 0) {
                     button.setBackground(lightSquareColor);
@@ -140,16 +113,6 @@ public class ChessUI extends JFrame {
         // add letters along top and bottom rows
         addLabels();
         panel.setBackground(backgroundColor);
-    }
-
-    /**
-     * Helpter method for clearing and redrawing the UI
-     *
-     * @param pieces - board pieces, use board's getter.
-     */
-    public void updateUI(Piece[][] pieces) {
-        panel.removeAll();
-        drawPanel(pieces);
     }
 
     private void addLabels() {
