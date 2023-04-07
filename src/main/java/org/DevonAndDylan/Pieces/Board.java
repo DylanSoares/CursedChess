@@ -133,11 +133,11 @@ public class Board {
 	
 	@Override
 	public String toString() {
-		String output = "";
+		StringBuilder output = new StringBuilder();
 		for (Piece p : pieces) {
-			output += p + "\n";
+			output.append(p).append("\n");
 		}
-		return output;
+		return output.toString();
 	}
 
 	public ArrayList<Piece> getPieces() {

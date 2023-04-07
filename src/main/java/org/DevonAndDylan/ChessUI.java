@@ -1,29 +1,35 @@
 package org.DevonAndDylan;
+
+import org.DevonAndDylan.Pieces.Piece;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class ChessUI extends JFrame {
 
-    public ChessUI() {
+    private JPanel panel;
+    private final Color lightSquareColor = new Color(255, 206, 158);
+    private final Color darkSquareColor = new Color(209, 139, 71);
+    private final Color backgroundColor = new Color(51, 51, 51);
+    private final Color textColor = new Color(255, 255, 255);
 
-        Color lightSquareColor = new Color(255, 206, 158);
-        Color darkSquareColor = new Color(209, 139, 71);
-        Color backgroundColor = new Color(51, 51, 51);
-        Color textColor = new Color(255, 255, 255);
-
+    public ChessUI(ArrayList<Piece> pieces) {
         JFrame frame = new JFrame("Chessboard");
-        JPanel panel = new JPanel(new GridLayout(10, 10));
+        drawPanel(pieces);
+        frame.add(panel);
+        frame.pack();
+        frame.setVisible(true);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    }
+
+    private void drawPanel(ArrayList<Piece> pieces) {
+        panel = new JPanel(new GridLayout(10, 10));
 
         // add letters along top and bottom rows
-        panel.add(new JLabel(""));
-        for (char c = 'a'; c <= 'h'; c++) {
-            JLabel label = new JLabel(String.valueOf(c), SwingConstants.CENTER);
-            label.setForeground(textColor);
-            panel.add(label);
-        }
-        panel.add(new JLabel(""));
+        addLabels();
 
         // add buttons and numbers along left and right columns
         // TODO make this in an array so we can actaully reference the buttons and start to
@@ -57,6 +63,11 @@ public class ChessUI extends JFrame {
         }
 
         // add letters along top and bottom rows
+        addLabels();
+        panel.setBackground(backgroundColor);
+    }
+
+    private void addLabels() {
         panel.add(new JLabel(""));
         for (char c = 'a'; c <= 'h'; c++) {
             JLabel label = new JLabel(String.valueOf(c), SwingConstants.CENTER);
@@ -64,10 +75,5 @@ public class ChessUI extends JFrame {
             panel.add(label);
         }
         panel.add(new JLabel(""));
-        panel.setBackground(backgroundColor);
-        frame.add(panel);
-        frame.pack();
-        frame.setVisible(true);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 }
