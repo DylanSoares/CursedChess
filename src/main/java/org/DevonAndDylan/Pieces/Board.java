@@ -145,7 +145,36 @@ public class Board {
 	public int toInt(char a) {
 		return a-96;
 	}
+	public char[][] toCharArray() {
+		char output[][] = new char[length][width];
+		for (int i=0;i<length;i++) {
+			for (int j=0;j<width;j++) {
+				output[i][j] = '0'; //empty
+			}
+		}
+		
+		for (Piece p : pieces) {
+			Location loc = p.getLoc();
+			int number = loc.getLoc2();
+			int letter = toInt(loc.getLoc1());
+			output[number][letter] = p.getLetter();
+		}
+		
+		return output;
+	}
 	
+	public Piece[][] toPieceArray() {
+		Piece output[][] = new Piece[length][width];
+		
+		for (Piece p : pieces) {
+			Location loc = p.getLoc();
+			int number = loc.getLoc2();
+			int letter = toInt(loc.getLoc1());
+			output[number][letter] = p;
+		}
+		
+		return output;
+	}
 	@Override
 	public String toString() {
 		StringBuilder output = new StringBuilder();
