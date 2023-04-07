@@ -31,27 +31,49 @@ public class Board {
 		
 	}*/
 	
-	public boolean move(Location start, Location end) {
+	/**
+	 * Return an int confirming if a move was valid and making it internally if so.
+	 * <p>
+	 * This method will do all the dirty work of checking internally if a given
+	 * move is valid, considering from whether or not there's even a piece at the given
+	 * location to if there'd be a collision in the way.
+	 * <p>
+	 * Be sure to refresh your display of the board, however you do it, 
+	 * after a piece successfully moves.
+	 * 
+	 * @param start the location of the piece making the move
+	 * @param end the destination the piece is traveling to
+	 * @return <b>0</b> -  Successful move
+	 * <br><b>1</b> - Piece cannot legally make the move
+	 * <br><b>2</b> - Starting and end position are identical
+	 * <br><b>3</b> - Move would end up out of bounds
+	 * <br><b>4</b> - No piece at the starting location to move
+	 * <br><b>5</b> - It is not that player's turn
+	 * <br><b>6</b> - Piece would collide while trying to move
+	 * <br><b>7</b> - Piece is trying to capture its teammate
+	 */
+	
+	public int move(Location start, Location end) {
 		int a = toInt(start.getLoc1()); //start file
 		int b = start.getLoc2(); //start rank
 		int c = toInt(end.getLoc1()); //end file
 		int d = end.getLoc2(); //end rank
 		//moving to starting position
 		if (start == end) {
-			return false;
+			return 2;
 		}
 		//moving out of bounds
 		if (a > width || a < 1) {
-			return false;
+			return 3;
 		}
 		if (b > length || b < 1) {
-			return false;
+			return 3;
 		}
 		if (c > width || c < 1) {
-			return false;
+			return 3;
 		}
 		if (d > length || d < 1) {
-			return false;
+			return 3;
 		}
 		//see who's moving
 		int sindex = -1;
@@ -68,8 +90,9 @@ public class Board {
 			}
 		}
 		if (sindex == -1) {
-			return false;
+			return 4;
 		}
+		//if (startPiece)
 		
 		
 		int moveFile = c-a;
@@ -79,14 +102,17 @@ public class Board {
 		//movement check
 		if ((deltaFile == 2 && deltaRank == 1) || (deltaFile == 1 && deltaRank == 2)) {
 			//knight movement
-			if ((startPiece instanceof MovesLShaped)) {
-				
-				return true; //knights can jump so no check needed TODO move the pieces
+			if (startPiece instanceof MovesLShaped) {
+				if (capture) {
+					pieces.remove(eindex);
+				}
+				pieces.get(sindex).move(end);
+				return 0; //knights can jump so no check needed TODO move the pieces
 			}
 		}
 		if (deltaFile == 0 && deltaRank > 0 || deltaFile > 0 && deltaRank == 0) {
 			//rook/queen movement
-			if ((startPiece instanceof MovesCrossShaped)) {
+			if (startPiece instanceof MovesCrossShaped) {
 				//avoid a collision TODO bug test this stuff
 				if (deltaFile == 0) {
 					int lowerBound = Math.min(b+moveRank, b);
@@ -94,7 +120,7 @@ public class Board {
 					for (Piece p : pieces) {
 						int l = p.getLoc().getLoc2();
 						if (l < upperBound && l > lowerBound) {
-							return false;
+							return 6;
 						}
 					}
 				} else {
@@ -103,20 +129,26 @@ public class Board {
 					for (Piece p : pieces) {
 						int l = toInt(p.getLoc().getLoc1());
 						if (l < upperBound && l > lowerBound) {
-							return false;
+							return 6;
 						}
 					}
 				}
-				return true; //done checking collisions and found none
+				if (capture) {
+					pieces.remove(eindex);
+				}
+				pieces.get(sindex).move(end);
+				return 0; //done checking collisions and found none
 			} 
 		}
 		if (deltaFile == deltaRank) {
-			//bishop movement
-			
+			//bishop/queen movement
+			if (startPiece instanceof MovesDiagonally) {
+				
+			}
 		}
 		
 		
-		return false;
+		return 1; // unknown/impossible move
 	}
 	
 	private void populate() {
@@ -155,8 +187,8 @@ public class Board {
 		
 		for (Piece p : pieces) {
 			Location loc = p.getLoc();
-			int number = loc.getLoc2();
-			int letter = toInt(loc.getLoc1());
+			int number = loc.getLoc2()-1; //-1 to account for index starting at 0
+			int letter = toInt(loc.getLoc1())-1;
 			output[number][letter] = p.getLetter();
 		}
 		
@@ -168,8 +200,8 @@ public class Board {
 		
 		for (Piece p : pieces) {
 			Location loc = p.getLoc();
-			int number = loc.getLoc2();
-			int letter = toInt(loc.getLoc1());
+			int number = loc.getLoc2()-1;
+			int letter = toInt(loc.getLoc1())-1;
 			output[number][letter] = p;
 		}
 		
