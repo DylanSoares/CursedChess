@@ -191,10 +191,10 @@ public class Board {
 		}
 		
 	}
-	public char toChar(int a) {
+	public static char toChar(int a) {
 		return (char)(a+96);
 	}
-	public int toInt(char a) {
+	public static int toInt(char a) {
 		return a-96;
 	}
 	public char[][] toCharArray() {
@@ -216,7 +216,7 @@ public class Board {
 	}
 	
 	public Piece[][] toPieceArray() {
-		Piece output[][] = new Piece[length][width];
+		Piece[][] output = new Piece[length][width];
 		
 		for (Piece p : pieces) {
 			Location loc = p.getLoc();
