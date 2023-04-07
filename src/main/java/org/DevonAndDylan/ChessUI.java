@@ -118,10 +118,6 @@ public class ChessUI extends JFrame {
         panel.setBackground(backgroundColor);
     }
 
-    /**
-     * A method that forces the redraw of the UI after a move.
-     * @param pieces 2D array of the pieces on the board. Use the getter from Board.java
-     */
     public void redrawUI(Piece[][] pieces) {
         frame.remove(panel); // This is super dumb but it works for some reason.
         drawUI(pieces);
