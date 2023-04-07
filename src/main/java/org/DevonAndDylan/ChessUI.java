@@ -72,6 +72,7 @@ public class ChessUI extends JFrame {
 
                 if (currPiece != null) {
                     if (currPiece.isWhite()) {
+                        //noinspection DuplicatedCode
                         switch (currPiece.getLetter()) {
                             case 'P' -> button.setIcon(pawnWhite);
                             case 'Q' -> button.setIcon(queenWhite);
@@ -81,6 +82,7 @@ public class ChessUI extends JFrame {
                             case 'R' -> button.setIcon(rookWhite);
                         }
                     } else {
+                        //noinspection DuplicatedCode
                         switch (currPiece.getLetter()) {
                             case 'P' -> button.setIcon(pawnBlack);
                             case 'Q' -> button.setIcon(queenBlack);
