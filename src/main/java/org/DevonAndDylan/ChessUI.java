@@ -5,8 +5,6 @@ import org.DevonAndDylan.Pieces.Piece;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class ChessUI extends JFrame {
 
