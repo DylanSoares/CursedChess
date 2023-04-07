@@ -12,10 +12,14 @@ public class ChessClient {
     public static void main(String[] args) throws IOException {
     	Board board = new Board();
     	System.out.println(board);
+
         // Create the UI for the chessboard
         new ChessUI();
         // TODO catch when the client closes the UI, should close the sockets and such.
         //      and disconnect the game/forfeit etc.
+
+        ArrayList<Piece> pieces = board.getPieces();
+        System.out.println(pieces.get(0).getLoc());
 
 //        just gonna put this here
         String move = "e4 Nc3";

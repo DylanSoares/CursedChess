@@ -154,5 +154,9 @@ public class Board {
 		}
 		return output;
 	}
+
+	public ArrayList<Piece> getPieces() {
+		return this.pieces;
+	}
 	
 }
