@@ -9,6 +9,8 @@ import java.awt.*;
 public class ChessUI extends JFrame {
 
     private JPanel panel;
+    private JFrame frame;
+
     private final Color lightSquareColor = new Color(255, 206, 158);
     private final Color darkSquareColor = new Color(209, 139, 71);
     private final Color backgroundColor = new Color(51, 51, 51);
@@ -36,7 +38,7 @@ public class ChessUI extends JFrame {
 
 
     public ChessUI(Piece[][] pieces) {
-        JFrame frame = new JFrame("Chessboard");
+        frame = new JFrame("Chessboard");
         drawUI(pieces);
         frame.setResizable(false);
         frame.add(panel);
@@ -114,6 +116,16 @@ public class ChessUI extends JFrame {
         // add letters along top and bottom rows
         addLabels();
         panel.setBackground(backgroundColor);
+    }
+
+    /**
+     * A method that forces the redraw of the UI after a move.
+     * @param pieces 2D array of the pieces on the board. Use the getter from Board.java
+     */
+    public void redrawUI(Piece[][] pieces) {
+        frame.remove(panel); // This is super dumb but it works for some reason.
+        drawUI(pieces);
+        frame.add(panel);
     }
 
     private void addLabels() {
