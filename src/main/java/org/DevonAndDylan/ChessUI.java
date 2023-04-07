@@ -9,7 +9,7 @@ import java.awt.*;
 public class ChessUI extends JFrame {
 
     private JPanel panel;
-    private JFrame frame;
+    private final JFrame frame;
 
     private final Color lightSquareColor = new Color(255, 206, 158);
     private final Color darkSquareColor = new Color(209, 139, 71);
