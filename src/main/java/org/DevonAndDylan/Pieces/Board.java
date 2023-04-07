@@ -84,7 +84,7 @@ public class Board {
 				return true; //knights can jump so no check needed TODO move the pieces
 			}
 		}
-		if (deltaFile == 0 && deltaRank > 0 || deltaFile >= 0 && deltaRank == 0) {
+		if (deltaFile == 0 && deltaRank > 0 || deltaFile > 0 && deltaRank == 0) {
 			//rook/queen movement
 			if ((startPiece instanceof MovesCrossShaped)) {
 				//avoid a collision TODO bug test this stuff
