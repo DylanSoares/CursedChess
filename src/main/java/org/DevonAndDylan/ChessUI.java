@@ -96,7 +96,7 @@ public class ChessUI extends JFrame {
 
                 button.addActionListener(e -> {
                     // TODO handle passing this click back to the ChessClient etc
-                    System.out.println("DEBUG: Location clicked was a: " + pieces[finali][finalj]);
+                    System.out.println("[UI:99] DEBUG: Location clicked was: " + pieces[finali][finalj]);
                 });
 
                 button.setPreferredSize(new Dimension(50, 50));
