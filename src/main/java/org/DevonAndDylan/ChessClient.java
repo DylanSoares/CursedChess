@@ -20,6 +20,7 @@ public class ChessClient {
         // TODO catch when the client closes the UI, should close the sockets and such.
         //      and disconnect the game/forfeit etc.
 
+        gui.drawUI(pieces);
 
 
 

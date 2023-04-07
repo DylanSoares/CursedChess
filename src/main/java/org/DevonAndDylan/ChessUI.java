@@ -39,14 +39,14 @@ public class ChessUI extends JFrame {
 
     public ChessUI(Piece[][] pieces) {
         JFrame frame = new JFrame("Chessboard");
-        drawPanel(pieces);
+        drawUI(pieces);
         frame.add(panel);
         frame.pack();
         frame.setVisible(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
-    private void drawPanel(Piece[][] pieces) {
+    public void drawUI(Piece[][] pieces) {
         panel = new JPanel(new GridLayout(10, 10));
 
         // add letters along top and bottom rows
@@ -113,16 +113,6 @@ public class ChessUI extends JFrame {
         // add letters along top and bottom rows
         addLabels();
         panel.setBackground(backgroundColor);
-    }
-
-    /**
-     * Helpter method for clearing and redrawing the UI
-     *
-     * @param pieces - board pieces, use board's getter.
-     */
-    public void updateUI(Piece[][] pieces) {
-        panel.removeAll();
-        drawPanel(pieces);
     }
 
     private void addLabels() {
