@@ -35,4 +35,15 @@ public class Location {
 	public String toString() {
 		return loc1 + "" + loc2;
 	}
+	@Override
+	public boolean equals(Object o) {
+		if (o == this) {
+            return true;
+        }
+		if (!(o instanceof Location)) {
+            return false;
+        }
+		Location l = (Location) o;
+		return loc1 == l.loc1 && loc2 == l.loc2;
+	}
 }

@@ -90,7 +90,7 @@ public class Board {
 			}
 		}
 		if (sindex == -1) {
-			return pieces.size();
+			return 4;
 		}
 		if (startPiece.isWhite() && !(whiteTurn)) {
 			return 5;
