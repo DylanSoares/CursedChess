@@ -5,8 +5,6 @@ import org.DevonAndDylan.Pieces.Piece;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class ChessUI extends JFrame {
 
@@ -40,6 +38,7 @@ public class ChessUI extends JFrame {
     public ChessUI(Piece[][] pieces) {
         JFrame frame = new JFrame("Chessboard");
         drawUI(pieces);
+        frame.setResizable(false);
         frame.add(panel);
         frame.pack();
         frame.setVisible(true);
@@ -71,6 +70,7 @@ public class ChessUI extends JFrame {
 
                 if (currPiece != null) {
                     if (currPiece.isWhite()) {
+                        //noinspection DuplicatedCode
                         switch (currPiece.getLetter()) {
                             case 'P' -> button.setIcon(pawnWhite);
                             case 'Q' -> button.setIcon(queenWhite);
@@ -80,6 +80,7 @@ public class ChessUI extends JFrame {
                             case 'R' -> button.setIcon(rookWhite);
                         }
                     } else {
+                        //noinspection DuplicatedCode
                         switch (currPiece.getLetter()) {
                             case 'P' -> button.setIcon(pawnBlack);
                             case 'Q' -> button.setIcon(queenBlack);
