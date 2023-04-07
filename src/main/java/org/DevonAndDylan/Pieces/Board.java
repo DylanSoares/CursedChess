@@ -76,31 +76,46 @@ public class Board {
 		int moveRank = d-b;
 		int deltaFile = Math.abs(moveFile);
 		int deltaRank = Math.abs(moveRank);
+		//movement check
 		if ((deltaFile == 2 && deltaRank == 1) || (deltaFile == 1 && deltaRank == 2)) {
 			//knight movement
 			if ((startPiece instanceof MovesLShaped)) {
-				return true;
+				
+				return true; //knights can jump so no check needed TODO move the pieces
 			}
 		}
 		if (deltaFile == 0 && deltaRank > 0 || deltaFile >= 0 && deltaRank == 0) {
 			//rook/queen movement
 			if ((startPiece instanceof MovesCrossShaped)) {
-				//avoid a collision
+				//avoid a collision TODO bug test this stuff
 				if (deltaFile == 0) {
 					int lowerBound = Math.min(b+moveRank, b);
 					int upperBound = Math.max(b+moveRank, b);
 					for (Piece p : pieces) {
-						
+						int l = p.getLoc().getLoc2();
+						if (l < upperBound && l > lowerBound) {
+							return false;
+						}
 					}
 				} else {
 					int lowerBound = Math.min(a+moveFile, a);
 					int upperBound = Math.max(a+moveFile, a);
+					for (Piece p : pieces) {
+						int l = toInt(p.getLoc().getLoc1());
+						if (l < upperBound && l > lowerBound) {
+							return false;
+						}
+					}
 				}
-				
-				
-				return true;
+				return true; //done checking collisions and found none
 			} 
-		} //else if
+		}
+		if (deltaFile == deltaRank) {
+			//bishop movement
+			
+		}
+		
+		
 		return false;
 	}
 	

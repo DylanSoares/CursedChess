@@ -15,16 +15,11 @@ public abstract class Piece {
 		this.isWhite = isWhite;
 	}
 	public void move(Location loc) {
-		
+		this.loc = loc;
+		moved = true;
 	}
 	public Location getLoc() {
 		return loc;
-	}
-	public void setLoc(Location loc) {
-		this.loc = loc;
-	}
-	public void capture(Location loc) {
-		
 	}
 	public char getLetter() {
 		return letter;
