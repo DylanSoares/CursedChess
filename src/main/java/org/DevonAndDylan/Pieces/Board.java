@@ -90,7 +90,7 @@ public class Board {
 			}
 		}
 		if (sindex == -1) {
-			return 4;
+			return pieces.size();
 		}
 		if (startPiece.isWhite() && !(whiteTurn)) {
 			return 5;
@@ -148,13 +148,15 @@ public class Board {
 				for (Piece p : pieces) {
 					int file = toInt(p.getLoc().getLoc1());
 					int rank = p.getLoc().getLoc2();
-					/*if ((file < upperBoundFile && file > lowerBoundFile)
+					if ((file < upperBoundFile && file > lowerBoundFile)
 							&& rank < upperBoundRank && rank > lowerBoundRank
-							&& ) {
+							&& Math.abs(a-file) == Math.abs(b-rank)) {
 						
 						return 6;
-					}*/
+					}
 				}
+				processMove(end, sindex, eindex, capture);
+				return 0; //done checking collisions and found none
 			}
 		}
 		

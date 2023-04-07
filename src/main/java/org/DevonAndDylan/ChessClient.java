@@ -19,8 +19,12 @@ public class ChessClient {
         ChessUI gui = new ChessUI(pieces);
         // TODO catch when the client closes the UI, should close the sockets and such.
         //      and disconnect the game/forfeit etc.
-
-
+        
+        
+        
+        System.out.println(board.move(new Location('b', 1), new Location('c', 3)));
+        //pieces = board.toPieceArray();
+        //gui.updateUI(pieces);
 
 //        just gonna put this here
         String move = "e4 Nc3";
