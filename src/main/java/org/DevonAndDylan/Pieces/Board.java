@@ -59,7 +59,7 @@ public class Board {
 		int c = toInt(end.getLoc1()); //end file
 		int d = end.getLoc2(); //end rank
 		//moving to starting position
-		if (start == end) {
+		if (start.equals(end)) {
 			return 2;
 		}
 		//moving out of bounds
@@ -120,7 +120,9 @@ public class Board {
 					int upperBound = Math.max(b+moveRank, b);
 					for (Piece p : pieces) {
 						int l = p.getLoc().getLoc2();
-						if (l < upperBound && l > lowerBound) {
+						int f = toInt(p.getLoc().getLoc1());
+						if (l < upperBound && l > lowerBound
+								&& f == a) {
 							return 6;
 						}
 					}
@@ -129,7 +131,9 @@ public class Board {
 					int upperBound = Math.max(a+moveFile, a);
 					for (Piece p : pieces) {
 						int l = toInt(p.getLoc().getLoc1());
-						if (l < upperBound && l > lowerBound) {
+						int r = p.getLoc().getLoc2();
+						if (l < upperBound && l > lowerBound
+								&& r == b) {
 							return 6;
 						}
 					}
@@ -151,7 +155,6 @@ public class Board {
 					if ((file < upperBoundFile && file > lowerBoundFile)
 							&& rank < upperBoundRank && rank > lowerBoundRank
 							&& Math.abs(a-file) == Math.abs(b-rank)) {
-						
 						return 6;
 					}
 				}
