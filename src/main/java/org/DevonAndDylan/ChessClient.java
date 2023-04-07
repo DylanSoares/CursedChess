@@ -11,9 +11,9 @@ public class ChessClient {
 
     public static void main(String[] args) throws IOException {
     	Board board = new Board();
-    	System.out.println(board);
+//    	System.out.println(board);
 
-        ArrayList<Piece> pieces = board.getPieces();
+        Piece[][] pieces = board.toPieceArray();
 
         // Create the UI for the chessboard
         ChessUI gui = new ChessUI(pieces);
