@@ -40,6 +40,7 @@ public class ChessUI extends JFrame {
     public ChessUI(Piece[][] pieces) {
         JFrame frame = new JFrame("Chessboard");
         drawUI(pieces);
+        frame.setResizable(false);
         frame.add(panel);
         frame.pack();
         frame.setVisible(true);
