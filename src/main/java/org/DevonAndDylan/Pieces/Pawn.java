@@ -7,7 +7,6 @@ public class Pawn extends Piece implements MovesOneSpace, MovesTwiceFirstTurn, M
 		setLetter('P');
 		char[] temp = {'Q', 'R', 'B', 'N'}; // probably needs a better approach
 		setPossiblePromotions(temp);
-		// TODO Auto-generated constructor stub
 	}
 	public Pawn(Location loc, boolean isWhite, char[] promos) {
 		super(loc, isWhite);

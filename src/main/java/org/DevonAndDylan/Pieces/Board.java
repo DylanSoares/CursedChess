@@ -162,6 +162,15 @@ public class Board {
 				return 0; //done checking collisions and found none
 			}
 		}
+		if (deltaFile == 1 || deltaRank == 1) {
+			//king/pawn movement TODO
+			if (startPiece instanceof MovesOneSpace) {
+				boolean white = startPiece.isWhite();
+				
+			}
+			
+		}
+		
 		
 		
 		return 1; // unknown/impossible move
