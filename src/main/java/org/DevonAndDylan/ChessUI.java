@@ -37,9 +37,14 @@ public class ChessUI extends JFrame {
     private final ImageIcon queenWhite = new ImageIcon("src/main/resources/wq.png");
 
 
-    public ChessUI(Piece[][] pieces) {
+    /**
+     * A constructor to initilaize the Chessboard UI
+     * @param pieces Array of pieces
+     * @param rotated If true, the board will be drawn rotated for the second player.
+     */
+    public ChessUI(Piece[][] pieces, boolean rotated) {
         frame = new JFrame("Chessboard");
-        drawUI(pieces);
+        drawUI(pieces, rotated);
         frame.setResizable(false);
         frame.add(panel);
         frame.pack();
@@ -47,17 +52,19 @@ public class ChessUI extends JFrame {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
-    public void drawUI(Piece[][] pieces) {
+    private void drawUI(Piece[][] pieces, Boolean rotated) {
         panel = new JPanel(new GridLayout(10, 10));
-
         // add letters along top and bottom rows
-        addLabels();
+        addLabels(rotated);
+        if(rotated) pieces = rotatePieces(pieces);
 
         // add buttons and numbers along left and right columns
         // TODO make this in an array so we can actaully reference the buttons and start to
         //      think about data transfer for the server.
         for (int i = 8; i >= 1; i--) {
-            JLabel labelStart = new JLabel(String.valueOf(i), SwingConstants.CENTER);
+            JLabel labelStart;
+            if(rotated) labelStart = new JLabel(String.valueOf(9-i), SwingConstants.CENTER);
+            else labelStart = new JLabel(String.valueOf(i), SwingConstants.CENTER);
 
             labelStart.setFont(arial);
             labelStart.setForeground(textColor);
@@ -94,9 +101,10 @@ public class ChessUI extends JFrame {
                     }
                 }
 
+                Piece[][] finalPieces = pieces;
                 button.addActionListener(e -> {
                     // TODO handle passing this click back to the ChessClient etc
-                    System.out.println("[UI:99] DEBUG: Location clicked was: " + pieces[finali][finalj]);
+                    System.out.println("[UI:99] DEBUG: Location clicked was: " + finalPieces[finali][finalj]);
                 });
 
                 button.setPreferredSize(new Dimension(50, 50));
@@ -107,32 +115,59 @@ public class ChessUI extends JFrame {
                 }
                 panel.add(button);
             }
-            JLabel labelEnd = new JLabel(String.valueOf(i), SwingConstants.CENTER);
+
+            JLabel labelEnd;
+            if(rotated) labelEnd = new JLabel(String.valueOf(9-i), SwingConstants.CENTER);
+            else labelEnd = new JLabel(String.valueOf(i), SwingConstants.CENTER);
+
             labelEnd.setForeground(textColor);
             labelEnd.setFont(arial);
             panel.add(labelEnd);
         }
 
         // add letters along top and bottom rows
-        addLabels();
+        addLabels(rotated);
         panel.setBackground(backgroundColor);
     }
 
-    public void redrawUI(Piece[][] pieces) {
+    /**
+     * @param pieces 2D Array of pieces fetched from the board's method.
+     * @param rotated If true, the board will be drawn rotated for players
+     */
+    public void redrawUI(Piece[][] pieces, Boolean rotated) {
         frame.remove(panel); // This is super dumb but it works for some reason.
-        drawUI(pieces);
+        drawUI(pieces, rotated);
         frame.add(panel);
         panel.revalidate();
         panel.repaint();
     }
 
-    private void addLabels() {
+    private Piece[][] rotatePieces(Piece[][] pieces) {
+        Piece[][] rotatedPieces = new Piece[8][8];
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                rotatedPieces[i][j] = pieces[7 - i][7 - j];
+            }
+        }
+        return rotatedPieces;
+    }
+
+    private void addLabels(boolean rotated) {
         panel.add(new JLabel(""));
-        for (char c = 'a'; c <= 'h'; c++) {
-            JLabel label = new JLabel(String.valueOf(c).toUpperCase(), SwingConstants.CENTER);
-            label.setForeground(textColor);
-            label.setFont(new Font("Arial", Font.PLAIN, 20));
-            panel.add(label);
+        if (!rotated) {
+            for (char c = 'a'; c <= 'h'; c++) {
+                JLabel label = new JLabel(String.valueOf(c).toUpperCase(), SwingConstants.CENTER);
+                label.setForeground(textColor);
+                label.setFont(new Font("Arial", Font.PLAIN, 20));
+                panel.add(label);
+            }
+        } else {
+            for (char c = 'h'; c >= 'a'; c--) {
+                JLabel label = new JLabel(String.valueOf(c).toUpperCase(), SwingConstants.CENTER);
+                label.setForeground(textColor);
+                label.setFont(new Font("Arial", Font.PLAIN, 20));
+                panel.add(label);
+            }
         }
         panel.add(new JLabel(""));
     }
