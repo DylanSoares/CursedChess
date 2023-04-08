@@ -12,13 +12,13 @@ public class ChessClient {
 
     public static void main(String[] args) throws IOException {
         Board board = new Board();
-        boolean rotate = true;
 //    	System.out.println(board);
 
         Piece[][] pieces = board.toPieceArray();
 
         // Create the UI for the chessboard
-        ChessUI gui = new ChessUI(pieces, rotate);
+        ChessUI gui_White = new ChessUI(pieces, false);
+        ChessUI gui_Black = new ChessUI(pieces, true);
 
 //        String move = "e4 Nc3";
 //
@@ -40,9 +40,8 @@ public class ChessClient {
         System.out.println("[Client:36] DEBUG: Moving result " + board.move(new Location('a', 8), new Location('a', 4)));
         pieces = board.toPieceArray();
         
-        gui.redrawUI(pieces, rotate);
-
-        System.out.println("Trying to rotate now!");
+        gui_Black.redrawUI(pieces, true);
+        gui_White.redrawUI(pieces, false);
 //        gui.rotateBoard(pieces);
     }
 }
