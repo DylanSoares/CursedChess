@@ -40,8 +40,8 @@ public class ChessClient {
             int y2 = Integer.parseInt(String.valueOf(moveCommand[3])) + 1;
 
             result = board.move(new Location(x1, y1), new Location(x2, y2));
-            System.err.println("[Client:55] DEBUG: Attempted to move to: " + x1 + "" + y1 + " to " + x2 + "" + y2);
-            System.err.println("[Client:57] DEBUG: Moving result " + result);
+//            System.err.println("[Client:55] DEBUG: Attempted to move to: " + x1 + "" + y1 + " to " + x2 + "" + y2);
+//            System.err.println("[Client:57] DEBUG: Moving result " + result);
         }
 
 
