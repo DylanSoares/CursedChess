@@ -7,19 +7,22 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.Socket;
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.BlockingQueue;
 
 public class ChessClient {
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, InterruptedException {
+        BlockingQueue<String> moveQueue = new ArrayBlockingQueue<>(1);
         Board board = new Board();
 
         Piece[][] pieces = board.toPieceArray();
 
         // Create the UI for the chessboard
-        ChessUI guiWhite = new ChessUI(pieces, false);
-        ChessUI guiBlack = new ChessUI(pieces, true);
+        ChessUI guiWhite = new ChessUI(pieces, false, moveQueue);
+        ChessUI guiBlack = new ChessUI(pieces, true, moveQueue);
 
-//        String move = "e4 Nc3";
+        //        String move = "e4 Nc3";
 //
 //        Socket socket = new Socket("localhost", 7777);
 //        System.out.println("DEBUG: Connected to server.");
@@ -33,15 +36,30 @@ public class ChessClient {
 //        dataOutputStream.close(); // close the output stream when we're done.
 //        socket.close();
 
-        System.out.println("[Client:36] DEBUG: Moving result " + board.move(new Location('b', 1), new Location('c', 3)));
-        System.out.println("[Client:36] DEBUG: Moving result " + board.move(new Location('d', 8), new Location('d', 3)));
-        System.out.println("[Client:36] DEBUG: Moving result " + board.move(new Location('c', 1), new Location('g', 5)));
-        System.out.println("[Client:36] DEBUG: Moving result " + board.move(new Location('a', 8), new Location('a', 4)));
+//        System.out.println("[Client:36] DEBUG: Moving result " + board.move(new Location('b', 1), new Location('c', 3)));
+//        System.out.println("[Client:36] DEBUG: Moving result " + board.move(new Location('d', 8), new Location('d', 3)));
+//        System.out.println("[Client:36] DEBUG: Moving result " + board.move(new Location('c', 1), new Location('g', 5)));
+//        System.out.println("[Client:36] DEBUG: Moving result " + board.move(new Location('a', 8), new Location('a', 4)));
 
-        pieces = board.toPieceArray();
 
-        guiWhite.redrawBoard(pieces, false, board.getWhoseTurn());
-        guiBlack.redrawBoard(pieces, true, board.getWhoseTurn());
+        // Some awful temporary driver code for UI <-> Client communication
+        int result = -1;
+        while(true) {
+            pieces = board.toPieceArray();
+            guiWhite.redrawBoard(pieces, false, board.getWhoseTurn(), result);
+            guiBlack.redrawBoard(pieces, true, board.getWhoseTurn(), result);
+
+            char[] moveCommand = moveQueue.take().toCharArray(); // this is blocking!
+
+            char x1  = Board.toChar(Integer.parseInt(String.valueOf(moveCommand[0]))+1);
+            char x2  = Board.toChar(Integer.parseInt(String.valueOf(moveCommand[2]))+1);
+            int y1 = Integer.parseInt(String.valueOf(moveCommand[1]))+1;
+            int y2 = Integer.parseInt(String.valueOf(moveCommand[3]))+1;
+
+            result = board.move(new Location(x1, y1), new Location(x2, y2));
+            System.err.println("[Client:55] DEBUG: Attempted to move to: " + x1 + "" + y1 + " to " + x2 + "" + y2);
+            System.err.println("[Client:57] DEBUG: Moving result " + result);
+        }
 
     }
 }
