@@ -221,9 +221,9 @@ public class ChessUI extends JFrame {
                 button.addActionListener(e -> {
                     Color ogColor;
                     if ((finali + finalj) % 2 == 0) {
-                        ogColor = lightSquareColor;
-                    } else {
                         ogColor = darkSquareColor;
+                    } else {
+                        ogColor = lightSquareColor;
                     }
 
                     // NOTE: This doesnt quite work right for the rotated player, we check that on the confirm button
@@ -252,9 +252,9 @@ public class ChessUI extends JFrame {
 
                 button.setPreferredSize(new Dimension(50, 50));
                 if ((i + j) % 2 == 0) {
-                    button.setBackground(lightSquareColor);
-                } else {
                     button.setBackground(darkSquareColor);
+                } else {
+                    button.setBackground(lightSquareColor);
                 }
                 boardPanel.add(button);
             }
