@@ -12,8 +12,34 @@ public class Knight extends Piece {
 
 	@Override
 	public ArrayList<Location> getLegalMoves(Board b) {
-		// TODO Auto-generated method stub
-		return null;
+		ArrayList<Location> output = new ArrayList<Location>();
+		Piece[][] board = b.toPieceArray();
+		int width = b.getWidth(); //how many FILES
+		int length = b.getLength(); //how many RANKS, typically 8 for both
+		
+		int x = this.getLoc().getX(); //the FILE
+		int y = this.getLoc().getY(); //the RANK. remember that the array is [y][x] because, uh, yeah
+		
+		//this looks complicated but it's just a fancy way to check all moves where
+		//you would move delta 2 and delta 1, as a knight does
+		for (int i = 2; i > -3; i--) {
+            for (int j = 2; j > -3; j--) {
+            	if (Math.abs(i) == 2 ^ Math.abs(j) == 2) { //exclusive or. exactly one is equal to 2
+            		if (i != 0 && j != 0) { //neither is equal to zero
+            			try {
+            				if (!(board[y+j][x+i] instanceof Piece) ||
+            						board[y+j][x+i].isWhite() != this.isWhite()) {
+            					output.add(new Location(x+i, y+j, true));
+            				}
+            			} catch (ArrayIndexOutOfBoundsException e) { //avoid out of bounds
+            				continue;
+            			}
+            		}
+            	}
+            }
+		}
+		
+		return output;
 	}
-
+	
 }
