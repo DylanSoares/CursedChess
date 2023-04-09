@@ -20,6 +20,16 @@ public class Board {
 	}
 
 
+	public Piece getLastMovePiece() {
+		return lastMovePiece;
+	}
+
+
+	public Location getLastMoveLocation() {
+		return lastMoveLocation;
+	}
+
+
 	public Board() {
 		this.width = 8;
 		this.length = 8;
@@ -102,17 +112,42 @@ public class Board {
 		if (sindex == -1) {
 			return 4;
 		}
-		if (startPiece.isWhite() && !(whiteTurn)) {
+		if (startPiece.isWhite() == !(whiteTurn)) { //should fix issue of black moving whenever
 			return 5;
 		}
 		if (capture && (startPiece.isWhite() == pieces.get(eindex).isWhite())) {
 			return 7;
 		}
 		
-		/*int moveFile = c-a;
+		int moveFile = c-a;
 		int moveRank = d-b;
 		int deltaFile = Math.abs(moveFile);
 		int deltaRank = Math.abs(moveRank);
+		
+		ArrayList<Location> moves = startPiece.getLegalMoves(this);
+		for (Location l : moves) {
+			//System.out.println(l + " " + end);
+			if (l.equals(end)) {
+				//special moves
+				//en passant... oh god
+				if (startPiece instanceof Pawn
+						&& deltaFile > 0
+						&& !capture) { //a pawn is moving diagonally but no target is found
+					//System.out.println("En passant target: " + new Location(c, b, false));
+					processEnPassant(end, sindex, new Location(c, b, false));
+				}
+				//TODO castling
+				
+				else {
+					processMove(end, sindex, eindex, capture);
+				}
+				return 0;
+			}
+		}
+		
+		
+		/*
+		
 		//movement check
 		if ((deltaFile == 2 && deltaRank == 1) || (deltaFile == 1 && deltaRank == 2)) {
 			//knight movement
@@ -185,6 +220,18 @@ public class Board {
 		
 		return 1; // unknown/impossible move
 	}
+	private void processEnPassant(Location end, int sindex, Location location) {
+		int eindex = -1;
+		for (int i=0;i<pieces.size();i++) {
+			if (pieces.get(i).getLoc().equals(location)) {
+				eindex = i;
+				break;
+			}
+		}
+		processMove(end, sindex, eindex, true);
+	}
+
+
 	private void processMove(Location end, int sindex, int eindex, boolean capture) {
 		lastMovePiece = pieces.get(sindex);
 		lastMoveLocation = end;
@@ -238,6 +285,18 @@ public class Board {
 		
 		return output;
 	}
+	public int getWidth() {
+		return width;
+	}
+
+
+
+	public int getLength() {
+		return length;
+	}
+
+
+
 	/**
 	 * Convert the board into a piece array with empty spaces.
 	 * <p>
@@ -257,6 +316,18 @@ public class Board {
 		}
 		
 		return output;
+	}
+	
+	public void printPieceArray() {
+		Piece[][] a = toPieceArray();
+		for (int i=length-1;i>=0;i--) {
+			for (int j=0;j<width;j++) {
+				System.out.print(a[i][j] + " ");
+				
+			}
+			System.out.println();
+		}
+		System.out.println();
 	}
 	@Override
 	public String toString() {

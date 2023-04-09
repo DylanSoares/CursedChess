@@ -10,6 +10,14 @@ public abstract class Piece {
 	private Location loc;
 	private boolean moved = false;
 	
+	/**
+	 * Create a piece at a certain location and on a certain team.
+	 * <p>
+	 * This will just be used as a super call, as the subclasses will
+	 * have their own changes to do.
+	 * @param loc location of piece
+	 * @param isWhite team affiliation. true if white, false if black.
+	 */
 	public Piece(Location loc, boolean isWhite) {
 		this.loc = loc;
 		this.isWhite = isWhite;
@@ -45,7 +53,7 @@ public abstract class Piece {
 	public void setPossiblePromotions(char[] possiblePromotions) {
 		this.possiblePromotions = possiblePromotions;
 	}
-	public boolean isMoved() {
+	public boolean hasMoved() {
 		return moved;
 	}
 	public void setMoved(boolean moved) {

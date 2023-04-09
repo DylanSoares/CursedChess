@@ -10,9 +10,20 @@ public class Location {
 		this.file = file;
 		this.rank = rank;
 	}
-	public Location(int file, int loc2) {
-		this.file = (char)(file+96); //convert to letter
-		this.rank = loc2;
+	/**
+	 * Create a location out of an int tuple.
+	 * <p>
+	 * This will properly convert it into a character when you give it an integer for the file.
+	 * @param file the file (a, b, c...)
+	 * @param rank the rank (1, 2, 3...)
+	 * @param isIndex will add 1 if they're indexes to compensate for the change to chess notation
+	 */
+	public Location(int file, int rank, boolean isIndex) {
+		int bonus = 0;
+		if (isIndex)
+			bonus = 1;
+		this.file = (char)(file+96+bonus); //convert to letter
+		this.rank = rank+bonus;
 	}
 
 	public char getFile() {
