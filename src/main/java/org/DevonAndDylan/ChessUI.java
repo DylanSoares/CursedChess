@@ -53,6 +53,7 @@ public class ChessUI extends JFrame {
     private int secondSelectedY = -1;
 
     private boolean rotated;
+    private boolean isWhitesTurn;
 
 
     /**
@@ -114,6 +115,9 @@ public class ChessUI extends JFrame {
     }
 
     private void drawTopPanel(boolean isWhitesTurn) {
+
+        this.isWhitesTurn = isWhitesTurn;
+
         // Create a new JPanel for the buttons container
         topPanel = new JPanel(new GridLayout(1, 3));
 
@@ -213,6 +217,7 @@ public class ChessUI extends JFrame {
                     }
                 }
 
+                Piece[][] finalPieces = pieces;
                 button.addActionListener(e -> {
                     Color ogColor;
                     if ((finali + finalj) % 2 == 0) {
@@ -223,7 +228,7 @@ public class ChessUI extends JFrame {
 
                     // NOTE: This doesnt quite work right for the rotated player, we check that on the confirm button
 //                    System.out.println("[UI:99] DEBUG: Location clicked was: " + finalPieces[finali][finalj]);
-                    if (!selectedFirst && !selectedSecond) {
+                    if (!selectedFirst && !selectedSecond && ((isWhitesTurn && finalPieces[finali][finalj].isWhite()) || (!isWhitesTurn && !finalPieces[finali][finalj].isWhite()))) {
 //                        System.err.println(Board.toChar(finalj+1) + " " + (finali+1));
                         firstSelectedX = finalj;
                         firstSelectedY = finali;
