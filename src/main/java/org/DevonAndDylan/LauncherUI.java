@@ -74,7 +74,6 @@ public class LauncherUI extends JFrame {
         boardContainer.add(buttonPanel);
         boardContainer.add(buttonPanel2);
 
-
         // Create toggle button and text fields
         JPanel togglePanel = new JPanel(new BorderLayout());
         JButton toggleButton = new JButton("Change Server Info");
@@ -105,7 +104,7 @@ public class LauncherUI extends JFrame {
 
         togglePanel.add(textFieldPanel, BorderLayout.CENTER);
 
-// Create center panel for button and toggle panels
+        // Create center panel for button and toggle panels
         JPanel centerPanel = new JPanel(new BorderLayout());
         centerPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, Integer.MAX_VALUE)); // allow expansion
         centerPanel.add(boardContainer, BorderLayout.CENTER);
@@ -115,7 +114,6 @@ public class LauncherUI extends JFrame {
         buttonPanel2.setBackground(backgroundColor);
         buttonPanel.setBackground(backgroundColor);
         setBackground(backgroundColor);
-//        centerPanel.setBackground(backgroundColor);
 
         // Add panels to frame
         add(centerPanel, BorderLayout.CENTER);
