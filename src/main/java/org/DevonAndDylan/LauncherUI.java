@@ -150,8 +150,6 @@ public class LauncherUI extends JFrame {
         });
 
         confirmButton.addActionListener(e -> {
-
-            System.err.println(chooseBlack);
             try {
                 choiceQueue.put(chooseBlack); // add the move to the blocking queue
             } catch (InterruptedException interruptedException) {
