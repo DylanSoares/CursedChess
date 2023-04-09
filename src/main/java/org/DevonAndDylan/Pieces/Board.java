@@ -64,10 +64,10 @@ public class Board {
 	 */
 	
 	public int move(Location start, Location end) {
-		int a = toInt(start.getLoc1()); //start file
-		int b = start.getLoc2(); //start rank
-		int c = toInt(end.getLoc1()); //end file
-		int d = end.getLoc2(); //end rank
+		int a = toInt(start.getFile()); //start file
+		int b = start.getRank(); //start rank
+		int c = toInt(end.getFile()); //end file
+		int d = end.getRank(); //end rank
 		//moving to starting position
 		if (start.equals(end)) {
 			return 2;
@@ -109,7 +109,7 @@ public class Board {
 			return 7;
 		}
 		
-		int moveFile = c-a;
+		/*int moveFile = c-a;
 		int moveRank = d-b;
 		int deltaFile = Math.abs(moveFile);
 		int deltaRank = Math.abs(moveRank);
@@ -129,8 +129,8 @@ public class Board {
 					int lowerBound = Math.min(b+moveRank, b);
 					int upperBound = Math.max(b+moveRank, b);
 					for (Piece p : pieces) {
-						int l = p.getLoc().getLoc2();
-						int f = toInt(p.getLoc().getLoc1());
+						int l = p.getLoc().getRank();
+						int f = toInt(p.getLoc().getFile());
 						if (l < upperBound && l > lowerBound
 								&& f == a) {
 							return 6;
@@ -140,8 +140,8 @@ public class Board {
 					int lowerBound = Math.min(a+moveFile, a);
 					int upperBound = Math.max(a+moveFile, a);
 					for (Piece p : pieces) {
-						int l = toInt(p.getLoc().getLoc1());
-						int r = p.getLoc().getLoc2();
+						int l = toInt(p.getLoc().getFile());
+						int r = p.getLoc().getRank();
 						if (l < upperBound && l > lowerBound
 								&& r == b) {
 							return 6;
@@ -160,8 +160,8 @@ public class Board {
 				int lowerBoundRank = Math.min(b+moveRank, b);
 				int upperBoundRank = Math.max(b+moveRank, b);
 				for (Piece p : pieces) {
-					int file = toInt(p.getLoc().getLoc1());
-					int rank = p.getLoc().getLoc2();
+					int file = toInt(p.getLoc().getFile());
+					int rank = p.getLoc().getRank();
 					if ((file < upperBoundFile && file > lowerBoundFile)
 							&& rank < upperBoundRank && rank > lowerBoundRank
 							&& Math.abs(a-file) == Math.abs(b-rank)) {
@@ -179,7 +179,7 @@ public class Board {
 				
 			}
 			
-		}
+		}*/
 		
 		
 		
@@ -231,21 +231,28 @@ public class Board {
 		
 		for (Piece p : pieces) {
 			Location loc = p.getLoc();
-			int number = loc.getLoc2()-1; //-1 to account for index starting at 0
-			int letter = toInt(loc.getLoc1())-1;
+			int number = loc.getY();
+			int letter = loc.getX();
 			output[number][letter] = p.getLetter();
 		}
 		
 		return output;
 	}
-	
+	/**
+	 * Convert the board into a piece array with empty spaces.
+	 * <p>
+	 * Do try and remember that editing these pieces is NOT editing those
+	 * pieces on the board itself. You MUST interact with the board's own methods
+	 * to do so.
+	 * @return a 2D array of Piece objects
+	 */
 	public Piece[][] toPieceArray() {
 		Piece[][] output = new Piece[length][width];
 		
 		for (Piece p : pieces) {
 			Location loc = p.getLoc();
-			int number = loc.getLoc2()-1;
-			int letter = toInt(loc.getLoc1())-1;
+			int number = loc.getY(); 
+			int letter = loc.getX();
 			output[number][letter] = p;
 		}
 		

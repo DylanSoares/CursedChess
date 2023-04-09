@@ -51,6 +51,17 @@ public abstract class Piece {
 	public void setMoved(boolean moved) {
 		this.moved = moved;
 	}
+	public void promote(char letter) throws PieceCannotPromoteException { //the piece must override this
+		throw new PieceCannotPromoteException(this + " cannot promote.");
+	}
+	/**
+	 * Get all valid moves of a piece.
+	 * <p>
+	 * Override me, please! I must be overridden to function!
+	 * @param b the board. in most cases, "this"
+	 * @return a list of locations the piece can move to
+	 */
+	public abstract ArrayList<Location> getLegalMoves(Board b);
 	
 	@Override
 	public String toString() {

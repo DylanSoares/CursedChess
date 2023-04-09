@@ -3,37 +3,55 @@ package org.DevonAndDylan.Pieces;
 
 
 public class Location {
-	private char loc1;
-	private int loc2;
+	private char file;
+	private int rank;
 	
-	public Location(char loc1, int loc2) {
-		this.loc1 = loc1;
-		this.loc2 = loc2;
+	public Location(char file, int rank) {
+		this.file = file;
+		this.rank = rank;
 	}
-	public Location(int loc1, int loc2) {
-		this.loc1 = (char)(loc1+96); //convert to letter
-		this.loc2 = loc2;
-	}
-
-	public char getLoc1() {
-		return loc1;
+	public Location(int file, int loc2) {
+		this.file = (char)(file+96); //convert to letter
+		this.rank = loc2;
 	}
 
-	public void setLoc1(char loc1) {
-		this.loc1 = loc1;
+	public char getFile() {
+		return file;
+	}
+	/**
+	 * Turn the file into an index starting at 0.
+	 * <p>
+	 * a -> 0, b -> 1, etc.
+	 * @return x index
+	 */
+	public int getX() {
+		return (((int)file) - 96) - 1;
 	}
 
-	public int getLoc2() {
-		return loc2;
+	public void setFile(char file) {
+		this.file = file;
 	}
 
-	public void setLoc2(int loc2) {
-		this.loc2 = loc2;
+	public int getRank() {
+		return rank;
+	}
+
+	public void setRank(int rank) {
+		this.rank = rank;
+	}
+	/**
+	 * Turn the rank into an index starting at 0.
+	 * <p>
+	 * 1 -> 0, 2 -> 1, etc.
+	 * @return y index
+	 */
+	public int getY() {
+		return rank - 1;
 	}
 	
 	@Override
 	public String toString() {
-		return loc1 + "" + loc2;
+		return file + "" + rank;
 	}
 	@Override
 	public boolean equals(Object o) {
@@ -44,6 +62,6 @@ public class Location {
             return false;
         }
 		Location l = (Location) o;
-		return loc1 == l.loc1 && loc2 == l.loc2;
+		return file == l.file && rank == l.rank;
 	}
 }

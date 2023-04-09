@@ -1,5 +1,7 @@
 package org.DevonAndDylan.Pieces;
 
+import java.util.ArrayList;
+
 public class Pawn extends Piece implements MovesOneSpace, MovesTwiceFirstTurn, MovesForward, AttacksDiagonally, CanPromote, CanEnPassant {
 
 	public Pawn(Location loc, boolean isWhite) { //default pawn
@@ -14,9 +16,17 @@ public class Pawn extends Piece implements MovesOneSpace, MovesTwiceFirstTurn, M
 	}
 
 	@Override
-	public Piece promote(char letter) {
+	public void promote(char letter) {
 		// TODO Auto-generated method stub
-		return null;
+	}
+	@Override
+	public ArrayList<Location> getLegalMoves(Board b) {
+		ArrayList<Location> output = new ArrayList<Location>();
+		Piece[][] board = b.toPieceArray();
+		
+		
+		// TODO Auto-generated method stub
+		return output;
 	}
 
 }
