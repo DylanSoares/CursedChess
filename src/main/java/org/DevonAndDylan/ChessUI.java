@@ -23,7 +23,7 @@ public class ChessUI extends JFrame {
     private final Color selectedPieceColor = new Color(226, 207, 89);
     private final Color selectedMoveColor = new Color(249, 240, 123);
 
-    private BlockingQueue<String> moveQueue;
+    private final BlockingQueue<String> moveQueue;
 
     Font arial = new Font("Arial", Font.PLAIN, 20);
 
@@ -228,7 +228,7 @@ public class ChessUI extends JFrame {
 
                     // NOTE: This doesnt quite work right for the rotated player, we check that on the confirm button
 //                    System.out.println("[UI:99] DEBUG: Location clicked was: " + finalPieces[finali][finalj]);
-                    if (!selectedFirst && !selectedSecond && ((isWhitesTurn && finalPieces[finali][finalj].isWhite()) || (!isWhitesTurn && !finalPieces[finali][finalj].isWhite()))) {
+                    if (finalPieces[finali][finalj] != null && !selectedFirst && !selectedSecond && ((isWhitesTurn && finalPieces[finali][finalj].isWhite()) || (!isWhitesTurn && !finalPieces[finali][finalj].isWhite()))) {
 //                        System.err.println(Board.toChar(finalj+1) + " " + (finali+1));
                         firstSelectedX = finalj;
                         firstSelectedY = finali;
