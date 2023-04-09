@@ -10,6 +10,16 @@ public class Board {
 	private Piece lastMovePiece;
 	private Location lastMoveLocation;
 	private boolean whiteTurn = true;
+
+
+	/**
+	 * @return true if white, false if black
+	 */
+	public boolean getWhoseTurn() {
+		return whiteTurn;
+	}
+
+
 	public Board() {
 		this.width = 8;
 		this.length = 8;
