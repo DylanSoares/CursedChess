@@ -22,7 +22,7 @@ public class ChessClient {
         LauncherUI launcher = new LauncherUI(choiceQueue);
 
 
-        boolean playersChoice = choiceQueue.take(); //true if white
+        boolean playersChoice = choiceQueue.take(); //false if white
         ChessUI gui = new ChessUI(pieces, playersChoice, moveQueue);
 
         // Some awful temporary driver code for UI <-> Client communication
