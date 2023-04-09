@@ -278,6 +278,8 @@ public class ChessUI extends JFrame {
         frame.remove(bottomPanel);
         frame.remove(boardContainer);
 
+        this.rotated = rotated;
+
         drawTopPanel(isWhitesTurn);
         drawBoardPanel(pieces, rotated);
         drawBottomPanel(moveResult);

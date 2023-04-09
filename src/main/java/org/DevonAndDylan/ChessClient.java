@@ -19,8 +19,8 @@ public class ChessClient {
         Piece[][] pieces = board.toPieceArray();
 
         // Create the UI for the chessboard
-        ChessUI guiWhite = new ChessUI(pieces, false, moveQueue);
-        ChessUI guiBlack = new ChessUI(pieces, true, moveQueue);
+        ChessUI gui = new ChessUI(pieces, false, moveQueue);
+
 
         //        String move = "e4 Nc3";
 //
@@ -46,8 +46,8 @@ public class ChessClient {
         int result = -1;
         while(true) {
             pieces = board.toPieceArray();
-            guiWhite.redrawBoard(pieces, false, board.getWhoseTurn(), result);
-            guiBlack.redrawBoard(pieces, true, board.getWhoseTurn(), result);
+            //yes I made it flip for literally no reason, its just fun for this driver code
+            gui.redrawBoard(pieces, !board.getWhoseTurn(), board.getWhoseTurn(), result);
 
             char[] moveCommand = moveQueue.take().toCharArray(); // this is blocking!
 
