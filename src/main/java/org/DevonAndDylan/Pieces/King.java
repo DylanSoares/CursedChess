@@ -2,7 +2,7 @@ package org.DevonAndDylan.Pieces;
 
 import java.util.ArrayList;
 
-public class King extends Piece implements MovesOneSpace {
+public class King extends Piece {
 
 	public King(Location loc, boolean isWhite) {
 		super(loc, isWhite);

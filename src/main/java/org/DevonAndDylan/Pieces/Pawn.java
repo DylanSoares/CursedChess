@@ -2,7 +2,7 @@ package org.DevonAndDylan.Pieces;
 
 import java.util.ArrayList;
 
-public class Pawn extends Piece implements MovesOneSpace, MovesTwiceFirstTurn, MovesForward, AttacksDiagonally, CanPromote, CanEnPassant {
+public class Pawn extends Piece {
 
 	public Pawn(Location loc, boolean isWhite) { //default pawn
 		super(loc, isWhite);
@@ -52,18 +52,20 @@ public class Pawn extends Piece implements MovesOneSpace, MovesTwiceFirstTurn, M
 			//the BEAST of en passant logic. en passant must be done IMMEDIATELY
 			if (b.getLastMoveLocation() instanceof Location) {
 				if (x+1 < width && y+1 < length && board[y][x+1] instanceof Pawn) { //en passant right
-					if (b.getLastMoveLocation().equals(new Location(x+1, y, true))) {
+					if (b.getLastMoveLocation().equals(new Location(x+1, y, true)) &&
+							!board[y][x+1].isWhite()) {
 						output.add(new Location(x+1, y+1, true));
 					}
 				}
 				if (x-1 >= 0 && y+1 < length && board[y][x-1] instanceof Pawn) { //en passant left
-					if (b.getLastMoveLocation().equals(new Location(x-1, y, true))) {
+					if (b.getLastMoveLocation().equals(new Location(x-1, y, true)) &&
+							!board[y][x-1].isWhite()) {
 						output.add(new Location(x-1, y+1, true));
 					}
 				}
 			}
 			
-		} else {
+		} else { //we're moving DOWNWARD as we are BLACK
 			if (!this.hasMoved()) { //two move boost when HAS NOT MOVED
 				if (!(board[y-1][x] instanceof Piece) || !(board[y-2][x] instanceof Piece)) { //piece in the way
 					output.add(new Location(x, y-2, true));
@@ -82,6 +84,21 @@ public class Pawn extends Piece implements MovesOneSpace, MovesTwiceFirstTurn, M
 			if (x-1 >= 0 && y-1 >= 0 && board[y-1][x-1] instanceof Piece) { //capture left
 				if (board[y-1][x-1].isWhite()) { //don't capture your own pieces
 					output.add(new Location(x-1, y-1, true));
+				}
+			}
+			//the BEAST of en passant logic. en passant must be done IMMEDIATELY
+			if (b.getLastMoveLocation() instanceof Location) {
+				if (x+1 < width && y-1 < length && board[y][x+1] instanceof Pawn) { //en passant right
+					if (b.getLastMoveLocation().equals(new Location(x+1, y, true)) &&
+							board[y][x+1].isWhite()) {
+						output.add(new Location(x+1, y-1, true));
+					}
+				}
+				if (x-1 >= 0 && y-1 < length && board[y][x-1] instanceof Pawn) { //en passant left
+					if (b.getLastMoveLocation().equals(new Location(x-1, y, true)) &&
+							board[y][x-1].isWhite()) {
+						output.add(new Location(x-1, y-1, true));
+					}
 				}
 			}
 		}

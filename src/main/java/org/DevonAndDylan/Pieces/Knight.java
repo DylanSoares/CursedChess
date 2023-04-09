@@ -2,7 +2,7 @@ package org.DevonAndDylan.Pieces;
 
 import java.util.ArrayList;
 
-public class Knight extends Piece implements MovesLShaped {
+public class Knight extends Piece {
 
 	public Knight(Location loc, boolean isWhite) {
 		super(loc, isWhite);

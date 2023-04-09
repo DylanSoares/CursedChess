@@ -69,8 +69,7 @@ public class Board {
 	 * <br><b>3</b> - Move would end up out of bounds
 	 * <br><b>4</b> - No piece at the starting location to move
 	 * <br><b>5</b> - It is not that player's turn
-	 * <br><b>6</b> - Piece would collide while trying to move
-	 * <br><b>7</b> - Piece is trying to capture its teammate
+	 * <br><b>6</b> - Piece is trying to capture its teammate
 	 */
 	
 	public int move(Location start, Location end) {
@@ -116,7 +115,7 @@ public class Board {
 			return 5;
 		}
 		if (capture && (startPiece.isWhite() == pieces.get(eindex).isWhite())) {
-			return 7;
+			return 6;
 		}
 		
 		int moveFile = c-a;
@@ -144,80 +143,6 @@ public class Board {
 				return 0;
 			}
 		}
-		
-		
-		/*
-		
-		//movement check
-		if ((deltaFile == 2 && deltaRank == 1) || (deltaFile == 1 && deltaRank == 2)) {
-			//knight movement
-			if (startPiece instanceof MovesLShaped) {
-				processMove(end, sindex, eindex, capture);
-				return 0; //knights can jump so no check needed
-			}
-		}
-		if (deltaFile == 0 && deltaRank > 0 || deltaFile > 0 && deltaRank == 0) {
-			//rook/queen movement
-			if (startPiece instanceof MovesCrossShaped) {
-				//avoid a collision TODO bug test this stuff
-				if (deltaFile == 0) {
-					int lowerBound = Math.min(b+moveRank, b);
-					int upperBound = Math.max(b+moveRank, b);
-					for (Piece p : pieces) {
-						int l = p.getLoc().getRank();
-						int f = toInt(p.getLoc().getFile());
-						if (l < upperBound && l > lowerBound
-								&& f == a) {
-							return 6;
-						}
-					}
-				} else {
-					int lowerBound = Math.min(a+moveFile, a);
-					int upperBound = Math.max(a+moveFile, a);
-					for (Piece p : pieces) {
-						int l = toInt(p.getLoc().getFile());
-						int r = p.getLoc().getRank();
-						if (l < upperBound && l > lowerBound
-								&& r == b) {
-							return 6;
-						}
-					}
-				}
-				processMove(end, sindex, eindex, capture);
-				return 0; //done checking collisions and found none
-			} 
-		}
-		if (deltaFile == deltaRank) {
-			//bishop/queen movement
-			if (startPiece instanceof MovesDiagonally) {
-				int lowerBoundFile = Math.min(a+moveFile, a);
-				int upperBoundFile = Math.max(a+moveFile, a);
-				int lowerBoundRank = Math.min(b+moveRank, b);
-				int upperBoundRank = Math.max(b+moveRank, b);
-				for (Piece p : pieces) {
-					int file = toInt(p.getLoc().getFile());
-					int rank = p.getLoc().getRank();
-					if ((file < upperBoundFile && file > lowerBoundFile)
-							&& rank < upperBoundRank && rank > lowerBoundRank
-							&& Math.abs(a-file) == Math.abs(b-rank)) {
-						return 6;
-					}
-				}
-				processMove(end, sindex, eindex, capture);
-				return 0; //done checking collisions and found none
-			}
-		}
-		if (deltaFile == 1 || deltaRank == 1) {
-			//king/pawn movement TODO
-			if (startPiece instanceof MovesOneSpace) {
-				boolean white = startPiece.isWhite();
-				
-			}
-			
-		}*/
-		
-		
-		
 		return 1; // unknown/impossible move
 	}
 	private void processEnPassant(Location end, int sindex, Location location) {

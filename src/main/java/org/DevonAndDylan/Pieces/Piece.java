@@ -71,6 +71,149 @@ public abstract class Piece {
 	 */
 	public abstract ArrayList<Location> getLegalMoves(Board b);
 	
+	/**
+	 * Check for collisions for a piece that moves in a cross shape.
+	 * <p>
+	 * Rooks and queens should be calling this.
+	 * @param board a 2D piece array of the board
+	 * @param x the piece's x position on said array
+	 * @param y the piece's y position on said array
+	 * @return four integers denoting how far the piece can travel/capture legally
+	 */
+	public int[] checkCross(Piece[][] board, int x, int y) {
+		int lastYabove = 0;
+		int lastYbelow = board.length-1;
+		int lastXleft = 0;
+		int lastXright = board[0].length-1;
+		
+		for (int i=0;i<y;i++) { //lastYabove
+			if (board[i][x] instanceof Piece) {
+				if (board[i][x].isWhite() != this.isWhite) {
+					lastYabove = i;
+				} else {
+					lastYabove = i+1;
+				}
+			}
+		}
+		for (int i=board.length-1;i>y;i--) { //lastYbelow
+			if (board[i][x] instanceof Piece) {
+				if (board[i][x].isWhite() != this.isWhite) {
+					lastYbelow = i;
+				} else {
+					lastYbelow = i+1;
+				}
+			}
+		}
+		for (int i=0;i<x;i++) { //lastXleft
+			if (board[y][i] instanceof Piece) {
+				if (board[y][i].isWhite() != this.isWhite) {
+					lastXleft = i;
+				} else {
+					lastXleft = i+1;
+				}
+			}
+		}
+		for (int i=board[0].length-1;i>x;i--) { //lastXright
+			if (board[y][i] instanceof Piece) {
+				if (board[y][i].isWhite() != this.isWhite) {
+					lastXright = i;
+				} else {
+					lastXright = i+1;
+				}
+			}
+		}
+		
+		int[] output = {lastYabove, lastYbelow, lastXleft, lastXright};
+		return output;
+	}
+	
+	
+	/**
+	 * Check for collisions for a piece that moves diagonally.
+	 * <p>
+	 * Bishops and queens should be calling this.
+	 * @param board a 2D piece array of the board
+	 * @param x the piece's x position on said array
+	 * @param y the piece's y position on said array
+	 * @return An arraylist of all valid locations.
+	 */
+	public ArrayList<Location> checkDiagonal(Piece[][] board, int x, int y) {
+		ArrayList<Location> output = new ArrayList<Location>();
+		//true nightmare fuel below
+		
+        int xNW = x - 1;
+        int xSW = x - 1;
+        int xNE = x + 1;
+        int xSE = x + 1;
+        int yNW = y - 1;
+        int ySW = y + 1;
+        int yNE = y - 1;
+        int ySE = y + 1;
+        
+        while (xNW >= 0 && yNW >= 0) {
+            if (board[yNW][xNW] instanceof Piece) {
+                if (board[yNW][xNW].isWhite() == this.isWhite) {
+                    break;
+                } else {
+                    output.add(new Location (xNW, yNW, true));
+                    break;
+                }
+            } else {
+            	output.add(new Location (xNW, yNW, true));
+                yNW--;
+                xNW--;
+            }
+        }
+        
+        while (xSW >= 0 && ySW < board.length) {
+            if (board[ySW][xSW] instanceof Piece) {
+                if (board[ySW][xSW].isWhite() == this.isWhite) {
+                    break;
+                } else {
+                    output.add(new Location (xSW, ySW, true));
+                    break;
+                }
+            } else {
+            	output.add(new Location (xSW, ySW, true));
+                ySW++;
+                xSW--;
+            }
+        }
+        
+        while (xSE < board[0].length && ySE < board.length) {
+            if (board[ySE][xSE] instanceof Piece) {
+                if (board[ySE][xSE].isWhite() == this.isWhite) {
+                    break;
+                } else {
+                	output.add(new Location (xSE, ySE, true));
+                    break;
+                }
+            } else {
+            	output.add(new Location (xSE, ySE, true));
+                ySE++;
+                xSE++;
+            }
+        }
+        
+        while (xNE < board[0].length && yNE >= 0) {
+            if (board[yNE][xNE] instanceof Piece) {
+                if (board[yNE][xNE].isWhite() == this.isWhite) {
+                    break;
+                } else {
+                	output.add(new Location (xNE, yNE, true));
+                    break;
+                }
+            } else {
+            	output.add(new Location (xNE, yNE, true));
+                yNE--;
+                xNE++;
+            }
+        }
+        
+        return output;
+	}
+	
+	
 	@Override
 	public String toString() {
 		String piece = "";
