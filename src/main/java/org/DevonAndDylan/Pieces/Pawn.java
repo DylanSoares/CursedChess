@@ -30,7 +30,7 @@ public class Pawn extends Piece {
 		int y = this.getLoc().getY(); //the RANK. remember that the array is [y][x] because, uh, yeah
 		if (this.isWhite()) { //we're moving upwards in RANK as we are WHITE
 			if (!this.hasMoved()) { //two move boost when HAS NOT MOVED
-				if (board[y + 1][x] == null || board[y + 2][x] == null) { //piece in the way
+				if (board[y + 1][x] == null && board[y + 2][x] == null) { //piece in the way
 					output.add(new Location(x, y+2, true)); //this isn't checking if the board is too small
 					output.add(new Location(x, y+1, true));
 				}
@@ -69,7 +69,7 @@ public class Pawn extends Piece {
 			
 		} else { //we're moving DOWNWARD as we are BLACK
 			if (!this.hasMoved()) { //two move boost when HAS NOT MOVED
-				if (board[y - 1][x] == null || board[y - 2][x] == null) { //piece in the way
+				if (board[y - 1][x] == null && board[y - 2][x] == null) { //piece in the way
 					output.add(new Location(x, y-2, true));
 					output.add(new Location(x, y-1, true));
 				}
