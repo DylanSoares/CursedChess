@@ -46,7 +46,6 @@ public class LauncherUI extends JFrame {
         JButton blackButton = new JButton("Black");
 
         // Add buttons to button panel
-
         buttonPanel.add(whiteButton);
         buttonPanel.add(Box.createHorizontalStrut(10)); // spacing
         buttonPanel.add(blackButton);
