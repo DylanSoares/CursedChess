@@ -12,15 +12,12 @@ public class Bishop extends Piece {
 
 	@Override
 	public ArrayList<Location> getLegalMoves(Board b) {
-		ArrayList<Location> output = new ArrayList<Location>();
 		Piece[][] board = b.toPieceArray();
 		
 		int x = this.getLoc().getX(); //the FILE
 		int y = this.getLoc().getY(); //the RANK. remember that the array is [y][x] because, uh, yeah
 
-		output.addAll(checkDiagonal(board, x, y));
-		
-		return output;
+		return new ArrayList<>(checkDiagonal(board, x, y));
 	}
 
 }

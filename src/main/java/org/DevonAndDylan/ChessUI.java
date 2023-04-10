@@ -229,7 +229,7 @@ public class ChessUI extends JFrame {
                         ogColor = lightSquareColor;
                     }
 
-                    // NOTE: This doesnt quite work right for the rotated player, we check that on the confirm button
+                    // NOTE: This doesn't quite work right for the rotated player, we check that on the confirm button
 //                    System.out.println("[UI:99] DEBUG: Location clicked was: " + finalPieces[finali][finalj]);
                     if (finalPieces[finali][finalj] != null && !selectedFirst && !selectedSecond && ((isWhitesTurn && finalPieces[finali][finalj].isWhite()) || (!isWhitesTurn && !finalPieces[finali][finalj].isWhite()))) {
 //                        System.err.println(Board.toChar(finalj+1) + " " + (finali+1));

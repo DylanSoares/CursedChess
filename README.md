@@ -8,6 +8,6 @@ COSC318 Final Project, a multiplayer chess game written in Java.
 2. Launch ChessClient.java (Both players)
 
 Known issues:
-1. Black can move every turn if UI didnt stop it
-2. Server doesnt work or do anything.
+1. Black can move every turn if UI didn't stop it
+2. Server doesn't work or do anything.
 3. Each player can make a turn for the other

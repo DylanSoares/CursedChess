@@ -88,7 +88,7 @@ public abstract class Piece {
 		int lastXright = board[0].length-1;
 		
 		for (int i=0;i<y;i++) { //lastYabove
-			if (board[i][x] instanceof Piece) {
+			if (board[i][x] != null) {
 				if (board[i][x].isWhite() != this.isWhite) {
 					lastYabove = i;
 				} else {
@@ -97,7 +97,7 @@ public abstract class Piece {
 			}
 		}
 		for (int i=board.length-1;i>y;i--) { //lastYbelow
-			if (board[i][x] instanceof Piece) {
+			if (board[i][x] != null) {
 				if (board[i][x].isWhite() != this.isWhite) {
 					lastYbelow = i;
 				} else {
@@ -106,7 +106,7 @@ public abstract class Piece {
 			}
 		}
 		for (int i=0;i<x;i++) { //lastXleft
-			if (board[y][i] instanceof Piece) {
+			if (board[y][i] != null) {
 				if (board[y][i].isWhite() != this.isWhite) {
 					lastXleft = i;
 				} else {
@@ -115,7 +115,7 @@ public abstract class Piece {
 			}
 		}
 		for (int i=board[0].length-1;i>x;i--) { //lastXright
-			if (board[y][i] instanceof Piece) {
+			if (board[y][i] != null) {
 				if (board[y][i].isWhite() != this.isWhite) {
 					lastXright = i;
 				} else {

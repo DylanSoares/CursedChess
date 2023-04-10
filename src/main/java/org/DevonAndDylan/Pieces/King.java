@@ -24,13 +24,11 @@ public class King extends Piece {
             for (int j = 1; j > -2; j--) {
             	if (!(i == 0 && j == 0)) { //not moving nowhere
         			try {
-        				if (!(board[y+j][x+i] instanceof Piece) ||
+        				if (board[y + j][x + i] == null ||
         						board[y+j][x+i].isWhite() != this.isWhite()) {
         					output.add(new Location(x+i, y+j, true));
         				}
-        			} catch (ArrayIndexOutOfBoundsException e) { //avoid out of bounds
-        				continue;
-        			}
+        			} catch (ArrayIndexOutOfBoundsException ignored) {} //avoid out of bounds
             	}
             }
 		}
