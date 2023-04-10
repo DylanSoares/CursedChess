@@ -95,7 +95,7 @@ public class ChessUI extends JFrame {
 
     private void drawBottomPanel(int result) {
         // Create a new JPanel for the buttons container
-        bottomPanel = new JPanel(new GridLayout(1, 3));
+        bottomPanel = new JPanel(new GridLayout(2, 1));
         String output;
         switch (result) {
             case 0 -> output = "Successfully moved.";
