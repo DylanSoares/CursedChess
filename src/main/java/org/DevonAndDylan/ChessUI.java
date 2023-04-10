@@ -277,6 +277,7 @@ public class ChessUI extends JFrame {
     }
 
     /**
+     * A method that redraws or refreshes the UI
      * @param pieces  2D Array of pieces fetched from the board's method.
      * @param rotated If true, the board will be drawn rotated for players
      */
