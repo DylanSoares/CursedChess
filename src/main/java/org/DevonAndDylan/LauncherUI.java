@@ -10,7 +10,7 @@ public class LauncherUI extends JFrame {
     boolean chooseBlack = false;
     private final BlockingQueue<Boolean> choiceQueue;
 
-    Font arial = new Font("Arial", Font.PLAIN, 20);
+    final Font arial = new Font("Arial", Font.PLAIN, 20);
 
     private final Color backgroundColor = new Color(51, 51, 51);
     private final Color buttonColor = new Color(101, 101, 101);

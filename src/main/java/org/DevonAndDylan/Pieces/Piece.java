@@ -53,6 +53,7 @@ public abstract class Piece {
 	public void setPossiblePromotions(char[] possiblePromotions) {
 		this.possiblePromotions = possiblePromotions;
 	}
+	@SuppressWarnings("BooleanMethodIsAlwaysInverted")
 	public boolean hasMoved() {
 		return moved;
 	}
@@ -122,9 +123,8 @@ public abstract class Piece {
 				}
 			}
 		}
-		
-		int[] output = {lastYabove, lastYbelow, lastXleft, lastXright};
-		return output;
+
+		return new int[]{lastYabove, lastYbelow, lastXleft, lastXright};
 	}
 	
 	
@@ -151,14 +151,12 @@ public abstract class Piece {
         int ySE = y + 1;
         
         while (xNW >= 0 && yNW >= 0) {
-            if (board[yNW][xNW] instanceof Piece) {
-                if (board[yNW][xNW].isWhite() == this.isWhite) {
-                    break;
-                } else {
-                    output.add(new Location (xNW, yNW, true));
-                    break;
-                }
-            } else {
+            if (board[yNW][xNW] != null) {
+				if (board[yNW][xNW].isWhite() != this.isWhite) {
+					output.add(new Location(xNW, yNW, true));
+				}
+				break;
+			} else {
             	output.add(new Location (xNW, yNW, true));
                 yNW--;
                 xNW--;
@@ -166,14 +164,12 @@ public abstract class Piece {
         }
         
         while (xSW >= 0 && ySW < board.length) {
-            if (board[ySW][xSW] instanceof Piece) {
-                if (board[ySW][xSW].isWhite() == this.isWhite) {
-                    break;
-                } else {
-                    output.add(new Location (xSW, ySW, true));
-                    break;
-                }
-            } else {
+            if (board[ySW][xSW] != null) {
+				if (board[ySW][xSW].isWhite() != this.isWhite) {
+					output.add(new Location(xSW, ySW, true));
+				}
+				break;
+			} else {
             	output.add(new Location (xSW, ySW, true));
                 ySW++;
                 xSW--;
@@ -181,14 +177,12 @@ public abstract class Piece {
         }
         
         while (xSE < board[0].length && ySE < board.length) {
-            if (board[ySE][xSE] instanceof Piece) {
-                if (board[ySE][xSE].isWhite() == this.isWhite) {
-                    break;
-                } else {
-                	output.add(new Location (xSE, ySE, true));
-                    break;
-                }
-            } else {
+            if (board[ySE][xSE] != null) {
+				if (board[ySE][xSE].isWhite() != this.isWhite) {
+					output.add(new Location(xSE, ySE, true));
+				}
+				break;
+			} else {
             	output.add(new Location (xSE, ySE, true));
                 ySE++;
                 xSE++;
@@ -196,14 +190,12 @@ public abstract class Piece {
         }
         
         while (xNE < board[0].length && yNE >= 0) {
-            if (board[yNE][xNE] instanceof Piece) {
-                if (board[yNE][xNE].isWhite() == this.isWhite) {
-                    break;
-                } else {
-                	output.add(new Location (xNE, yNE, true));
-                    break;
-                }
-            } else {
+            if (board[yNE][xNE] != null) {
+				if (board[yNE][xNE].isWhite() != this.isWhite) {
+					output.add(new Location(xNE, yNE, true));
+				}
+				break;
+			} else {
             	output.add(new Location (xNE, yNE, true));
                 yNE--;
                 xNE++;
@@ -216,29 +208,15 @@ public abstract class Piece {
 	
 	@Override
 	public String toString() {
-		String piece = "";
-		switch(letter) {
-		case 'P':
-			piece = "Pawn";
-			break;
-		case 'Q':
-			piece = "Queen";
-			break;
-		case 'K':
-			piece = "King";
-			break;
-		case 'N':
-			piece = "Knight";
-			break;
-		case 'B':
-			piece = "Bishop";
-			break;
-		case 'R':
-			piece = "Rook";
-			break;
-		default:
-			piece = "Unknown";
-		}
+		String piece = switch (letter) {
+			case 'P' -> "Pawn";
+			case 'Q' -> "Queen";
+			case 'K' -> "King";
+			case 'N' -> "Knight";
+			case 'B' -> "Bishop";
+			case 'R' -> "Rook";
+			default -> "Unknown";
+		};
 		return piece + " on " + loc;
 	}
 

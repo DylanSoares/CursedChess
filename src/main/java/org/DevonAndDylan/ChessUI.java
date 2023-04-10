@@ -25,7 +25,7 @@ public class ChessUI extends JFrame {
 
     private final BlockingQueue<String> moveQueue;
 
-    Font arial = new Font("Arial", Font.PLAIN, 20);
+    final Font arial = new Font("Arial", Font.PLAIN, 20);
 
     private final ImageIcon bishopBlack = new ImageIcon("src/main/resources/bb.png");
     private final ImageIcon bishopWhite = new ImageIcon("src/main/resources/wb.png");
@@ -200,7 +200,6 @@ public class ChessUI extends JFrame {
 
                 if (currPiece != null) {
                     if (currPiece.isWhite()) {
-                        //noinspection DuplicatedCode
                         switch (currPiece.getLetter()) {
                             case 'P' -> button.setIcon(pawnWhite);
                             case 'Q' -> button.setIcon(queenWhite);
@@ -210,7 +209,6 @@ public class ChessUI extends JFrame {
                             case 'R' -> button.setIcon(rookWhite);
                         }
                     } else {
-                        //noinspection DuplicatedCode
                         switch (currPiece.getLetter()) {
                             case 'P' -> button.setIcon(pawnBlack);
                             case 'Q' -> button.setIcon(queenBlack);

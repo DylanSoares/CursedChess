@@ -3,9 +3,10 @@ package org.DevonAndDylan.Pieces;
 import java.util.ArrayList;
 
 
+@SuppressWarnings("CommentedOutCode")
 public class Board {
-	private int width;
-	private int length;
+	private final int width;
+	private final int length;
 	private ArrayList<Piece> pieces = new ArrayList<Piece>();
 	private Piece lastMovePiece;
 	private Location lastMoveLocation;
@@ -55,7 +56,7 @@ public class Board {
 	 * Return an int confirming if a move was valid and making it internally if so.
 	 * <p>
 	 * This method will do all the dirty work of checking internally if a given
-	 * move is valid, considering from whether or not there's even a piece at the given
+	 * move is valid, considering from whether there's even a piece at the given
 	 * location to if there'd be a collision in the way.
 	 * <p>
 	 * Be sure to refresh your display of the board, however you do it, 
@@ -194,7 +195,7 @@ public class Board {
 		return a-96;
 	}
 	public char[][] toCharArray() {
-		char output[][] = new char[length][width];
+		char[][] output = new char[length][width];
 		for (int i=0;i<length;i++) {
 			for (int j=0;j<width;j++) {
 				output[i][j] = '0'; //empty

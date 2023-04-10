@@ -2,16 +2,17 @@ package org.DevonAndDylan;
 
 import org.DevonAndDylan.Pieces.*;
 
-import java.util.ArrayList;
-import java.io.DataOutputStream;
+//import java.util.ArrayList;
+//import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
-import java.net.Socket;
+//import java.io.OutputStream;
+//import java.net.Socket;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 
 public class ChessClient {
 
+    @SuppressWarnings("CommentedOutCode")
     public static void main(String[] args) throws IOException, InterruptedException {
         BlockingQueue<Boolean> choiceQueue = new ArrayBlockingQueue<>(1);
         BlockingQueue<String> moveQueue = new ArrayBlockingQueue<>(1);
@@ -27,6 +28,7 @@ public class ChessClient {
 
         // Some awful temporary driver code for UI <-> Client communication
         int result = -1;
+        //noinspection InfiniteLoopStatement
         while (true) {
             pieces = board.toPieceArray();
             //yes I made it flip for literally no reason, its just fun for this driver code
