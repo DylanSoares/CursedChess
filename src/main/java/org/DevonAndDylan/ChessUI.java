@@ -45,6 +45,8 @@ public class ChessUI extends JFrame {
     private final ImageIcon queenBlack = new ImageIcon("src/main/resources/bq.png");
     private final ImageIcon queenWhite = new ImageIcon("src/main/resources/wq.png");
 
+    private JLabel labelOutput;
+
     boolean selectedFirst = false;
     boolean selectedSecond = false;
     private int firstSelectedX = -1;
@@ -107,7 +109,7 @@ public class ChessUI extends JFrame {
             default -> output = "Waiting for move.";
         }
 
-        JLabel labelOutput = new JLabel(output, SwingConstants.CENTER);
+        labelOutput = new JLabel(output, SwingConstants.CENTER);
         labelOutput.setFont(arial);
         labelOutput.setForeground(textColor);
 
@@ -163,6 +165,8 @@ public class ChessUI extends JFrame {
                 }
                 selectedFirst = false;
                 selectedSecond = false;
+            }else{
+                labelOutput.setText("Invalid selection.");
             }
         });
 
