@@ -104,7 +104,7 @@ public class ChessUI extends JFrame {
             case 4 -> output = "No piece selected to move.";
             case 5 -> output = "It's not your turn!";
             case 6, 7 -> output = "Piece collides while trying to move.";
-            default -> output = "Welcome to cursed chess!";
+            default -> output = "Waiting for move.";
         }
 
         JLabel labelOutput = new JLabel(output, SwingConstants.CENTER);
