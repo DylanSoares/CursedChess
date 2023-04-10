@@ -14,9 +14,7 @@ public class King extends Piece {
 	public ArrayList<Location> getLegalMoves(Board b) {
 		ArrayList<Location> output = new ArrayList<>();
 		Piece[][] board = b.toPieceArray();
-		int width = b.getWidth(); //how many FILES
-		int length = b.getLength(); //how many RANKS, typically 8 for both
-		
+
 		int x = this.getLoc().getX(); //the FILE
 		int y = this.getLoc().getY(); //the RANK. remember that the array is [y][x] because, uh, yeah
 		

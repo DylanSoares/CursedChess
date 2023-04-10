@@ -12,7 +12,7 @@ import java.util.concurrent.BlockingQueue;
 
 public class ChessClient {
 
-    @SuppressWarnings("CommentedOutCode")
+    @SuppressWarnings({"CommentedOutCode", "RedundantThrows"})
     public static void main(String[] args) throws IOException, InterruptedException {
         BlockingQueue<Boolean> choiceQueue = new ArrayBlockingQueue<>(1);
         BlockingQueue<String> moveQueue = new ArrayBlockingQueue<>(1);
@@ -20,7 +20,7 @@ public class ChessClient {
 
         Piece[][] pieces = board.toPieceArray();
 
-        LauncherUI launcher = new LauncherUI(choiceQueue);
+        new LauncherUI(choiceQueue);
 
 
         boolean playersChoice = choiceQueue.take(); //false if white

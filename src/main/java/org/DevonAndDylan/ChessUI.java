@@ -102,7 +102,7 @@ public class ChessUI extends JFrame {
         switch (result) {
             case 0 -> output = "Successfully moved.";
             case 1 -> output = "Illegal move.";
-            case 2, 3 -> output = "You shouldnt see this.";
+            case 2, 3 -> output = "You shouldn't see this.";
             case 4 -> output = "No piece selected to move.";
             case 5 -> output = "It's not your turn!";
             case 6, 7 -> output = "Piece collides while trying to move.";

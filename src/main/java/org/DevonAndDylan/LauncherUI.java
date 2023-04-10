@@ -8,21 +8,16 @@ import java.util.concurrent.BlockingQueue;
 public class LauncherUI extends JFrame {
 
     boolean chooseBlack = false;
-    private final BlockingQueue<Boolean> choiceQueue;
 
     final Font arial = new Font("Arial", Font.PLAIN, 20);
 
-    private final Color backgroundColor = new Color(51, 51, 51);
     private final Color buttonColor = new Color(101, 101, 101);
-    private final Color textColor = new Color(255, 255, 255);
     private final Color selectedPieceColor = new Color(226, 207, 89);
 
     private final JTextField serverTextfield;
     private final JTextField portTextfield;
 
     public LauncherUI(BlockingQueue<Boolean> choiceQueue) {
-
-        this.choiceQueue = choiceQueue;
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setPreferredSize(new Dimension(400, 310)); // set preferred size
@@ -105,6 +100,7 @@ public class LauncherUI extends JFrame {
         centerPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, Integer.MAX_VALUE)); // allow expansion
         centerPanel.add(boardContainer, BorderLayout.CENTER);
 
+        Color backgroundColor = new Color(51, 51, 51);
         boardContainer.setBackground(backgroundColor);
         textFieldPanel.setBackground(backgroundColor);
         buttonPanel2.setBackground(backgroundColor);
@@ -120,6 +116,7 @@ public class LauncherUI extends JFrame {
         setLocationRelativeTo(null);
         setVisible(true);
 
+        Color textColor = new Color(255, 255, 255);
         exitButton.setForeground(textColor);
         confirmButton.setForeground(textColor);
         whiteButton.setForeground(textColor);
