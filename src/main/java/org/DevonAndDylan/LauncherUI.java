@@ -25,7 +25,7 @@ public class LauncherUI extends JFrame {
         this.choiceQueue = choiceQueue;
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setPreferredSize(new Dimension(400, 300)); // set preferred size
+        setPreferredSize(new Dimension(400, 310)); // set preferred size
 
         // Create header label
         JLabel headerLabel = new JLabel("Cursed Chess", JLabel.CENTER);
@@ -64,13 +64,8 @@ public class LauncherUI extends JFrame {
         buttonPanel2.add(Box.createHorizontalStrut(10)); // spacing
         buttonPanel2.add(confirmButton);
 
-
-        JLabel colorLabel = new JLabel("Please choose a color:", JLabel.CENTER);
-        headerLabel.setFont(arial);
-
         JPanel boardContainer = new JPanel();
         boardContainer.setLayout(new BoxLayout(boardContainer, BoxLayout.Y_AXIS));
-        boardContainer.add(colorLabel);
         boardContainer.add(buttonPanel);
         boardContainer.add(buttonPanel2);
 
@@ -93,7 +88,7 @@ public class LauncherUI extends JFrame {
         serverTextfield = new JTextField(20);
         portTextfield = new JTextField(20);
 
-        serverTextfield.setVisible(false);
+        serverTextfield.setVisible(false); // initially hidden
         portTextfield.setVisible(false); // initially hidden
 
         serverTextfield.setText("localhost");
