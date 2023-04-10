@@ -12,7 +12,7 @@ public class Knight extends Piece {
 
 	@Override
 	public ArrayList<Location> getLegalMoves(Board b) {
-		ArrayList<Location> output = new ArrayList<Location>();
+		ArrayList<Location> output = new ArrayList<>();
 		Piece[][] board = b.toPieceArray();
 		int width = b.getWidth(); //how many FILES
 		int length = b.getLength(); //how many RANKS, typically 8 for both

@@ -69,10 +69,9 @@ public class Location {
 		if (o == this) {
             return true;
         }
-		if (!(o instanceof Location)) {
+		if (!(o instanceof Location l)) {
             return false;
         }
-		Location l = (Location) o;
 		return file == l.file && rank == l.rank;
 	}
 }

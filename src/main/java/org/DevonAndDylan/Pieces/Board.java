@@ -7,7 +7,7 @@ import java.util.ArrayList;
 public class Board {
 	private final int width;
 	private final int length;
-	private ArrayList<Piece> pieces = new ArrayList<Piece>();
+	private ArrayList<Piece> pieces = new ArrayList<>();
 	private Piece lastMovePiece;
 	private Location lastMoveLocation;
 	private boolean whiteTurn = true;
@@ -57,7 +57,7 @@ public class Board {
 	 * <p>
 	 * This method will do all the dirty work of checking internally if a given
 	 * move is valid, considering from whether there's even a piece at the given
-	 * location to if there'd be a collision in the way.
+	 * location to if there's being a collision in the way.
 	 * <p>
 	 * Be sure to refresh your display of the board, however you do it, 
 	 * after a piece successfully moves.

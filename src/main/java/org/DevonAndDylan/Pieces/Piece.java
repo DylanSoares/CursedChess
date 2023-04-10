@@ -138,7 +138,7 @@ public abstract class Piece {
 	 * @return An arraylist of all valid locations.
 	 */
 	public ArrayList<Location> checkDiagonal(Piece[][] board, int x, int y) {
-		ArrayList<Location> output = new ArrayList<Location>();
+		ArrayList<Location> output = new ArrayList<>();
 		//true nightmare fuel below
 		
         int xNW = x - 1;

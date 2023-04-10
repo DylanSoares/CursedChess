@@ -13,7 +13,7 @@ public class ChessServer {
         //waits for connection
 
         Socket clientSocket = serverSocket.accept(); // this blocks so no other client can connect now.
-        //itll need to be threaded, and somehow we will have to make these communicate.
+        //it'll need to be threaded, and somehow we will have to make these communicate.
 
         InputStream inputStream = clientSocket.getInputStream();
         DataInputStream dataInputStream = new DataInputStream(inputStream);
