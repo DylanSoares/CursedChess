@@ -27,6 +27,8 @@ public class LauncherUI extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setPreferredSize(new Dimension(400, 310)); // set preferred size
 
+        setResizable(false);
+
         // Create header label
         JLabel headerLabel = new JLabel("Cursed Chess", JLabel.CENTER);
         headerLabel.setFont(arial);
