@@ -60,7 +60,8 @@ public class ChessUI extends JFrame {
 
     /**
      * A constructor to initialize the Chessboard UI
-     * Note: It is his.moveQueue = moveQueue;assumed white is the first player to play.
+     * Note: this.moveQueue = moveQueue; assumed white is the first player to play.
+     * Requires the blocking queue object from the summoning class
      *
      * @param pieces  Array of pieces
      * @param rotated If true, the board will be drawn rotated for the second player.
