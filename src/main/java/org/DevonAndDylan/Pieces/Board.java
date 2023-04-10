@@ -1,6 +1,7 @@
 package org.DevonAndDylan.Pieces;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 
 @SuppressWarnings("CommentedOutCode")
@@ -197,9 +198,8 @@ public class Board {
 	public char[][] toCharArray() {
 		char[][] output = new char[length][width];
 		for (int i=0;i<length;i++) {
-			for (int j=0;j<width;j++) {
-				output[i][j] = '0'; //empty
-			}
+			//empty
+			Arrays.fill(output[i], '0');
 		}
 		
 		for (Piece p : pieces) {
