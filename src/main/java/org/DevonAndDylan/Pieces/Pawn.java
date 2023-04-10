@@ -50,15 +50,17 @@ public class Pawn extends Piece {
 				}
 			}
 			//the BEAST of en passant logic. en passant must be done IMMEDIATELY
-			if (b.getLastMoveLocation() != null) {
+			if (b.getLastMoveEndLocation() != null) {
 				if (x+1 < width && y+1 < length && board[y][x+1] instanceof Pawn) { //en passant right
-					if (b.getLastMoveLocation().equals(new Location(x+1, y, true)) &&
+					if (b.getLastMoveStartLocation().equals(new Location(x+1, y+2, true)) && 
+							b.getLastMoveEndLocation().equals(new Location(x+1, y, true)) &&
 							!board[y][x+1].isWhite()) {
 						output.add(new Location(x+1, y+1, true));
 					}
 				}
 				if (x-1 >= 0 && y+1 < length && board[y][x-1] instanceof Pawn) { //en passant left
-					if (b.getLastMoveLocation().equals(new Location(x-1, y, true)) &&
+					if (b.getLastMoveStartLocation().equals(new Location(x-1, y+2, true)) && 
+							b.getLastMoveEndLocation().equals(new Location(x-1, y, true)) &&
 							!board[y][x-1].isWhite()) {
 						output.add(new Location(x-1, y+1, true));
 					}
@@ -87,15 +89,17 @@ public class Pawn extends Piece {
 				}
 			}
 			//the BEAST of en passant logic. en passant must be done IMMEDIATELY
-			if (b.getLastMoveLocation() != null) {
+			if (b.getLastMoveEndLocation() != null) {
 				if (x+1 < width && y-1 < length && board[y][x+1] instanceof Pawn) { //en passant right
-					if (b.getLastMoveLocation().equals(new Location(x+1, y, true)) &&
+					if (b.getLastMoveStartLocation().equals(new Location(x+1, y-2, true)) && 
+							b.getLastMoveEndLocation().equals(new Location(x+1, y, true)) &&
 							board[y][x+1].isWhite()) {
 						output.add(new Location(x+1, y-1, true));
 					}
 				}
 				if (x-1 >= 0 && y-1 < length && board[y][x-1] instanceof Pawn) { //en passant left
-					if (b.getLastMoveLocation().equals(new Location(x-1, y, true)) &&
+					if (b.getLastMoveStartLocation().equals(new Location(x-1, y-2, true)) && 
+							b.getLastMoveEndLocation().equals(new Location(x-1, y, true)) &&
 							board[y][x-1].isWhite()) {
 						output.add(new Location(x-1, y-1, true));
 					}

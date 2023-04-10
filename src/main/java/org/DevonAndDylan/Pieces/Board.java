@@ -10,7 +10,8 @@ public class Board {
 	private final int length;
 	private ArrayList<Piece> pieces = new ArrayList<>();
 	private Piece lastMovePiece;
-	private Location lastMoveLocation;
+	private Location lastMoveStartLocation;
+	private Location lastMoveEndLocation;
 	private boolean whiteTurn = true;
 
 
@@ -27,9 +28,13 @@ public class Board {
 	}
 
 
-	public Location getLastMoveLocation() {
-		return lastMoveLocation;
+	public Location getLastMoveEndLocation() {
+		return lastMoveEndLocation;
 	}
+	public Location getLastMoveStartLocation() {
+		return lastMoveStartLocation;
+	}
+	
 
 
 	public Board() {
@@ -135,19 +140,19 @@ public class Board {
 						&& deltaFile > 0
 						&& !capture) { //a pawn is moving diagonally but no target is found
 					//System.out.println("En passant target: " + new Location(c, b, false));
-					processEnPassant(end, sindex, new Location(c, b, false));
+					processEnPassant(start, end, sindex, new Location(c, b, false));
 				}
 				//TODO castling
 				
 				else {
-					processMove(end, sindex, eindex, capture);
+					processMove(start, end, sindex, eindex, capture);
 				}
 				return 0;
 			}
 		}
 		return 1; // unknown/impossible move
 	}
-	private void processEnPassant(Location end, int sindex, Location location) {
+	private void processEnPassant(Location start, Location end, int sindex, Location location) {
 		int eindex = -1;
 		for (int i=0;i<pieces.size();i++) {
 			if (pieces.get(i).getLoc().equals(location)) {
@@ -155,13 +160,14 @@ public class Board {
 				break;
 			}
 		}
-		processMove(end, sindex, eindex, true);
+		processMove(start, end, sindex, eindex, true);
 	}
 
 
-	private void processMove(Location end, int sindex, int eindex, boolean capture) {
+	private void processMove(Location start, Location end, int sindex, int eindex, boolean capture) {
 		lastMovePiece = pieces.get(sindex);
-		lastMoveLocation = end;
+		lastMoveStartLocation = start;
+		lastMoveEndLocation = end;
 		whiteTurn = !whiteTurn;
 		pieces.get(sindex).move(end);
 		if (capture) {
@@ -206,7 +212,10 @@ public class Board {
 			Location loc = p.getLoc();
 			int number = loc.getY();
 			int letter = loc.getX();
-			output[number][letter] = p.getLetter();
+			if (p.isWhite())
+				output[number][letter] = p.getLetter();
+			else
+				output[number][letter] = Character.toLowerCase(p.getLetter());
 		}
 		
 		return output;
@@ -267,5 +276,7 @@ public class Board {
 	public ArrayList<Piece> getPieces() {
 		return this.pieces;
 	}
-	
+
+
+
 }
