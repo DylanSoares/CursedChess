@@ -19,6 +19,8 @@ public class LauncherUI extends JFrame {
 
     public LauncherUI(BlockingQueue<Boolean> choiceQueue) {
 
+        ImageIcon clientIcon = new ImageIcon("src/main/resources/clienticon.png");
+        setIconImage(clientIcon.getImage());
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setPreferredSize(new Dimension(400, 310)); // set preferred size
 
