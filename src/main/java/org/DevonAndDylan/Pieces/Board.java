@@ -98,6 +98,7 @@ public class Board {
 	 * <br><b>5</b> - It is not that player's turn
 	 * <br><b>6</b> - Piece is trying to capture its teammate
 	 * <br><b>7</b> - A promotion is unresolved. Please call promote().
+	 * <br><b>8</b> - A promotion is unresolved. Please call promote().
 	 */
 	
 	public int move(Location start, Location end) {

@@ -31,7 +31,7 @@ public class Pawn extends Piece {
 					output.add(new Location(x, y+1, true));
 				}
 			} else {
-				if (board[y + 1][x] == null && y+1 < length) {
+				if (y+1 < length && board[y + 1][x] == null) {
 					output.add(new Location(x, y+1, true));
 				}
 			}
