@@ -111,6 +111,7 @@ public class ChessUI extends JFrame {
             case 5 -> output = "It's not your turn!";
             case 6 -> output = "Piece collides while trying to move.";
             case 7 -> output = "A piece is awaiting promotion.";
+            case 8 -> output = "Illegal move. You are in check.";
             default -> output = "Waiting for move.";
         }
 

@@ -160,24 +160,49 @@ public class Board {
 		for (Location l : moves) {
 			//System.out.println(l + " " + end);
 			if (l.equals(end)) {
-				//special moves
-				//en passant... oh god
-				if (startPiece instanceof Pawn
-						&& deltaFile > 0
-						&& !capture) { //a pawn is moving diagonally but no target is found
-					//System.out.println("En passant target: " + new Location(c, b, false));
-					processEnPassant(start, end, sindex, new Location(c, b, false));
-				} else if (startPiece instanceof Pawn
-						&& (d == length && startPiece.isWhite())
-						|| (d == 1 && !startPiece.isWhite())) {
-					processPromote(start, end, sindex, eindex, capture);
-				}
-				
-				//promotion
-				//TODO castling
-				
-				else {
-					processMove(start, end, sindex, eindex, capture);
+				if ((startPiece.isWhite() && whiteCheck)
+						|| (!startPiece.isWhite() && blackCheck)) { //the player moving is in check
+					boolean illegal = false;
+					if (startPiece instanceof Pawn
+							&& deltaFile > 0
+							&& !capture) { //a pawn is moving diagonally but no target is found
+						//System.out.println("En passant target: " + new Location(c, b, false));
+						illegal = processEnPassantCheck(start, end, sindex, new Location(c, b, false), startPiece.isWhite());
+					} else if (startPiece instanceof Pawn
+							&& (d == length && startPiece.isWhite())
+							|| (d == 1 && !startPiece.isWhite())) {
+						illegal = processPromoteCheck(start, end, sindex, eindex, capture, startPiece.isWhite());
+					}
+					
+					//promotion
+					//TODO castling
+					
+					else {
+						illegal = processMoveCheck(start, end, sindex, eindex, capture, startPiece.isWhite());
+					}
+					if (illegal)
+						return 8;
+				} else {
+					//special moves
+					//en passant... oh god
+					if (startPiece instanceof Pawn
+							&& deltaFile > 0
+							&& !capture) { //a pawn is moving diagonally but no target is found
+						//System.out.println("En passant target: " + new Location(c, b, false));
+						processEnPassant(start, end, sindex, new Location(c, b, false));
+					} else if (startPiece instanceof Pawn
+							&& (d == length && startPiece.isWhite())
+							|| (d == 1 && !startPiece.isWhite())) {
+						processPromote(start, end, sindex, eindex, capture);
+					}
+					
+					//promotion
+					//TODO castling
+					
+					else {
+						processMove(start, end, sindex, eindex, capture);
+					}
+					
 				}
 				updateCheck();
 				return 0;
@@ -185,6 +210,67 @@ public class Board {
 		}
 		return 1; // unknown/impossible move
 	}
+	private boolean processEnPassantCheck(Location start, Location end, int sindex, Location location, boolean white) {
+		int eindex = -1;
+		for (int i=0;i<pieces.size();i++) {
+			if (pieces.get(i).getLoc().equals(location)) {
+				eindex = i;
+				break;
+			}
+		}
+		return processMoveCheck(start, end, sindex, eindex, true, white);
+	}
+
+	private boolean processPromoteCheck(Location start, Location end, int sindex, int eindex, boolean capture,
+			boolean white) {
+		Location target = null;
+		ArrayList<Piece> piecesTemp = new ArrayList<Piece>();
+		for (Piece p: pieces) {
+			piecesTemp.add((Piece) p.clone());
+		}
+		for (Piece p: piecesTemp) {
+			if (p instanceof King &&
+					p.isWhite() == white) {
+				target = p.getLoc();
+				break;
+			}
+		}
+		piecesTemp.get(sindex).move(end);
+		if (capture) {
+			piecesTemp.remove(eindex);
+		}
+		if (checkIfTargeted(target, white, new Board(width, length, piecesTemp))) {
+			return true;
+		}
+		processPromote(start, end, sindex, eindex, capture);
+		return false;
+	}
+
+	private boolean processMoveCheck(Location start, Location end, int sindex, int eindex, boolean capture,
+			boolean white) { //temporarily make a move and check if it sticks
+		Location target = null;
+		ArrayList<Piece> piecesTemp = new ArrayList<Piece>();
+		for (Piece p: pieces) {
+			piecesTemp.add((Piece) p.clone());
+		}
+		for (Piece p: piecesTemp) {
+			if (p instanceof King &&
+					p.isWhite() == white) {
+				target = p.getLoc();
+				break;
+			}
+		}
+		piecesTemp.get(sindex).move(end);
+		if (capture) {
+			piecesTemp.remove(eindex);
+		}
+		if (checkIfTargeted(target, white, new Board(width, length, piecesTemp))) {
+			return true;
+		}
+		processMove(start, end, sindex, eindex, capture);
+		return false;
+	}
+
 	private void processPromote(Location start, Location end, int sindex, int eindex, boolean capture) {
 		lastMovePiece = pieces.get(sindex);
 		lastMoveStartLocation = start;
@@ -224,6 +310,7 @@ public class Board {
 		pieces.remove(promotePieceIndex);
 		whiteTurn = !whiteTurn;
 		promote = false;
+		updateCheck();
 	}
 	
 	private void processEnPassant(Location start, Location end, int sindex, Location location) {
@@ -261,13 +348,13 @@ public class Board {
 				}
 			}
 		}
-		whiteCheck = checkIfTargeted(whiteKing, true);
-		blackCheck = checkIfTargeted(blackKing, false);
+		whiteCheck = checkIfTargeted(whiteKing, true, this);
+		blackCheck = checkIfTargeted(blackKing, false, this);
 	}
-	private boolean checkIfTargeted(Location target, boolean isWhite) {
-		for (Piece p: pieces) {
+	private boolean checkIfTargeted(Location target, boolean isWhite, Board b) {
+		for (Piece p: b.getPieces()) {
 			if (p.isWhite() != isWhite) {
-				ArrayList<Location> moves = p.getLegalMoves(this);
+				ArrayList<Location> moves = p.getLegalMoves(b);
 				for (Location l : moves) {
 					if (l.equals(target)) {
 						return true;
@@ -278,6 +365,10 @@ public class Board {
 		return false;
 	}
 	
+	public void setPieces(ArrayList<Piece> pieces) {
+		this.pieces = pieces;
+	}
+
 	private void populate() {
 		boolean white = true;
 		for (int i=1;i<=width;i+=7) {

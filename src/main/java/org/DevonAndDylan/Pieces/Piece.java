@@ -6,7 +6,6 @@ public abstract class Piece {
 	private char letter;
 	private int value;
 	private boolean isWhite;
-	private char[] possiblePromotions;
 	private Location loc;
 	private boolean moved = false;
 	
@@ -46,12 +45,6 @@ public abstract class Piece {
 	}
 	public void setWhite(boolean isWhite) {
 		this.isWhite = isWhite;
-	}
-	public char[] getPossiblePromotions() {
-		return possiblePromotions;
-	}
-	public void setPossiblePromotions(char[] possiblePromotions) {
-		this.possiblePromotions = possiblePromotions;
 	}
 	@SuppressWarnings("BooleanMethodIsAlwaysInverted")
 	public boolean hasMoved() {
@@ -217,6 +210,19 @@ public abstract class Piece {
 			default -> "Unknown";
 		};
 		return piece + " on " + loc;
+	}
+	@Override
+	public Piece clone() {
+		Piece output = switch (letter) {
+			case 'P' -> new Pawn(this.loc, this.isWhite);
+			case 'Q' -> new Queen(this.loc, this.isWhite);
+			case 'K' -> new King(this.loc, this.isWhite);
+			case 'N' -> new Knight(this.loc, this.isWhite);
+			case 'B' -> new Bishop(this.loc, this.isWhite);
+			case 'R' -> new Rook(this.loc, this.isWhite);
+			default -> null;
+		};
+		return output;
 	}
 
 }
