@@ -356,7 +356,7 @@ public class ChessUI extends JFrame {
             popup.dispose();
         });
         knightButton.addActionListener(e -> {
-            promoteType = 'K';
+            promoteType = 'N';
             popup.dispose();
         });
         rookButton.addActionListener(e -> {
