@@ -15,13 +15,23 @@ public class Board {
 	private boolean whiteTurn = true;
 	private boolean promote = false;
 	private int promotePieceIndex;
-
+	private boolean whiteCheck = false;
+	private boolean blackCheck = false;
+	
 
 	/**
 	 * @return true if white, false if black
 	 */
 	public boolean getWhoseTurn() {
 		return whiteTurn;
+	}
+
+	public boolean isWhiteCheck() {
+		return whiteCheck;
+	}
+
+	public boolean isBlackCheck() {
+		return blackCheck;
 	}
 
 	/**
@@ -168,6 +178,7 @@ public class Board {
 				else {
 					processMove(start, end, sindex, eindex, capture);
 				}
+				updateCheck();
 				return 0;
 			}
 		}
@@ -239,10 +250,10 @@ public class Board {
 	}
 	
 	private void updateCheck() {
-		Location whiteKing;
-		Location blackKing;
+		Location whiteKing = null;
+		Location blackKing = null;
 		for (Piece p: pieces) {
-			if (p instanceof King) {
+			if (p instanceof King) { //hardcoded that kings are the royal piece. w/e
 				if (p.isWhite()) {
 					whiteKing = p.getLoc();
 				} else {
@@ -250,18 +261,21 @@ public class Board {
 				}
 			}
 		}
-		
-		
+		whiteCheck = checkIfTargeted(whiteKing, true);
+		blackCheck = checkIfTargeted(blackKing, false);
 	}
-	private void checkIfTargeted(Location target, boolean isWhite) {
+	private boolean checkIfTargeted(Location target, boolean isWhite) {
 		for (Piece p: pieces) {
 			if (p.isWhite() != isWhite) {
 				ArrayList<Location> moves = p.getLegalMoves(this);
 				for (Location l : moves) {
-					
+					if (l.equals(target)) {
+						return true;
+					}
 				}
 			}
 		}
+		return false;
 	}
 	
 	private void populate() {
