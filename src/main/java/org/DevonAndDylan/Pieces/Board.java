@@ -245,6 +245,32 @@ public class Board {
 		}
 	}
 	
+	private void updateCheck() {
+		Location whiteKing;
+		Location blackKing;
+		for (Piece p: pieces) {
+			if (p instanceof King) {
+				if (p.isWhite()) {
+					whiteKing = p.getLoc();
+				} else {
+					blackKing = p.getLoc();
+				}
+			}
+		}
+		
+		
+	}
+	private void checkIfTargeted(Location target, boolean isWhite) {
+		for (Piece p: pieces) {
+			if (p.isWhite() != isWhite) {
+				ArrayList<Location> moves = p.getLegalMoves(this);
+				for (Location l : moves) {
+					
+				}
+			}
+		}
+	}
+	
 	private void populate() {
 		boolean white = true;
 		for (int i=1;i<=width;i+=7) {
