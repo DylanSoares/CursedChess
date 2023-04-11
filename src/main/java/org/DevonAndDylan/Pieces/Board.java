@@ -18,15 +18,24 @@ public class Board implements Serializable {
 	private int promotePieceIndex;
 	private boolean whiteCheck = false;
 	private boolean blackCheck = false;
+	private double score = -1;
 	
-
+	
 	/**
 	 * @return true if white, false if black
 	 */
 	public boolean getWhoseTurn() {
 		return whiteTurn;
 	}
-
+	
+	/**
+	 * Return the score of the game
+	 * @return 1 if white won, 0 if black won, 0.5 if it's a draw, and -1 if the game is in progress
+	 */
+	public double getScore() {
+		return score;
+	}
+	
 	public boolean isWhiteCheck() {
 		return whiteCheck;
 	}
@@ -74,11 +83,6 @@ public class Board implements Serializable {
 		this.pieces = pieces;
 	}
 	
-	/*public boolean move(String m) {
-		char letter = m.charAt(0);
-		
-	}*/
-	
 	/**
 	 * Return an int confirming if a move was valid and making it internally if so.
 	 * <p>
@@ -101,9 +105,13 @@ public class Board implements Serializable {
 	 * <br><b>7</b> - A promotion is unresolved. Please call promote().
 	 * <br><b>8</b> - Piece cannot legally make the move as the king is in check
 	 * <br><b>9</b> - Castling is illegal as you would enter check during
+	 * <br><b>-1</b> - The game has ended. No more moves can be made.
 	 */
 	
 	public int move(Location start, Location end) {
+		if (score != -1) {
+			return -1;
+		}
 		int a = toInt(start.getFile()); //start file
 		int b = start.getRank(); //start rank
 		int c = toInt(end.getFile()); //end file
@@ -173,17 +181,14 @@ public class Board implements Serializable {
 					} else if (startPiece instanceof Pawn
 							&& (d == length && startPiece.isWhite())
 							|| (d == 1 && !startPiece.isWhite())) {
-						illegal = processPromoteCheck(start, end, sindex, eindex, capture, startPiece.isWhite());
+						illegal = processPromoteCheck(start, end, sindex, eindex, capture, startPiece.isWhite(), false);
 					} else if (startPiece instanceof King
 							&& deltaFile == 2) {
 						return 8; //you can't castle while in check!
 					}
 					
-					//promotion
-					//TODO castling
-					
 					else {
-						illegal = processMoveCheck(start, end, sindex, eindex, capture, startPiece.isWhite());
+						illegal = processMoveCheck(start, end, sindex, eindex, capture, startPiece.isWhite(), false);
 					}
 					if (illegal)
 						return 8;
@@ -225,9 +230,6 @@ public class Board implements Serializable {
 						processMove(start, end, sindex, eindex, capture);
 					}
 					
-					//promotion
-					//TODO castling
-					
 					else {
 						processMove(start, end, sindex, eindex, capture);
 					}
@@ -247,11 +249,11 @@ public class Board implements Serializable {
 				break;
 			}
 		}
-		return processMoveCheck(start, end, sindex, eindex, true, white);
+		return processMoveCheck(start, end, sindex, eindex, true, white, false);
 	}
 
 	private boolean processPromoteCheck(Location start, Location end, int sindex, int eindex, boolean capture,
-			boolean white) {
+			boolean white, boolean test) {
 		Location target = null;
 		ArrayList<Piece> piecesTemp = new ArrayList<Piece>();
 		for (Piece p: pieces) {
@@ -271,12 +273,23 @@ public class Board implements Serializable {
 		if (checkIfTargeted(target, white, new Board(width, length, piecesTemp))) {
 			return true;
 		}
-		processPromote(start, end, sindex, eindex, capture);
+		if (!test)
+			processPromote(start, end, sindex, eindex, capture);
 		return false;
 	}
-
+	/**
+	 * Check if a move is illegal or not.
+	 * @param start
+	 * @param end
+	 * @param sindex
+	 * @param eindex
+	 * @param capture
+	 * @param white
+	 * @param test false if you want the move to be processed afterwards
+	 * @return true if illegal, false if legal
+	 */
 	private boolean processMoveCheck(Location start, Location end, int sindex, int eindex, boolean capture,
-			boolean white) { //temporarily make a move and check if it sticks
+			boolean white, boolean test) { //temporarily make a move and check if it sticks
 		Location target = null;
 		ArrayList<Piece> piecesTemp = new ArrayList<Piece>();
 		for (Piece p: pieces) {
@@ -296,8 +309,61 @@ public class Board implements Serializable {
 		if (checkIfTargeted(target, white, new Board(width, length, piecesTemp))) {
 			return true;
 		}
-		processMove(start, end, sindex, eindex, capture);
+		if (!test)
+			processMove(start, end, sindex, eindex, capture);
 		return false;
+	}
+	private void verifyMate() {
+		// TODO Auto-generated method stub
+		if (whiteTurn) {
+			for (int i=0;i<pieces.size();i++) {
+				if (pieces.get(i).isWhite()) {
+					for (Location l:pieces.get(i).getLegalMoves(this)) {
+						int eindex = -1;
+						boolean capture = false;
+						for (int j=0;j<pieces.size();j++) {
+							if (pieces.get(j).getLoc().equals(l)) {
+								eindex = j;
+								capture = true;
+								break;
+							}
+						}
+						if (!processMoveCheck(pieces.get(i).getLoc(), l, i, eindex, capture, whiteTurn, true)) {
+							return;
+						}
+					}
+				}
+			}
+			if (whiteCheck) {
+				score = 0; //white is checkmated
+			} else {
+				score = 0.5; //stalemate
+			}
+		} else {
+			for (int i=0;i<pieces.size();i++) {
+				if (!pieces.get(i).isWhite()) {
+					for (Location l:pieces.get(i).getLegalMoves(this)) {
+						int eindex = -1;
+						boolean capture = false;
+						for (int j=0;j<pieces.size();j++) {
+							if (pieces.get(j).getLoc().equals(l)) {
+								eindex = j;
+								capture = true;
+								break;
+							}
+						}
+						if (!processMoveCheck(pieces.get(i).getLoc(), l, i, eindex, capture, whiteTurn, true)) {
+							return;
+						}
+					}
+				}
+			}
+			if (blackCheck) {
+				score = 1; //black is checkmated
+			} else {
+				score = 0.5; //stalemate
+			}
+		}
 	}
 
 	private void processPromote(Location start, Location end, int sindex, int eindex, boolean capture) {
@@ -379,7 +445,10 @@ public class Board implements Serializable {
 		}
 		whiteCheck = checkIfTargeted(whiteKing, true, this);
 		blackCheck = checkIfTargeted(blackKing, false, this);
+		verifyMate();
 	}
+
+
 	private boolean checkIfTargeted(Location target, boolean isWhite, Board b) {
 		for (Piece p: b.getPieces()) {
 			if (p.isWhite() != isWhite) {
