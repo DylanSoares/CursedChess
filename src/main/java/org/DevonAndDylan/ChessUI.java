@@ -237,25 +237,28 @@ public class ChessUI extends JFrame {
 
                     // NOTE: This doesn't quite work right for the rotated player, we check that on the confirm button
 //                    System.out.println("[UI:99] DEBUG: Location clicked was: " + finalPieces[finali][finalj]);
-                    if (finalPieces[finali][finalj] != null && !selectedFirst && !selectedSecond && ((isWhitesTurn && finalPieces[finali][finalj].isWhite()) || (!isWhitesTurn && !finalPieces[finali][finalj].isWhite()))) {
+                    if(!this.rotated == isWhitesTurn) {
+                        if (finalPieces[finali][finalj] != null && !selectedFirst && !selectedSecond &&
+                                ((isWhitesTurn && finalPieces[finali][finalj].isWhite()) || (!isWhitesTurn && !finalPieces[finali][finalj].isWhite()))) {
 //                        System.err.println(Board.toChar(finalj+1) + " " + (finali+1));
-                        firstSelectedX = finalj;
-                        firstSelectedY = finali;
-                        selectedFirst = true;
-                        button.setBackground(selectedPieceColor);
-                    } else if (selectedFirst && !selectedSecond && !(finalj == firstSelectedX && finali == firstSelectedY)) {
-                        secondSelectedX = finalj;
-                        secondSelectedY = finali;
-                        selectedSecond = true;
-                        button.setBackground(selectedMoveColor);
-                    } else if (finalj == secondSelectedX && finali == secondSelectedY && selectedFirst) {
+                            firstSelectedX = finalj;
+                            firstSelectedY = finali;
+                            selectedFirst = true;
+                            button.setBackground(selectedPieceColor);
+                        } else if (selectedFirst && !selectedSecond && !(finalj == firstSelectedX && finali == firstSelectedY)) {
+                            secondSelectedX = finalj;
+                            secondSelectedY = finali;
+                            selectedSecond = true;
+                            button.setBackground(selectedMoveColor);
+                        } else if (finalj == secondSelectedX && finali == secondSelectedY && selectedFirst) {
 
-                        selectedSecond = false;
-                        button.setBackground(ogColor);
-                    } else if (finalj == firstSelectedX && finali == firstSelectedY && selectedFirst && !selectedSecond) {
+                            selectedSecond = false;
+                            button.setBackground(ogColor);
+                        } else if (finalj == firstSelectedX && finali == firstSelectedY && selectedFirst && !selectedSecond) {
 
-                        selectedFirst = false;
-                        button.setBackground(ogColor);
+                            selectedFirst = false;
+                            button.setBackground(ogColor);
+                        }
                     }
                 });
 
