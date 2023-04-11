@@ -63,33 +63,10 @@ public class ChessClient {
                     char[] moveCommand = moveQueue.take().toCharArray(); // this is blocking!
                     output.writeObject(moveCommand);
                     result = (int) input.readObject();
-//                result = board.move(new Location(x1, y1), new Location(x2, y2));
                 }
             }else{
                 System.out.print(input.readObject());
             }
         }
-
-
-        //        String move = "e4 Nc3";
-//
-//        Socket socket = new Socket("localhost", 7777);
-//        System.out.println("DEBUG: Connected to server.");
-//
-//        OutputStream outputStream = socket.getOutputStream(); // get the output stream from the socket.
-//        DataOutputStream dataOutputStream = new DataOutputStream(outputStream);
-//
-//        // write the message we want to send
-//        dataOutputStream.writeUTF(move);
-//        dataOutputStream.flush(); // send the message
-//        dataOutputStream.close(); // close the output stream when we're done.
-//        socket.close();
-
-//        System.out.println("[Client:36] DEBUG: Moving result " + board.move(new Location('b', 1), new Location('c', 3)));
-//        System.out.println("[Client:36] DEBUG: Moving result " + board.move(new Location('d', 8), new Location('d', 3)));
-//        System.out.println("[Client:36] DEBUG: Moving result " + board.move(new Location('c', 1), new Location('g', 5)));
-//        System.out.println("[Client:36] DEBUG: Moving result " + board.move(new Location('a', 8), new Location('a', 4)));
-
-//        socket.close();
     }
 }
