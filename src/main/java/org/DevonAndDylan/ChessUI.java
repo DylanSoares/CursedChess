@@ -325,8 +325,6 @@ public class ChessUI extends JFrame {
     }
 
     private void drawPromotePopup() {
-
-        // TODO fix submit button not centering, add Icons to the buttons
         JDialog popup = new JDialog(frame, "Promotion Required", true);
 
         popup.setResizable(false);

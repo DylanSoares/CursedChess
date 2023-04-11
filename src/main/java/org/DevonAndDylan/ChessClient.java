@@ -42,7 +42,6 @@ public class ChessClient {
             if(needPromotion) {
                 board.promote(promoteQueue.take());
             }else {
-
                 char[] moveCommand = moveQueue.take().toCharArray(); // this is blocking!
 
                 char x1 = Board.toChar(Integer.parseInt(String.valueOf(moveCommand[0])) + 1);
