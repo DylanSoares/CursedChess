@@ -215,7 +215,7 @@ public abstract class Piece implements Serializable {
 	@Override
 	public Piece clone() {
 		Piece output = switch (letter) {
-			case 'P' -> new Pawn(this.loc, this.isWhite);
+			case 'P' -> new Pawn(this.loc, this.isWhite, this.moved);
 			case 'Q' -> new Queen(this.loc, this.isWhite);
 			case 'K' -> new King(this.loc, this.isWhite);
 			case 'N' -> new Knight(this.loc, this.isWhite);

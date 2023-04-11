@@ -32,8 +32,8 @@ public class King extends Piece implements Serializable {
             }
 		}
 		if (!this.hasMoved()) { //hardcoded castling
-			if (board[y][0].isWhite() == this.isWhite()
-					&& board[y][0] instanceof Rook
+			if (board[y][0] instanceof Rook
+					&& board[y][0].isWhite() == this.isWhite()
 					&& !board[y][0].hasMoved()) {
 				boolean block = false;
 				for (int i = 1;i<x;i++) {
@@ -46,8 +46,8 @@ public class King extends Piece implements Serializable {
 					output.add(new Location(x-2,y,true));
 				}
 			}
-			if (board[y][width-1].isWhite() == this.isWhite()
-					&& board[y][width-1] instanceof Rook
+			if (board[y][width-1] instanceof Rook
+					&& board[y][width-1].isWhite() == this.isWhite()
 					&& !board[y][width-1].hasMoved()) {
 				boolean block = false;
 				for (int i = width-2;i>x;i--) {

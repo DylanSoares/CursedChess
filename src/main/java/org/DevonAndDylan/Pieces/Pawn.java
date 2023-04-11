@@ -10,6 +10,12 @@ public class Pawn extends Piece implements Serializable {
 		setLetter('P');
 	}
 
+	public Pawn(Location loc, boolean isWhite, boolean moved) {
+		super(loc, isWhite);
+		setLetter('P');
+		setMoved(moved);
+	}
+
 	@Override
 	public ArrayList<Location> getLegalMoves(Board b) {
 		ArrayList<Location> output = new ArrayList<>();

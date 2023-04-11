@@ -106,6 +106,7 @@ public class Board implements Serializable {
 	 * <br><b>8</b> - Piece cannot legally make the move as the king is in check
 	 * <br><b>9</b> - Castling is illegal as you would enter check during the castling
 	 * <br><b>10</b> - The game has ended. No more moves can be made.
+	 * <br><b>11</b> - Piece cannot legally make the move as the king would be put inn check
 	 */
 	
 	public int move(Location start, Location end) {
@@ -203,7 +204,9 @@ public class Board implements Serializable {
 					} else if (startPiece instanceof Pawn
 							&& (d == length && startPiece.isWhite())
 							|| (d == 1 && !startPiece.isWhite())) {
-						processPromote(start, end, sindex, eindex, capture);
+						if (processPromoteCheck(start, end, sindex, eindex, capture, startPiece.isWhite(), false)) {
+							return 11;
+						}
 					}else if (startPiece instanceof King
 							&& deltaFile == 2) {
 						if (moveFile > 0) { //castle right
@@ -231,7 +234,9 @@ public class Board implements Serializable {
 					}
 					
 					else {
-						processMove(start, end, sindex, eindex, capture);
+						if (processMoveCheck(start, end, sindex, eindex, capture, startPiece.isWhite(), false)) {
+							return 11;
+						}
 					}
 					
 				}
