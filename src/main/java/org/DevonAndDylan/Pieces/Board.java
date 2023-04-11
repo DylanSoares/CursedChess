@@ -316,7 +316,6 @@ public class Board implements Serializable {
 		return false;
 	}
 	private void verifyMate() {
-		// TODO Auto-generated method stub
 		if (whiteTurn) {
 			for (int i=0;i<pieces.size();i++) {
 				if (pieces.get(i).isWhite()) {

@@ -25,7 +25,7 @@ public class ChessClient {
 
         new LauncherUI(choiceQueue);
         boolean playersChoice = choiceQueue.take(); //false if white
-        // TODO remove choice from launcher, first player connected always gets white.
+        // TODO Implement choice from user for color (Server currently ignores this)
 
         Socket socket = new Socket("localhost", 7777);
         System.err.println("Connected to server");

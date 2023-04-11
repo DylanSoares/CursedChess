@@ -8,7 +8,6 @@ public class King extends Piece implements Serializable {
 	public King(Location loc, boolean isWhite) {
 		super(loc, isWhite);
 		setLetter('K');
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override

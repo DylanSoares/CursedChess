@@ -139,7 +139,6 @@ public class LauncherUI extends JFrame {
         blackButton.setBackground(buttonColor);
         whiteButton.setBackground(selectedPieceColor);
 
-        // TODO listeners
         exitButton.addActionListener(e -> System.exit(0));
 
         confirmButton.addActionListener(e -> {
