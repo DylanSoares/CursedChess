@@ -280,10 +280,12 @@ public class ChessUI extends JFrame {
 
     /**
      * A method that redraws or refreshes the UI
+     *
      * @param pieces  2D Array of pieces fetched from the board's method.
      * @param rotated If true, the board will be drawn rotated for players
+     * @param promote If the UI is required to draw the promotion
      */
-    public void redrawBoard(Piece[][] pieces, boolean rotated, boolean isWhitesTurn, int moveResult) {
+    public void redrawBoard(Piece[][] pieces, boolean rotated, boolean isWhitesTurn, int moveResult, boolean promote) {
         frame.remove(topPanel);
         frame.remove(boardPanel);
         frame.remove(bottomPanel);
@@ -305,8 +307,58 @@ public class ChessUI extends JFrame {
 
         frame.add(boardContainer);
 
+        if(promote) {
+            drawPromotePopup();
+        }
+
         frame.validate();
         frame.repaint();
+    }
+
+    private void drawPromotePopup() {
+
+        // TODO fix submit button not centering, add Icons to the buttons
+        JDialog popup = new JDialog(frame, "Promotion Required", true);
+
+        popup.setResizable(false);
+
+        JPanel promoteContainer = new JPanel();
+        promoteContainer.setLayout(new BoxLayout(promoteContainer, BoxLayout.Y_AXIS));
+
+        JPanel headerPanel = new JPanel(new GridLayout(1, 1));
+        headerPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        headerPanel.setAlignmentX(JComponent.CENTER_ALIGNMENT); // center horizontally
+
+        JPanel choicesPanel = new JPanel(new GridLayout(1, 4));
+        choicesPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        choicesPanel.setAlignmentX(JComponent.CENTER_ALIGNMENT); // center horizontally
+
+
+        JLabel headerLabel = new JLabel("Choose promotion type:");
+        headerPanel.add(headerLabel);
+
+        Button queenButton = new Button("Queen");
+        Button knightButton = new Button("Knight");
+        Button rookButton = new Button("Rook");
+        Button bishopButton = new Button("Bishop");
+
+        queenButton.addActionListener(e -> {});
+        knightButton.addActionListener(e -> {});
+        rookButton.addActionListener(e -> {});
+        bishopButton.addActionListener(e -> {});
+
+        choicesPanel.add(queenButton);
+        choicesPanel.add(knightButton);
+        choicesPanel.add(rookButton);
+        choicesPanel.add(bishopButton);
+
+        promoteContainer.add(headerPanel);
+        promoteContainer.add(choicesPanel);
+
+        popup.add(promoteContainer);
+        popup.setLayout(new BoxLayout(popup.getContentPane(), BoxLayout.Y_AXIS));
+        popup.pack();
+        popup.setVisible(true);
     }
 
 

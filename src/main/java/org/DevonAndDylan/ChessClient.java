@@ -30,9 +30,12 @@ public class ChessClient {
         int result = -1;
         //noinspection InfiniteLoopStatement
         while (true) {
-            pieces = board.toPieceArray();
-            //yes I made it flip for literally no reason, its just fun for this driver code
-            gui.redrawBoard(pieces, playersChoice, board.getWhoseTurn(), result);
+
+            boolean needPromotion = board.isPromote(); //replace later with server call
+            boolean whoseTurn = board.getWhoseTurn(); // replace later with server call (true if white)
+            pieces = board.toPieceArray(); //replace later with server call
+
+            gui.redrawBoard(pieces, playersChoice, whoseTurn, result, needPromotion);
 
             char[] moveCommand = moveQueue.take().toCharArray(); // this is blocking!
 
@@ -42,8 +45,6 @@ public class ChessClient {
             int y2 = Integer.parseInt(String.valueOf(moveCommand[3])) + 1;
 
             result = board.move(new Location(x1, y1), new Location(x2, y2));
-//            System.err.println("[Client:55] DEBUG: Attempted to move to: " + x1 + "" + y1 + " to " + x2 + "" + y2);
-//            System.err.println("[Client:57] DEBUG: Moving result " + result);
         }
 
 
