@@ -63,7 +63,6 @@ public class ChessClient {
                     char[] moveCommand = moveQueue.take().toCharArray(); // this is blocking!
                     output.writeObject(moveCommand);
                     result = (int) input.readObject();
-                    System.out.println(result);
 //                result = board.move(new Location(x1, y1), new Location(x2, y2));
                 }
             }else{
