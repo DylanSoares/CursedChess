@@ -24,6 +24,7 @@ public class ChessUI extends JFrame {
     private final Color selectedMoveColor = new Color(249, 240, 123);
 
     private final BlockingQueue<String> moveQueue;
+    private final BlockingQueue<Character> promoteQueue;
 
     final Font arial = new Font("Arial", Font.PLAIN, 20);
 
@@ -57,6 +58,8 @@ public class ChessUI extends JFrame {
     private boolean rotated;
     private boolean isWhitesTurn;
 
+    private char promoteType;
+
 
     /**
      * A constructor to initialize the Chessboard UI
@@ -66,10 +69,10 @@ public class ChessUI extends JFrame {
      * @param pieces  Array of pieces
      * @param rotated If true, the board will be drawn rotated for the second player.
      */
-    public ChessUI(Piece[][] pieces, boolean rotated, BlockingQueue<String> moveQueue) {
+    public ChessUI(Piece[][] pieces, boolean rotated, BlockingQueue<String> moveQueue, BlockingQueue<Character> promoteQueue) {
 
         this.moveQueue = moveQueue;
-
+        this.promoteQueue = promoteQueue;
 
         frame = new JFrame("Chessboard");
         ImageIcon clientIcon = new ImageIcon("src/main/resources/clienticon.png");
@@ -151,13 +154,13 @@ public class ChessUI extends JFrame {
                 int firstY = firstSelectedY;
                 int secondY = secondSelectedY;
                 if (this.rotated) { //fix the rotation players index being all screwed up
-                    firstY = 8 - firstSelectedY-1;
-                    firstX = 8 - firstSelectedX-1;
-                    secondX = 8 - secondSelectedX-1;
-                    secondY = 8 - secondSelectedY-1;
+                    firstY = 8 - firstSelectedY - 1;
+                    firstX = 8 - firstSelectedX - 1;
+                    secondX = 8 - secondSelectedX - 1;
+                    secondY = 8 - secondSelectedY - 1;
                 }
 //                System.out.println("Client wants to send move " + Board.toChar(firstX) + "" + firstY + " to " + Board.toChar(secondX) + "" + secondY);
-                String move = firstX+""+firstY+""+secondX+""+secondY;
+                String move = firstX + "" + firstY + "" + secondX + "" + secondY;
 //                System.out.println("[UI:146] DEBUG: movement is requested: " + move);
                 try {
                     moveQueue.put(move); // add the move to the blocking queue
@@ -167,7 +170,7 @@ public class ChessUI extends JFrame {
                 }
                 selectedFirst = false;
                 selectedSecond = false;
-            }else{
+            } else {
                 labelOutput.setText("Invalid selection.");
             }
         });
@@ -280,10 +283,12 @@ public class ChessUI extends JFrame {
 
     /**
      * A method that redraws or refreshes the UI
+     *
      * @param pieces  2D Array of pieces fetched from the board's method.
      * @param rotated If true, the board will be drawn rotated for players
+     * @param promote If the UI is required to draw the promotion
      */
-    public void redrawBoard(Piece[][] pieces, boolean rotated, boolean isWhitesTurn, int moveResult) {
+    public void redrawBoard(Piece[][] pieces, boolean rotated, boolean isWhitesTurn, int moveResult, boolean promote) {
         frame.remove(topPanel);
         frame.remove(boardPanel);
         frame.remove(bottomPanel);
@@ -305,8 +310,76 @@ public class ChessUI extends JFrame {
 
         frame.add(boardContainer);
 
+        if (promote) {
+            drawPromotePopup();
+            try {
+                promoteQueue.put(promoteType); // add the move to the blocking queue
+            } catch (InterruptedException interruptedException) {
+                interruptedException.printStackTrace();
+                System.err.println("help me please");
+            }
+        }
+
         frame.validate();
         frame.repaint();
+    }
+
+    private void drawPromotePopup() {
+
+        // TODO fix submit button not centering, add Icons to the buttons
+        JDialog popup = new JDialog(frame, "Promotion Required", true);
+
+        popup.setResizable(false);
+        popup.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        JPanel promoteContainer = new JPanel();
+        promoteContainer.setLayout(new BoxLayout(promoteContainer, BoxLayout.Y_AXIS));
+
+        JPanel headerPanel = new JPanel(new GridLayout(1, 1));
+        headerPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        headerPanel.setAlignmentX(JComponent.CENTER_ALIGNMENT); // center horizontally
+
+        JPanel choicesPanel = new JPanel(new GridLayout(1, 4));
+        choicesPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        choicesPanel.setAlignmentX(JComponent.CENTER_ALIGNMENT); // center horizontally
+
+
+        JLabel headerLabel = new JLabel("Choose promotion type:");
+        headerPanel.add(headerLabel);
+
+        Button queenButton = new Button("Queen");
+        Button knightButton = new Button("Knight");
+        Button rookButton = new Button("Rook");
+        Button bishopButton = new Button("Bishop");
+
+        queenButton.addActionListener(e -> {
+            promoteType = 'Q';
+            popup.dispose();
+        });
+        knightButton.addActionListener(e -> {
+            promoteType = 'N';
+            popup.dispose();
+        });
+        rookButton.addActionListener(e -> {
+            promoteType = 'R';
+            popup.dispose();
+        });
+        bishopButton.addActionListener(e -> {
+            promoteType = 'B';
+            popup.dispose();
+        });
+
+        choicesPanel.add(queenButton);
+        choicesPanel.add(knightButton);
+        choicesPanel.add(rookButton);
+        choicesPanel.add(bishopButton);
+
+        promoteContainer.add(headerPanel);
+        promoteContainer.add(choicesPanel);
+
+        popup.add(promoteContainer);
+        popup.setLayout(new BoxLayout(popup.getContentPane(), BoxLayout.Y_AXIS));
+        popup.pack();
+        popup.setVisible(true);
     }
 
 

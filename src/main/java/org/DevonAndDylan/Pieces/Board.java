@@ -201,20 +201,13 @@ public class Board {
 		}
 		Location promoteLocation = pieces.get(promotePieceIndex).getLoc();
 		switch (letter) {
-		case 'Q':
-			pieces.add(new Queen(promoteLocation, whiteTurn));
-			break;
-		case 'N':
-			pieces.add(new Knight(promoteLocation, whiteTurn));
-			break;
-		case 'B':
-			pieces.add(new Bishop(promoteLocation, whiteTurn));
-			break;
-		case 'R':
-			pieces.add(new Rook(promoteLocation, whiteTurn));
-			break;
-		default:
-			return false;
+			case 'Q' -> pieces.add(new Queen(promoteLocation, whiteTurn));
+			case 'N' -> pieces.add(new Knight(promoteLocation, whiteTurn));
+			case 'B' -> pieces.add(new Bishop(promoteLocation, whiteTurn));
+			case 'R' -> pieces.add(new Rook(promoteLocation, whiteTurn));
+			default -> {
+				return false;
+			}
 		}
 		pieces.remove(promotePieceIndex);
 		whiteTurn = !whiteTurn;
