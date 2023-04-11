@@ -178,13 +178,13 @@ public class Board {
 		lastMoveStartLocation = start;
 		lastMoveEndLocation = end;
 		pieces.get(sindex).move(end);
-		promotePieceIndex = sindex;
 		if (capture) {
 			if (sindex > eindex) {
 				sindex--;
 			}
 			pieces.remove(eindex);
 		}
+		promotePieceIndex = sindex;
 		
 		
 		promote = true;
