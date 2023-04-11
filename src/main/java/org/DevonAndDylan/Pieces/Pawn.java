@@ -16,10 +16,6 @@ public class Pawn extends Piece {
 	}
 
 	@Override
-	public void promote(char letter) {
-
-	}
-	@Override
 	public ArrayList<Location> getLegalMoves(Board b) {
 		ArrayList<Location> output = new ArrayList<>();
 		Piece[][] board = b.toPieceArray();
