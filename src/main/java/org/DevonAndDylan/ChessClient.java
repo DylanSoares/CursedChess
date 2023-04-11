@@ -16,6 +16,8 @@ public class ChessClient {
     public static void main(String[] args) throws IOException, InterruptedException {
         BlockingQueue<Boolean> choiceQueue = new ArrayBlockingQueue<>(1);
         BlockingQueue<String> moveQueue = new ArrayBlockingQueue<>(1);
+        BlockingQueue<Character> promoteQueue = new ArrayBlockingQueue<>(1);
+
         Board board = new Board();
 
         Piece[][] pieces = board.toPieceArray();
@@ -24,7 +26,7 @@ public class ChessClient {
 
 
         boolean playersChoice = choiceQueue.take(); //false if white
-        ChessUI gui = new ChessUI(pieces, playersChoice, moveQueue);
+        ChessUI gui = new ChessUI(pieces, playersChoice, moveQueue, promoteQueue);
 
         // Some awful temporary driver code for UI <-> Client communication
         int result = -1;
@@ -37,14 +39,19 @@ public class ChessClient {
 
             gui.redrawBoard(pieces, playersChoice, whoseTurn, result, needPromotion);
 
-            char[] moveCommand = moveQueue.take().toCharArray(); // this is blocking!
+            if(needPromotion) {
+                board.promote(promoteQueue.take());
+            }else {
 
-            char x1 = Board.toChar(Integer.parseInt(String.valueOf(moveCommand[0])) + 1);
-            char x2 = Board.toChar(Integer.parseInt(String.valueOf(moveCommand[2])) + 1);
-            int y1 = Integer.parseInt(String.valueOf(moveCommand[1])) + 1;
-            int y2 = Integer.parseInt(String.valueOf(moveCommand[3])) + 1;
+                char[] moveCommand = moveQueue.take().toCharArray(); // this is blocking!
 
-            result = board.move(new Location(x1, y1), new Location(x2, y2));
+                char x1 = Board.toChar(Integer.parseInt(String.valueOf(moveCommand[0])) + 1);
+                char x2 = Board.toChar(Integer.parseInt(String.valueOf(moveCommand[2])) + 1);
+                int y1 = Integer.parseInt(String.valueOf(moveCommand[1])) + 1;
+                int y2 = Integer.parseInt(String.valueOf(moveCommand[3])) + 1;
+
+                result = board.move(new Location(x1, y1), new Location(x2, y2));
+            }
         }
 
 
