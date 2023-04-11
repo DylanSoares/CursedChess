@@ -13,6 +13,8 @@ public class Board {
 	private Location lastMoveStartLocation;
 	private Location lastMoveEndLocation;
 	private boolean whiteTurn = true;
+	private boolean promote = false;
+	private int promotePieceIndex;
 
 
 	/**
@@ -20,6 +22,14 @@ public class Board {
 	 */
 	public boolean getWhoseTurn() {
 		return whiteTurn;
+	}
+
+	/**
+	 * Check if we're waiting on a promotion.
+	 * @return true when waiting for a promotion
+	 */
+	public boolean isPromote() {
+		return promote;
 	}
 
 
@@ -77,6 +87,7 @@ public class Board {
 	 * <br><b>4</b> - No piece at the starting location to move
 	 * <br><b>5</b> - It is not that player's turn
 	 * <br><b>6</b> - Piece is trying to capture its teammate
+	 * <br><b>7</b> - A promotion is unresolved. Please call promote().
 	 */
 	
 	public int move(Location start, Location end) {
@@ -84,6 +95,10 @@ public class Board {
 		int b = start.getRank(); //start rank
 		int c = toInt(end.getFile()); //end file
 		int d = end.getRank(); //end rank
+		//waiting on a promotion so all moves are illegal until then
+		if (promote) {
+			return 7;
+		}
 		//moving to starting position
 		if (start.equals(end)) {
 			return 2;
@@ -141,7 +156,13 @@ public class Board {
 						&& !capture) { //a pawn is moving diagonally but no target is found
 					//System.out.println("En passant target: " + new Location(c, b, false));
 					processEnPassant(start, end, sindex, new Location(c, b, false));
+				} else if (startPiece instanceof Pawn
+						&& (d == length && startPiece.isWhite())
+						|| (d == 1 && !startPiece.isWhite())) {
+					processPromote(start, end, sindex, eindex, capture);
 				}
+				
+				//promotion
 				//TODO castling
 				
 				else {
@@ -152,6 +173,55 @@ public class Board {
 		}
 		return 1; // unknown/impossible move
 	}
+	private void processPromote(Location start, Location end, int sindex, int eindex, boolean capture) {
+		lastMovePiece = pieces.get(sindex);
+		lastMoveStartLocation = start;
+		lastMoveEndLocation = end;
+		pieces.get(sindex).move(end);
+		promotePieceIndex = sindex;
+		if (capture) {
+			if (sindex > eindex) {
+				sindex--;
+			}
+			pieces.remove(eindex);
+		}
+		
+		
+		promote = true;
+	}
+
+	/**
+	 * Promotes a piece to a better piece via a given letter
+	 * @param letter standard chess notation of the piece desired
+	 * @return true if it was successful
+	 */
+	public boolean promote(char letter) {
+		if (!promote) {
+			return false;
+		}
+		Location promoteLocation = pieces.get(promotePieceIndex).getLoc();
+		switch (letter) {
+		case 'Q':
+			pieces.add(new Queen(promoteLocation, whiteTurn));
+			break;
+		case 'N':
+			pieces.add(new Knight(promoteLocation, whiteTurn));
+			break;
+		case 'B':
+			pieces.add(new Bishop(promoteLocation, whiteTurn));
+			break;
+		case 'R':
+			pieces.add(new Rook(promoteLocation, whiteTurn));
+			break;
+		default:
+			return false;
+		}
+		pieces.remove(promotePieceIndex);
+		whiteTurn = !whiteTurn;
+		promote = false;
+		return true;
+	}
+	
 	private void processEnPassant(Location start, Location end, int sindex, Location location) {
 		int eindex = -1;
 		for (int i=0;i<pieces.size();i++) {

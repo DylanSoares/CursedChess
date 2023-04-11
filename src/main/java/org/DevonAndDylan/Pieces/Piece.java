@@ -205,7 +205,6 @@ public abstract class Piece {
         return output;
 	}
 	
-	
 	@Override
 	public String toString() {
 		String piece = switch (letter) {
