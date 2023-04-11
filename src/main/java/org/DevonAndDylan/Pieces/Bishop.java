@@ -7,7 +7,6 @@ public class Bishop extends Piece {
 	public Bishop(Location loc, boolean isWhite) {
 		super(loc, isWhite);
 		setLetter('B');
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override

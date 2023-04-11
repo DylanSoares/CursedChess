@@ -17,7 +17,7 @@ public class Pawn extends Piece {
 
 	@Override
 	public void promote(char letter) {
-		// TODO Auto-generated method stub
+
 	}
 	@Override
 	public ArrayList<Location> getLegalMoves(Board b) {

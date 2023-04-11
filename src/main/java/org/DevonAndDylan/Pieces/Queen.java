@@ -7,7 +7,6 @@ public class Queen extends Piece {
 	public Queen(Location loc, boolean isWhite) {
 		super(loc, isWhite);
 		setLetter('Q');
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
