@@ -99,7 +99,8 @@ public class Board implements Serializable {
 	 * <br><b>5</b> - It is not that player's turn
 	 * <br><b>6</b> - Piece is trying to capture its teammate
 	 * <br><b>7</b> - A promotion is unresolved. Please call promote().
-	 * <br><b>8</b> - A promotion is unresolved. Please call promote().
+	 * <br><b>8</b> - Piece cannot legally make the move as the king is in check
+	 * <br><b>9</b> - Castling is illegal as you would enter check during
 	 */
 	
 	public int move(Location start, Location end) {
@@ -173,6 +174,9 @@ public class Board implements Serializable {
 							&& (d == length && startPiece.isWhite())
 							|| (d == 1 && !startPiece.isWhite())) {
 						illegal = processPromoteCheck(start, end, sindex, eindex, capture, startPiece.isWhite());
+					} else if (startPiece instanceof King
+							&& deltaFile == 2) {
+						return 8; //you can't castle while in check!
 					}
 					
 					//promotion
@@ -195,6 +199,30 @@ public class Board implements Serializable {
 							&& (d == length && startPiece.isWhite())
 							|| (d == 1 && !startPiece.isWhite())) {
 						processPromote(start, end, sindex, eindex, capture);
+					}else if (startPiece instanceof King
+							&& deltaFile == 2) {
+						if (moveFile > 0) { //castle right
+							if (checkIfTargeted(new Location(c-1, d, false), startPiece.isWhite(), this) || checkIfTargeted(end, startPiece.isWhite(), this)) {
+								return 9;
+							}
+							for (int i=0;i<pieces.size();i++) {
+								if (pieces.get(i) instanceof Rook
+										&& pieces.get(i).getLoc().equals(new Location(width, b, false))) {
+									pieces.get(i).move(new Location(c-1, b, false));
+								}
+							}
+						} else { //castle left
+							if (checkIfTargeted(new Location(c+1, d, false), startPiece.isWhite(), this) || checkIfTargeted(end, startPiece.isWhite(), this)) {
+								return 9;
+							}
+							for (int i=0;i<pieces.size();i++) {
+								if (pieces.get(i) instanceof Rook
+										&& pieces.get(i).getLoc().equals(new Location(1, b, false))) {
+									pieces.get(i).move(new Location(c+1, b, false));
+								}
+							}
+						}
+						processMove(start, end, sindex, eindex, capture);
 					}
 					
 					//promotion

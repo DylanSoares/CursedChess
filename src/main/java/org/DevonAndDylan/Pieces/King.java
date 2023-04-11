@@ -15,7 +15,8 @@ public class King extends Piece implements Serializable {
 	public ArrayList<Location> getLegalMoves(Board b) {
 		ArrayList<Location> output = new ArrayList<>();
 		Piece[][] board = b.toPieceArray();
-
+		int width = b.getWidth(); //how many FILES
+		
 		int x = this.getLoc().getX(); //the FILE
 		int y = this.getLoc().getY(); //the RANK. remember that the array is [y][x] because, uh, yeah
 		
@@ -30,6 +31,36 @@ public class King extends Piece implements Serializable {
         			} catch (ArrayIndexOutOfBoundsException ignored) {} //avoid out of bounds
             	}
             }
+		}
+		if (!this.hasMoved()) { //hardcoded castling
+			if (board[y][0].isWhite() == this.isWhite()
+					&& board[y][0] instanceof Rook
+					&& !board[y][0].hasMoved()) {
+				boolean block = false;
+				for (int i = 1;i<x;i++) {
+					if (board[y][i] instanceof Piece) {
+						block = true;
+						break;
+					}
+				}
+				if (!block) {
+					output.add(new Location(x-2,y,true));
+				}
+			}
+			if (board[y][width-1].isWhite() == this.isWhite()
+					&& board[y][width-1] instanceof Rook
+					&& !board[y][width-1].hasMoved()) {
+				boolean block = false;
+				for (int i = width-2;i>x;i--) {
+					if (board[y][i] instanceof Piece) {
+						block = true;
+						break;
+					}
+				}
+				if (!block) {
+					output.add(new Location(x+2,y,true));
+				}
+			}
 		}
 		
 		return output;
