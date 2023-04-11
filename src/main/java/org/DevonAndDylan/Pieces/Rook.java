@@ -1,8 +1,9 @@
 package org.DevonAndDylan.Pieces;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Rook extends Piece {
+public class Rook extends Piece implements Serializable {
 
 	public Rook(Location loc, boolean isWhite) {
 		super(loc, isWhite);

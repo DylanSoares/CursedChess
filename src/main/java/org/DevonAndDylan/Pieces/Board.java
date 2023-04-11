@@ -1,11 +1,12 @@
 package org.DevonAndDylan.Pieces;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 
 
 @SuppressWarnings("CommentedOutCode")
-public class Board {
+public class Board implements Serializable {
 	private final int width;
 	private final int length;
 	private ArrayList<Piece> pieces = new ArrayList<>();

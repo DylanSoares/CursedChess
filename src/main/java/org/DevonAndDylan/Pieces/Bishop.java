@@ -1,8 +1,9 @@
 package org.DevonAndDylan.Pieces;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Bishop extends Piece {
+public class Bishop extends Piece implements Serializable {
 
 	public Bishop(Location loc, boolean isWhite) {
 		super(loc, isWhite);

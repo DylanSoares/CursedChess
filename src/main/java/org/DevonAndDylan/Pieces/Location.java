@@ -1,8 +1,9 @@
 package org.DevonAndDylan.Pieces;
 
 
+import java.io.Serializable;
 
-public class Location {
+public class Location implements Serializable {
 	private char file;
 	private int rank;
 	

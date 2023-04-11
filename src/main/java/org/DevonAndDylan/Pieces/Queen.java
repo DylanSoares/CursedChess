@@ -1,8 +1,9 @@
 package org.DevonAndDylan.Pieces;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Queen extends Piece {
+public class Queen extends Piece implements Serializable {
 
 	public Queen(Location loc, boolean isWhite) {
 		super(loc, isWhite);

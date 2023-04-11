@@ -1,8 +1,9 @@
 package org.DevonAndDylan.Pieces;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public abstract class Piece {
+public abstract class Piece implements Serializable {
 	private char letter;
 	private int value;
 	private boolean isWhite;

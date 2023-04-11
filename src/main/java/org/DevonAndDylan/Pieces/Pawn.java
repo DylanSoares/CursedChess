@@ -1,8 +1,9 @@
 package org.DevonAndDylan.Pieces;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Pawn extends Piece {
+public class Pawn extends Piece implements Serializable {
 
 	public Pawn(Location loc, boolean isWhite) { //default pawn
 		super(loc, isWhite);
