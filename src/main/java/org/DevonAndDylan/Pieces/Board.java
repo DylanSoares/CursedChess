@@ -203,12 +203,12 @@ public class Board {
 
 	/**
 	 * Promotes a piece to a better piece via a given letter
+	 *
 	 * @param letter standard chess notation of the piece desired
-	 * @return true if it was successful
 	 */
-	public boolean promote(char letter) {
+	public void promote(char letter) {
 		if (!promote) {
-			return false;
+			return;
 		}
 		Location promoteLocation = pieces.get(promotePieceIndex).getLoc();
 		switch (letter) {
@@ -217,13 +217,12 @@ public class Board {
 			case 'B' -> pieces.add(new Bishop(promoteLocation, whiteTurn));
 			case 'R' -> pieces.add(new Rook(promoteLocation, whiteTurn));
 			default -> {
-				return false;
+				return;
 			}
 		}
 		pieces.remove(promotePieceIndex);
 		whiteTurn = !whiteTurn;
 		promote = false;
-		return true;
 	}
 	
 	private void processEnPassant(Location start, Location end, int sindex, Location location) {
