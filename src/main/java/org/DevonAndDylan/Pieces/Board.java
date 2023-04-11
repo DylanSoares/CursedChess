@@ -104,13 +104,13 @@ public class Board implements Serializable {
 	 * <br><b>6</b> - Piece is trying to capture its teammate
 	 * <br><b>7</b> - A promotion is unresolved. Please call promote().
 	 * <br><b>8</b> - Piece cannot legally make the move as the king is in check
-	 * <br><b>9</b> - Castling is illegal as you would enter check during
-	 * <br><b>-1</b> - The game has ended. No more moves can be made.
+	 * <br><b>9</b> - Castling is illegal as you would enter check during the castling
+	 * <br><b>10</b> - The game has ended. No more moves can be made.
 	 */
 	
 	public int move(Location start, Location end) {
 		if (score != -1) {
-			return -1;
+			return 10;
 		}
 		int a = toInt(start.getFile()); //start file
 		int b = start.getRank(); //start rank
@@ -259,6 +259,7 @@ public class Board implements Serializable {
 		for (Piece p: pieces) {
 			piecesTemp.add((Piece) p.clone());
 		}
+		piecesTemp.get(sindex).move(end);
 		for (Piece p: piecesTemp) {
 			if (p instanceof King &&
 					p.isWhite() == white) {
@@ -266,7 +267,7 @@ public class Board implements Serializable {
 				break;
 			}
 		}
-		piecesTemp.get(sindex).move(end);
+		
 		if (capture) {
 			piecesTemp.remove(eindex);
 		}
@@ -295,6 +296,7 @@ public class Board implements Serializable {
 		for (Piece p: pieces) {
 			piecesTemp.add((Piece) p.clone());
 		}
+		piecesTemp.get(sindex).move(end);
 		for (Piece p: piecesTemp) {
 			if (p instanceof King &&
 					p.isWhite() == white) {
@@ -302,7 +304,7 @@ public class Board implements Serializable {
 				break;
 			}
 		}
-		piecesTemp.get(sindex).move(end);
+		
 		if (capture) {
 			piecesTemp.remove(eindex);
 		}
