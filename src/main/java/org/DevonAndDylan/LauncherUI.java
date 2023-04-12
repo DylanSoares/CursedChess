@@ -7,17 +7,11 @@ import java.util.concurrent.BlockingQueue;
 
 public class LauncherUI extends JFrame {
 
-    boolean chooseBlack = false;
-
     final Font arial = new Font("Arial", Font.PLAIN, 20);
-
-    private final Color buttonColor = new Color(101, 101, 101);
-    private final Color selectedPieceColor = new Color(226, 207, 89);
-
     private final JTextField serverTextfield;
     private final JTextField portTextfield;
 
-    public LauncherUI(BlockingQueue<Boolean> choiceQueue) {
+    public LauncherUI(BlockingQueue<String> serverInfoQueue) {
 
         ImageIcon clientIcon = new ImageIcon("src/main/resources/clienticon.png");
         setIconImage(clientIcon.getImage());
@@ -30,23 +24,6 @@ public class LauncherUI extends JFrame {
         JLabel headerLabel = new JLabel("Cursed Chess", JLabel.CENTER);
         headerLabel.setFont(arial);
         add(headerLabel, BorderLayout.NORTH);
-
-        // Create vertical button panel
-        JPanel buttonPanel = new JPanel();
-        buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 10)); // add vertical spacing
-        buttonPanel.setBorder(BorderFactory.createEmptyBorder(20, 0, 20, 0));
-        buttonPanel.setAlignmentX(JComponent.CENTER_ALIGNMENT); // center horizontally
-
-
-        // Create header label
-        JButton whiteButton = new JButton("White");
-        JButton blackButton = new JButton("Black");
-
-        // Add buttons to button panel
-        buttonPanel.add(whiteButton);
-        buttonPanel.add(Box.createHorizontalStrut(10)); // spacing
-        buttonPanel.add(blackButton);
-
 
         // Create vertical button panel
         JPanel buttonPanel2 = new JPanel();
@@ -64,7 +41,6 @@ public class LauncherUI extends JFrame {
 
         JPanel boardContainer = new JPanel();
         boardContainer.setLayout(new BoxLayout(boardContainer, BoxLayout.Y_AXIS));
-        boardContainer.add(buttonPanel);
         boardContainer.add(buttonPanel2);
 
         // Create toggle button and text fields
@@ -106,7 +82,6 @@ public class LauncherUI extends JFrame {
         boardContainer.setBackground(backgroundColor);
         textFieldPanel.setBackground(backgroundColor);
         buttonPanel2.setBackground(backgroundColor);
-        buttonPanel.setBackground(backgroundColor);
         setBackground(backgroundColor);
 
         // Add panels to frame
@@ -121,29 +96,27 @@ public class LauncherUI extends JFrame {
         Color textColor = new Color(255, 255, 255);
         exitButton.setForeground(textColor);
         confirmButton.setForeground(textColor);
-        whiteButton.setForeground(textColor);
-        blackButton.setForeground(textColor);
         toggleButton.setForeground(textColor);
 
 
         exitButton.setFont(arial);
         confirmButton.setFont(arial);
-        whiteButton.setFont(arial);
-        blackButton.setFont(arial);
+
         toggleButton.setFont(arial);
 
 
+        Color buttonColor = new Color(101, 101, 101);
         toggleButton.setBackground(buttonColor);
         exitButton.setBackground(buttonColor);
         confirmButton.setBackground(buttonColor);
-        blackButton.setBackground(buttonColor);
-        whiteButton.setBackground(selectedPieceColor);
+
 
         exitButton.addActionListener(e -> System.exit(0));
 
         confirmButton.addActionListener(e -> {
             try {
-                choiceQueue.put(chooseBlack); // add the move to the blocking queue
+                serverInfoQueue.put(serverTextfield.getText());
+                serverInfoQueue.put(portTextfield.getText());
             } catch (InterruptedException interruptedException) {
                 interruptedException.printStackTrace();
                 System.err.println("help me please");
@@ -156,18 +129,6 @@ public class LauncherUI extends JFrame {
             ((JFrame) frame).dispose();
 
             // TODO handle checking for server info changes
-        });
-
-        whiteButton.addActionListener(e -> {
-            chooseBlack = false;
-            blackButton.setBackground(buttonColor);
-            whiteButton.setBackground(selectedPieceColor);
-        });
-
-        blackButton.addActionListener(e -> {
-            chooseBlack = true;
-            blackButton.setBackground(selectedPieceColor);
-            whiteButton.setBackground(buttonColor);
         });
     }
 
