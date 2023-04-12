@@ -29,12 +29,10 @@ public class Pawn extends Piece implements Serializable {
 			if (!this.hasMoved()) { //two move boost when HAS NOT MOVED
 				if (board[y + 1][x] == null && board[y + 2][x] == null) { //piece in the way
 					output.add(new Location(x, y+2, true)); //this isn't checking if the board is too small
-					output.add(new Location(x, y+1, true));
 				}
-			} else {
-				if (y+1 < length && board[y + 1][x] == null) {
-					output.add(new Location(x, y+1, true));
-				}
+			}
+			if (y+1 < length && board[y + 1][x] == null) {
+				output.add(new Location(x, y+1, true));
 			}
 			if (x+1 < width && y+1 < length && board[y + 1][x + 1] != null) { //capture right
 				if (!board[y+1][x+1].isWhite()) { //don't capture your own pieces
@@ -68,12 +66,10 @@ public class Pawn extends Piece implements Serializable {
 			if (!this.hasMoved()) { //two move boost when HAS NOT MOVED
 				if (board[y - 1][x] == null && board[y - 2][x] == null) { //piece in the way
 					output.add(new Location(x, y-2, true));
-					output.add(new Location(x, y-1, true));
 				}
-			} else {
-				if (y-1 >= 0 && board[y - 1][x] == null) {
-					output.add(new Location(x, y-1, true));
-				}
+			}
+			if (y-1 >= 0 && board[y - 1][x] == null) {
+				output.add(new Location(x, y-1, true));
 			}
 			if (x+1 < width && y-1 >= 0 && board[y - 1][x + 1] != null) { //capture right
 				if (board[y-1][x+1].isWhite()) { //don't capture your own pieces
