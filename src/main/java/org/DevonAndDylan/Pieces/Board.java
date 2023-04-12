@@ -215,20 +215,20 @@ public class Board implements Serializable {
 							if (checkIfTargeted(new Location(c-1, d, false), startPiece.isWhite(), this) || checkIfTargeted(end, startPiece.isWhite(), this)) {
 								return 9;
 							}
-							for (int i=0;i<pieces.size();i++) {
-								if (pieces.get(i) instanceof Rook
-										&& pieces.get(i).getLoc().equals(new Location(width, b, false))) {
-									pieces.get(i).move(new Location(c-1, b, false));
+							for (Piece piece : pieces) {
+								if (piece instanceof Rook
+										&& piece.getLoc().equals(new Location(width, b, false))) {
+									piece.move(new Location(c - 1, b, false));
 								}
 							}
 						} else { //castle left
 							if (checkIfTargeted(new Location(c+1, d, false), startPiece.isWhite(), this) || checkIfTargeted(end, startPiece.isWhite(), this)) {
 								return 9;
 							}
-							for (int i=0;i<pieces.size();i++) {
-								if (pieces.get(i) instanceof Rook
-										&& pieces.get(i).getLoc().equals(new Location(1, b, false))) {
-									pieces.get(i).move(new Location(c+1, b, false));
+							for (Piece piece : pieces) {
+								if (piece instanceof Rook
+										&& piece.getLoc().equals(new Location(1, b, false))) {
+									piece.move(new Location(c + 1, b, false));
 								}
 							}
 						}
@@ -264,7 +264,7 @@ public class Board implements Serializable {
 		Location target = null;
 		ArrayList<Piece> piecesTemp = new ArrayList<Piece>();
 		for (Piece p: pieces) {
-			piecesTemp.add((Piece) p.clone());
+			piecesTemp.add((Piece) p.clonePiece());
 		}
 		piecesTemp.get(sindex).move(end);
 		for (Piece p: piecesTemp) {
@@ -301,7 +301,7 @@ public class Board implements Serializable {
 		Location target = null;
 		ArrayList<Piece> piecesTemp = new ArrayList<Piece>();
 		for (Piece p: pieces) {
-			piecesTemp.add((Piece) p.clone());
+			piecesTemp.add((Piece) p.clonePiece());
 		}
 		piecesTemp.get(sindex).move(end);
 		for (Piece p: piecesTemp) {
