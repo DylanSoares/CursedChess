@@ -28,8 +28,7 @@ public class ChessClient {
 
         String serverIP = serverInfoQueue.take();
         int serverPort = Integer.parseInt(serverInfoQueue.take());
-        try {
-            Socket socket = new Socket(serverIP, serverPort);
+        try (Socket socket = new Socket(serverIP, serverPort)) {
 
             ObjectInputStream input = new ObjectInputStream(socket.getInputStream());
             ObjectOutputStream output = new ObjectOutputStream(socket.getOutputStream());
@@ -70,7 +69,7 @@ public class ChessClient {
         } catch (ConnectException e) {
             drawPopup("Connection Refused", "<html>Provided server info may be incorrect.<br>Please try again.</html>");
         } catch (SocketException e) {
-            drawPopup("Socket Closed", "<html>A socket error has<br>occured</html>");
+            drawPopup("Socket Closed", "Socket was closed");
         }
     }
 

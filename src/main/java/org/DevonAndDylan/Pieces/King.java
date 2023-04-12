@@ -37,7 +37,7 @@ public class King extends Piece implements Serializable {
 					&& !board[y][0].hasMoved()) {
 				boolean block = false;
 				for (int i = 1;i<x;i++) {
-					if (board[y][i] instanceof Piece) {
+					if (board[y][i] != null) {
 						block = true;
 						break;
 					}
@@ -51,7 +51,7 @@ public class King extends Piece implements Serializable {
 					&& !board[y][width-1].hasMoved()) {
 				boolean block = false;
 				for (int i = width-2;i>x;i--) {
-					if (board[y][i] instanceof Piece) {
+					if (board[y][i] != null) {
 						block = true;
 						break;
 					}

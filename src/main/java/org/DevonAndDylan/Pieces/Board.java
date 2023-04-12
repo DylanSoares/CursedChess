@@ -173,7 +173,7 @@ public class Board implements Serializable {
 			if (l.equals(end)) {
 				if ((startPiece.isWhite() && whiteCheck)
 						|| (!startPiece.isWhite() && blackCheck)) { //the player moving is in check
-					boolean illegal = false;
+					boolean illegal;
 					if (startPiece instanceof Pawn
 							&& deltaFile > 0
 							&& !capture) { //a pawn is moving diagonally but no target is found
@@ -262,9 +262,9 @@ public class Board implements Serializable {
 	private boolean processPromoteCheck(Location start, Location end, int sindex, int eindex, boolean capture,
 			boolean white, boolean test) {
 		Location target = null;
-		ArrayList<Piece> piecesTemp = new ArrayList<Piece>();
+		ArrayList<Piece> piecesTemp = new ArrayList<>();
 		for (Piece p: pieces) {
-			piecesTemp.add((Piece) p.clonePiece());
+			piecesTemp.add(p.clonePiece());
 		}
 		piecesTemp.get(sindex).move(end);
 		for (Piece p: piecesTemp) {
@@ -287,21 +287,14 @@ public class Board implements Serializable {
 	}
 	/**
 	 * Check if a move is illegal or not.
-	 * @param start
-	 * @param end
-	 * @param sindex
-	 * @param eindex
-	 * @param capture
-	 * @param white
-	 * @param test false if you want the move to be processed afterwards
 	 * @return true if illegal, false if legal
 	 */
 	private boolean processMoveCheck(Location start, Location end, int sindex, int eindex, boolean capture,
 			boolean white, boolean test) { //temporarily make a move and check if it sticks
 		Location target = null;
-		ArrayList<Piece> piecesTemp = new ArrayList<Piece>();
+		ArrayList<Piece> piecesTemp = new ArrayList<>();
 		for (Piece p: pieces) {
-			piecesTemp.add((Piece) p.clonePiece());
+			piecesTemp.add(p.clonePiece());
 		}
 		piecesTemp.get(sindex).move(end);
 		for (Piece p: piecesTemp) {
