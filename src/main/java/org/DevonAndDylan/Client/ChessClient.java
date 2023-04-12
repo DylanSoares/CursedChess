@@ -70,7 +70,7 @@ public class ChessClient {
         } catch (ConnectException e) {
             drawPopup("Connection Refused", "<html>Provided server info may be incorrect.<br>Please try again.</html>");
         } catch (SocketException e) {
-            drawPopup("Socket Closed", "<html>A socket error has<br>occured</html>");
+            drawPopup("Socket Closed", "Socket was closed");
         }
     }
 
