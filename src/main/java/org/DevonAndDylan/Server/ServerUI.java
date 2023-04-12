@@ -28,6 +28,9 @@ public class ServerUI extends JFrame {
 
         this.serverInfoQueue = serverInfoQueue;
 
+        ImageIcon clientIcon = new ImageIcon("src/main/resources/clienticon.png");
+        setIconImage(clientIcon.getImage());
+
         setTitle("CursedChess Server");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setResizable(false);
