@@ -13,6 +13,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.ConnectException;
 import java.net.Socket;
+import java.net.SocketException;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 
@@ -68,6 +69,8 @@ public class ChessClient {
             }
         } catch (ConnectException e) {
             drawPopup("Connection Refused", "<html>Provided server info may be incorrect.<br>Please try again.</html>");
+        } catch (SocketException e) {
+            drawPopup("Socket Closed", "<html>A socket error has<br>occured</html>");
         }
     }
 
