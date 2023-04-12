@@ -1,4 +1,4 @@
-package org.DevonAndDylan;
+package org.DevonAndDylan.Client;
 
 import org.DevonAndDylan.Pieces.Board;
 import org.DevonAndDylan.Pieces.Piece;

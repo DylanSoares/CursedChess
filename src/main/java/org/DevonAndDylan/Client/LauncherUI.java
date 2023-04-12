@@ -1,4 +1,4 @@
-package org.DevonAndDylan;
+package org.DevonAndDylan.Client;
 
 import javax.swing.*;
 import java.awt.*;
