@@ -106,7 +106,7 @@ public class Board implements Serializable {
 	 * <br><b>8</b> - Piece cannot legally make the move as the king is in check
 	 * <br><b>9</b> - Castling is illegal as you would enter check during the castling
 	 * <br><b>10</b> - The game has ended. No more moves can be made.
-	 * <br><b>11</b> - Piece cannot legally make the move as the king would be put inn check
+	 * <br><b>11</b> - Piece cannot legally make the move as the king would be put in check
 	 */
 	
 	public int move(Location start, Location end) {
@@ -178,7 +178,7 @@ public class Board implements Serializable {
 							&& deltaFile > 0
 							&& !capture) { //a pawn is moving diagonally but no target is found
 						//System.out.println("En passant target: " + new Location(c, b, false));
-						illegal = processEnPassantCheck(start, end, sindex, new Location(c, b, false), startPiece.isWhite());
+						illegal = processEnPassantCheck(start, end, sindex, new Location(c, b, false), startPiece.isWhite(), false);
 					} else if (startPiece instanceof Pawn
 							&& (d == length && startPiece.isWhite())
 							|| (d == 1 && !startPiece.isWhite())) {
@@ -200,7 +200,9 @@ public class Board implements Serializable {
 							&& deltaFile > 0
 							&& !capture) { //a pawn is moving diagonally but no target is found
 						//System.out.println("En passant target: " + new Location(c, b, false));
-						processEnPassant(start, end, sindex, new Location(c, b, false));
+						if (processEnPassantCheck(start, end, sindex, new Location(c, b, false), startPiece.isWhite(), false)) {
+							return 11;
+						}
 					} else if (startPiece instanceof Pawn
 							&& (d == length && startPiece.isWhite())
 							|| (d == 1 && !startPiece.isWhite())) {
@@ -246,7 +248,7 @@ public class Board implements Serializable {
 		}
 		return 1; // unknown/impossible move
 	}
-	private boolean processEnPassantCheck(Location start, Location end, int sindex, Location location, boolean white) {
+	private boolean processEnPassantCheck(Location start, Location end, int sindex, Location location, boolean white, boolean test) {
 		int eindex = -1;
 		for (int i=0;i<pieces.size();i++) {
 			if (pieces.get(i).getLoc().equals(location)) {
@@ -254,7 +256,7 @@ public class Board implements Serializable {
 				break;
 			}
 		}
-		return processMoveCheck(start, end, sindex, eindex, true, white, false);
+		return processMoveCheck(start, end, sindex, eindex, true, white, test);
 	}
 
 	private boolean processPromoteCheck(Location start, Location end, int sindex, int eindex, boolean capture,
@@ -333,6 +335,19 @@ public class Board implements Serializable {
 								capture = true;
 								break;
 							}
+						}
+						int a = toInt(pieces.get(i).getLoc().getFile()); //start file
+						int b = pieces.get(i).getLoc().getRank(); //start rank
+						int c = toInt(l.getFile()); //end file
+						int moveFile = c-a;
+						int deltaFile = Math.abs(moveFile);
+						if (pieces.get(i) instanceof Pawn
+								&& deltaFile > 0
+								&& !capture) {
+							if (processEnPassantCheck(pieces.get(i).getLoc(), l, i, new Location(c, b, false), whiteTurn, true)) {
+								return;
+							}
+							break;
 						}
 						if (!processMoveCheck(pieces.get(i).getLoc(), l, i, eindex, capture, whiteTurn, true)) {
 							return;
@@ -414,7 +429,7 @@ public class Board implements Serializable {
 		updateCheck();
 	}
 	
-	private void processEnPassant(Location start, Location end, int sindex, Location location) {
+	/*private void processEnPassant(Location start, Location end, int sindex, Location location) {
 		int eindex = -1;
 		for (int i=0;i<pieces.size();i++) {
 			if (pieces.get(i).getLoc().equals(location)) {
@@ -423,7 +438,7 @@ public class Board implements Serializable {
 			}
 		}
 		processMove(start, end, sindex, eindex, true);
-	}
+	}*/
 
 
 	private void processMove(Location start, Location end, int sindex, int eindex, boolean capture) {
