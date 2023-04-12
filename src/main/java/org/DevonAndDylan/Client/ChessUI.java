@@ -29,7 +29,7 @@ public class ChessUI extends JFrame {
     final Font arial = new Font("Arial", Font.PLAIN, 20);
 
     private final ImageIcon bishopBlack = new ImageIcon("src/main/resources/bb.png");
-    private final ImageIcon bishopWhite = new ImageIcon("wb.png");
+    private final ImageIcon bishopWhite = new ImageIcon("src/main/resource/wb.png");
 
     private final ImageIcon pawnBlack = new ImageIcon("src/main/resources/bp.png");
     private final ImageIcon pawnWhite = new ImageIcon("src/main/resources/wp.png");
