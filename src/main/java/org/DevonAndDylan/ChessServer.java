@@ -131,11 +131,6 @@ public class ChessServer {
         }
     }
 
-
-//    private static int makeMove(Board board, ObjectInputStream in2) throws IOException, ClassNotFoundException {
-//
-//    }
-
     private static String convertPromoteToString(char promote) {
         String output;
         switch (promote) {

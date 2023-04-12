@@ -14,13 +14,8 @@ public class ServerUI extends JFrame {
     private JTextField ipTextField;
     private JLabel ipLabel;
 
-    private final Color lightSquareColor = new Color(255, 206, 158);
-    private final Color darkSquareColor = new Color(209, 139, 71);
     private final Color backgroundColor = new Color(51, 51, 51);
-    private final Color buttonColor = new Color(101, 101, 101);
     private final Color textColor = new Color(255, 255, 255);
-    private final Color selectedPieceColor = new Color(226, 207, 89);
-    private final Color selectedMoveColor = new Color(249, 240, 123);
     private final Color startColor = new Color(135, 243, 135);
 
 
@@ -64,12 +59,13 @@ public class ServerUI extends JFrame {
         startButton.setBackground(startColor);
         startButton.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         buttonPanel.add(startButton);
+        startButton.setFont(arial_sm);
 //        mainPanel.add(buttonPanel, BorderLayout.SOUTH);
 
         startButton.addActionListener(e -> {
             try {
                 if (!serverStarted) {
-                    serverStarted = !serverStarted;
+                    serverStarted = true;
                     serverInfoQueue.put(ipTextField.getText());
                     serverInfoQueue.put(portTextField.getText());
                     ipTextField.setEditable(false);
@@ -90,11 +86,11 @@ public class ServerUI extends JFrame {
         portTextField = new JTextField("7777", 10);
         JLabel portLabel = new JLabel("Server Port:");
 
-        portLabel.setFont(new Font("Helvetica", Font.PLAIN, 14));
+        portLabel.setFont(arial_sm);
 
         // Create IP label
         JLabel ipLabel = new JLabel("Server IP:");
-        ipLabel.setFont(new Font("Helvetica", Font.PLAIN, 14));
+        ipLabel.setFont(arial_sm);
 
         String ip;
         try {
