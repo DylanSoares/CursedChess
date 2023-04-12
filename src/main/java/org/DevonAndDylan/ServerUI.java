@@ -100,7 +100,7 @@ public class ServerUI extends JFrame {
         }
 
         ipTextField = new JTextField(ip);
-        ipLabel.setFont(new Font("Helvetica", Font.PLAIN, 14));
+        ipLabel.setFont(arial_sm);
 
         portPanel.add(ipLabel, BorderLayout.SOUTH);
         portPanel.add(ipTextField);
@@ -128,10 +128,6 @@ public class ServerUI extends JFrame {
     }
 
     public void sendLogMsg(String msg) {
-        logsTextArea.setText(logsTextArea.getText() + msg + "\n");
+        logsTextArea.setText(logsTextArea.getText() + "\n" + msg);
     }
 }
-
-
-
-

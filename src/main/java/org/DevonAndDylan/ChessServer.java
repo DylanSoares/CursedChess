@@ -24,8 +24,6 @@ public class ChessServer {
 
         String ip = serverInfoQueue.take();
         int port = Integer.parseInt(serverInfoQueue.take());
-        System.err.println("Ip is: " + ip + " on port " + port);
-
 
         serverSocket = new ServerSocket(port, 50, InetAddress.getByName(ip));
 
@@ -34,8 +32,9 @@ public class ChessServer {
 
         Piece[][] pieces;
 
+        // TODO get server to restart from UI
+        //      And get server to handle server not dying
         // Wait for two clients to connect
-        // TODO check that getInetAddress is the address of the connecting client
         Socket client1 = serverSocket.accept();
         gui.sendLogMsg("Client 1 Connected from " + client1.getRemoteSocketAddress().toString() + " as WHITE");
 

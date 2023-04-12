@@ -3,6 +3,8 @@ package org.DevonAndDylan;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.concurrent.BlockingQueue;
 
 public class LauncherUI extends JFrame {
@@ -59,13 +61,20 @@ public class LauncherUI extends JFrame {
         togglePanel.add(toggleButton, BorderLayout.NORTH);
 
         JPanel textFieldPanel = new JPanel();
-        serverTextfield = new JTextField(20);
-        portTextfield = new JTextField(20);
+        serverTextfield = new JTextField(15);
+        portTextfield = new JTextField(5);
 
         serverTextfield.setVisible(false); // initially hidden
         portTextfield.setVisible(false); // initially hidden
 
-        serverTextfield.setText("localhost");
+
+        String ip;
+        try {
+            ip = InetAddress.getLocalHost().getHostAddress();
+        } catch (UnknownHostException e) {
+            ip = "localhost";
+        }
+        serverTextfield.setText(ip);
         portTextfield.setText("7777");
 
         textFieldPanel.add(serverTextfield);
