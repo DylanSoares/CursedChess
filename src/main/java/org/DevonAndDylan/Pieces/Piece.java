@@ -95,7 +95,7 @@ public abstract class Piece implements Serializable {
 				if (board[i][x].isWhite() != this.isWhite) {
 					lastYbelow = i;
 				} else {
-					lastYbelow = i+1;
+					lastYbelow = i-1;
 				}
 			}
 		}
@@ -113,7 +113,7 @@ public abstract class Piece implements Serializable {
 				if (board[y][i].isWhite() != this.isWhite) {
 					lastXright = i;
 				} else {
-					lastXright = i+1;
+					lastXright = i-1;
 				}
 			}
 		}
