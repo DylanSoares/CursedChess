@@ -213,7 +213,7 @@ public abstract class Piece implements Serializable {
 		return piece + " on " + loc;
 	}
 	@Override
-	public Piece clone() {
+	public Piece clone() { // TODO why does not not call super?
 		Piece output = switch (letter) {
 			case 'P' -> new Pawn(this.loc, this.isWhite, this.moved);
 			case 'Q' -> new Queen(this.loc, this.isWhite);

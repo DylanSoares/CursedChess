@@ -184,6 +184,7 @@ public class ChessUI extends JFrame {
     }
 
     private void drawBoardPanel(Piece[][] pieces, boolean rotated) {
+
         boardPanel = new JPanel(new GridLayout(10, 10));
         // add letters along top and bottom rows
         addLabels(rotated);
@@ -235,7 +236,6 @@ public class ChessUI extends JFrame {
                     } else {
                         ogColor = lightSquareColor;
                     }
-
                     // NOTE: This doesn't quite work right for the rotated player, we check that on the confirm button
 //                    System.out.println("[UI:99] DEBUG: Location clicked was: " + finalPieces[finali][finalj]);
                     if(!this.rotated == isWhitesTurn) {
@@ -252,11 +252,9 @@ public class ChessUI extends JFrame {
                             selectedSecond = true;
                             button.setBackground(selectedMoveColor);
                         } else if (finalj == secondSelectedX && finali == secondSelectedY && selectedFirst) {
-
                             selectedSecond = false;
                             button.setBackground(ogColor);
                         } else if (finalj == firstSelectedX && finali == firstSelectedY && selectedFirst && !selectedSecond) {
-
                             selectedFirst = false;
                             button.setBackground(ogColor);
                         }
