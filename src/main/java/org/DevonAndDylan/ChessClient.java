@@ -29,11 +29,8 @@ public class ChessClient {
 
         String serverIP = serverInfoQueue.take();
         int serverPort = Integer.parseInt(serverInfoQueue.take());
-//        System.out.println("Connecting to... " + serverIP + " on port " + serverPort)
         try {
             Socket socket = new Socket(serverIP, serverPort);
-            System.err.println("Connected to server");
-
 
             ObjectInputStream input = new ObjectInputStream(socket.getInputStream());
             ObjectOutputStream output = new ObjectOutputStream(socket.getOutputStream());
@@ -45,7 +42,6 @@ public class ChessClient {
             ChessUI gui = new ChessUI(pieces, playersChoice, moveQueue, promoteQueue);
 
 
-            // Some awful temporary driver code for UI <-> Client communication
             int result = -1;
             //noinspection InfiniteLoopStatement
             while (true) {
@@ -99,6 +95,7 @@ public class ChessClient {
 
         continueButton.addActionListener(e -> {
             popup.dispose();
+            System.exit(1);
         });
 
         popup.add(headerPanel);
