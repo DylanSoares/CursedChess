@@ -64,17 +64,11 @@ public class ChessServer {
                 out1.writeObject(true);
                 out2.writeObject(false);
                 if (promotionNeeded) {
-
+                    char promotion = (char) in1.readObject();
+                    board.promote(promotion);
                 } else {
-                    char[] moveCommand = (char[]) in1.readObject();
-
-                    char x1 = Board.toChar(Integer.parseInt(String.valueOf(moveCommand[0])) + 1);
-                    char x2 = Board.toChar(Integer.parseInt(String.valueOf(moveCommand[2])) + 1);
-                    int y1 = Integer.parseInt(String.valueOf(moveCommand[1])) + 1;
-                    int y2 = Integer.parseInt(String.valueOf(moveCommand[3])) + 1;
-
-                    int result = board.move(new Location(x1, y1), new Location(x2, y2));
-                    System.err.println("Result of move in1: " + result);
+                    int result = makeMove(board, in1);
+//                    System.err.println("Result of move in1: " + result);
                     out1.writeObject(result);
                 }
                 out2.writeObject("Other player has finished their turn.");
@@ -83,25 +77,29 @@ public class ChessServer {
                 out2.writeObject(true);
                 if (promotionNeeded) {
                     //TODO implement client and server promotion
+                    char promotion = (char) in2.readObject();
+                    board.promote(promotion);
                 } else {
-
-                    char[] moveCommand = (char[]) in2.readObject();
-
-                    char x1 = Board.toChar(Integer.parseInt(String.valueOf(moveCommand[0])) + 1);
-                    char x2 = Board.toChar(Integer.parseInt(String.valueOf(moveCommand[2])) + 1);
-                    int y1 = Integer.parseInt(String.valueOf(moveCommand[1])) + 1;
-                    int y2 = Integer.parseInt(String.valueOf(moveCommand[3])) + 1;
-
-                    int result = board.move(new Location(x1, y1), new Location(x2, y2));
-                    System.err.println("Result of move in2: " + result);
+                    int result = makeMove(board, in2);
+//                    System.err.println("Result of move in2: " + result);
                     out2.writeObject(result);
                 }
                 out1.writeObject("Other player has finished their turn.");
             }
-            System.err.println("loop itr");
         }
 //        client1.close();
 //        client2.close();
 //        serverSocket.close();
+    }
+
+    private static int makeMove(Board board, ObjectInputStream in2) throws IOException, ClassNotFoundException {
+        char[] moveCommand = (char[]) in2.readObject();
+
+        char x1 = Board.toChar(Integer.parseInt(String.valueOf(moveCommand[0])) + 1);
+        char x2 = Board.toChar(Integer.parseInt(String.valueOf(moveCommand[2])) + 1);
+        int y1 = Integer.parseInt(String.valueOf(moveCommand[1])) + 1;
+        int y2 = Integer.parseInt(String.valueOf(moveCommand[3])) + 1;
+
+        return board.move(new Location(x1, y1), new Location(x2, y2));
     }
 }

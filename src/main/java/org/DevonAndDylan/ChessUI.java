@@ -315,7 +315,7 @@ public class ChessUI extends JFrame {
 
         frame.add(boardContainer);
 
-        if (promote) {
+        if (promote && (!this.rotated == isWhitesTurn)) {
             drawPromotePopup();
             try {
                 promoteQueue.put(promoteType); // add the move to the blocking queue

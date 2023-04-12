@@ -17,7 +17,6 @@ import java.util.concurrent.BlockingQueue;
 
 public class ChessClient {
 
-    @SuppressWarnings({"CommentedOutCode", "RedundantThrows"})
     public static void main(String[] args) throws ClassNotFoundException, InterruptedException, IOException {
         BlockingQueue<Boolean> choiceQueue = new ArrayBlockingQueue<>(1);
         BlockingQueue<String> moveQueue = new ArrayBlockingQueue<>(1);
@@ -58,6 +57,7 @@ public class ChessClient {
             if(isClientsTurn) { // I can go!
                 if (needPromotion) {
                     //TODO implement client and server promotion
+                    output.writeObject(promoteQueue.take());
 //                board.promote(promoteQueue.take());
                 } else {
                     char[] moveCommand = moveQueue.take().toCharArray(); // this is blocking!
