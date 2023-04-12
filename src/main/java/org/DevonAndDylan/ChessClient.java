@@ -57,7 +57,6 @@ public class ChessClient {
                 boolean isClientsTurn = (boolean) input.readObject();
                 if (isClientsTurn) { // I can go!
                     if (needPromotion) {
-                        //TODO implement client and server promotion
                         output.writeObject(promoteQueue.take());
 //                board.promote(promoteQueue.take());
                     } else {

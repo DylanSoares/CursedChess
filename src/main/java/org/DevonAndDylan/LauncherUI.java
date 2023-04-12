@@ -127,8 +127,6 @@ public class LauncherUI extends JFrame {
                 frame = frame.getParent();
             while (!(frame instanceof JFrame));
             ((JFrame) frame).dispose();
-
-            // TODO handle checking for server info changes
         });
     }
 
