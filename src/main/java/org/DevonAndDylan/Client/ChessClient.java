@@ -28,8 +28,7 @@ public class ChessClient {
 
         String serverIP = serverInfoQueue.take();
         int serverPort = Integer.parseInt(serverInfoQueue.take());
-        try {
-            Socket socket = new Socket(serverIP, serverPort);
+        try (Socket socket = new Socket(serverIP, serverPort)) {
 
             ObjectInputStream input = new ObjectInputStream(socket.getInputStream());
             ObjectOutputStream output = new ObjectOutputStream(socket.getOutputStream());

@@ -8,25 +8,15 @@ import java.util.concurrent.BlockingQueue;
 
 public class ServerUI extends JFrame {
     private boolean serverStarted = false;
-    private JTextArea logsTextArea;
-    private JButton startButton;
+    private final JTextArea logsTextArea;
+    private final JButton startButton;
     private JTextField portTextField;
     private JTextField ipTextField;
-    private JLabel ipLabel;
-
-    private final Color backgroundColor = new Color(51, 51, 51);
-    private final Color textColor = new Color(255, 255, 255);
-    private final Color startColor = new Color(135, 243, 135);
-
 
     final Font arial = new Font("Arial", Font.PLAIN, 18);
     final Font arial_sm = new Font("Arial", Font.PLAIN, 14);
 
-    private final BlockingQueue<String> serverInfoQueue;
-
     public ServerUI(BlockingQueue<String> serverInfoQueue) {
-
-        this.serverInfoQueue = serverInfoQueue;
 
         ImageIcon clientIcon = new ImageIcon("src/main/resources/clienticon.png");
         setIconImage(clientIcon.getImage());
@@ -59,6 +49,7 @@ public class ServerUI extends JFrame {
         startButton = new JButton("Start Server");
         startButton.setPreferredSize(new Dimension(160, 50));
         startButton.setFocusPainted(false);
+        Color startColor = new Color(135, 243, 135);
         startButton.setBackground(startColor);
         startButton.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         buttonPanel.add(startButton);
@@ -116,9 +107,11 @@ public class ServerUI extends JFrame {
 
         mainPanel.add(portPanel, BorderLayout.WEST);
 
+        Color backgroundColor = new Color(51, 51, 51);
         mainPanel.setBackground(backgroundColor);
         buttonPanel.setBackground(backgroundColor);
         portPanel.setBackground(backgroundColor);
+        Color textColor = new Color(255, 255, 255);
         ipLabel.setForeground(textColor);
         portLabel.setForeground(textColor);
         titleLabel.setForeground(textColor);

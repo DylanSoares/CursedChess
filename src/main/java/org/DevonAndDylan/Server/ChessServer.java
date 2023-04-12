@@ -16,11 +16,9 @@ public class ChessServer {
     static ServerSocket serverSocket;
     private static final BlockingQueue<String> serverInfoQueue = new ArrayBlockingQueue<>(2);
 
-    private static ServerUI gui;
-
     public static void main(String[] args) throws InterruptedException, IOException, ClassNotFoundException {
 
-        gui = new ServerUI(serverInfoQueue);
+        ServerUI gui = new ServerUI(serverInfoQueue);
 
         String ip = serverInfoQueue.take();
         int port = Integer.parseInt(serverInfoQueue.take());
@@ -61,6 +59,7 @@ public class ChessServer {
             out2.writeObject(pieces);
 
 //         Wait for messages from the clients and forward them to the other client
+            //noinspection InfiniteLoopStatement
             while (true) {
                 // Write pieces from board to the client
                 boolean isWhiteTurn = board.getWhoseTurn();
