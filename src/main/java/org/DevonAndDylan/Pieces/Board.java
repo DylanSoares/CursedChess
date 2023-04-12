@@ -179,8 +179,8 @@ public class Board implements Serializable {
 							&& !capture) { //a pawn is moving diagonally but no target is found
 						//System.out.println("En passant target: " + new Location(c, b, false));
 						illegal = processEnPassantCheck(start, end, sindex, new Location(c, b, false), startPiece.isWhite(), false);
-					} else if (startPiece instanceof Pawn
-							&& (d == length && startPiece.isWhite())
+					} else if ((startPiece instanceof Pawn
+							&& d == length && startPiece.isWhite())
 							|| (d == 1 && !startPiece.isWhite())) {
 						illegal = processPromoteCheck(start, end, sindex, eindex, capture, startPiece.isWhite(), false);
 					} else if (startPiece instanceof King
@@ -203,8 +203,8 @@ public class Board implements Serializable {
 						if (processEnPassantCheck(start, end, sindex, new Location(c, b, false), startPiece.isWhite(), false)) {
 							return 11;
 						}
-					} else if (startPiece instanceof Pawn
-							&& (d == length && startPiece.isWhite())
+					} else if ((startPiece instanceof Pawn
+							&& d == length && startPiece.isWhite())
 							|| (d == 1 && !startPiece.isWhite())) {
 						if (processPromoteCheck(start, end, sindex, eindex, capture, startPiece.isWhite(), false)) {
 							return 11;
