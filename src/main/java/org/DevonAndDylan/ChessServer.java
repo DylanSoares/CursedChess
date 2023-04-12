@@ -84,7 +84,7 @@ public class ChessServer {
 //                    System.err.println("Result of move in2: " + result);
                     out2.writeObject(result);
                 }
-                out1.writeObject("Other player has finished their turn.");
+                out1.writeObject(null);
             }
         }
 //        client1.close();

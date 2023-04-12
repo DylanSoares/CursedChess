@@ -65,7 +65,7 @@ public class ChessClient {
                     result = (int) input.readObject();
                 }
             }else{
-                System.out.print(input.readObject());
+                input.readObject();
             }
         }
     }
