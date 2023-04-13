@@ -9,3 +9,5 @@ COSC318 Final Project, a multiplayer chess game written in Java.
 
 Known issues:
 1. UI when selecting squares can occasionally bug out until the continue button is pressed.
+2. Draw by repetition is not checked.
+3. Draw by fifty-move rule is not checked.
